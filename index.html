@@ -1,207 +1,3460 @@
-<!-- =========================================
-     RO'Lyfe Capital & Research Links
-     ========================================= -->
-<section class="card" id="capitalLinks">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <div class="section-kicker">CAPITAL + RESEARCH</div>
+<meta
+  name="description"
+  content="RO'Lyfe Auction Capital Machine™ — auction property intelligence, deal analysis, rehab, tax and lien research, underwriting, contractor coordination and capital routing."
+>
 
-  <h2>Applications, Property Research &amp; Capital Pathways</h2>
+<title>RO'Lyfe Auction Capital Machine™</title>
 
-  <p class="muted">
-    Use the links below to move an analyzed auction opportunity into property
-    research, financing, capital, and underwriting.
-  </p>
+<!-- Keep the modular production stylesheet connected.
+     The embedded styles below also make this index self-contained. -->
+<link rel="stylesheet" href="./css/machine.css">
 
-  <div class="link-grid">
+<style>
+/* =========================================================
+   RO'Lyfe Auction Capital Machine™
+   Production Index Styles
+   Self-contained fallback styling
+   ========================================================= */
 
-    <!-- =====================================
-         AUCTION PROPERTY
-         ===================================== -->
-    <div class="link-card">
-      <div class="link-icon">🏷️</div>
+:root{
+  --bg:#070b16;
+  --panel:#10182b;
+  --panel2:#0c1323;
+  --panel3:#111d34;
+  --border:#263451;
+  --border2:#34476a;
+  --text:#f4f7fb;
+  --muted:#91a0b8;
+  --accent:#66d9ff;
+  --accent2:#8c7cff;
+  --green:#54e39a;
+  --yellow:#ffd166;
+  --red:#ff6b6b;
+  --orange:#ff9f43;
+  --shadow:0 18px 45px rgba(0,0,0,.28);
+}
 
-      <h3>Auction Property</h3>
+*{
+  box-sizing:border-box;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  margin:0;
+  background:
+    radial-gradient(circle at top right,rgba(102,217,255,.07),transparent 30%),
+    radial-gradient(circle at top left,rgba(140,124,255,.06),transparent 28%),
+    var(--bg);
+  color:var(--text);
+  font-family:Arial,Helvetica,sans-serif;
+  line-height:1.5;
+}
+
+a{
+  color:inherit;
+  text-decoration:none;
+}
+
+button,
+input,
+select,
+textarea{
+  font:inherit;
+}
+
+button{
+  cursor:pointer;
+}
+
+.container{
+  width:min(1220px,92%);
+  margin:auto;
+}
+
+/* =========================
+   HEADER
+   ========================= */
+
+header{
+  position:sticky;
+  top:0;
+  z-index:1000;
+  background:rgba(7,11,22,.95);
+  backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--border);
+}
+
+.nav{
+  min-height:72px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
+}
+
+.logo{
+  font-size:19px;
+  font-weight:800;
+  letter-spacing:.4px;
+}
+
+.logo span{
+  color:var(--accent);
+}
+
+.nav-links{
+  display:flex;
+  gap:16px;
+  flex-wrap:wrap;
+}
+
+.nav-links a{
+  color:var(--muted);
+  font-size:13px;
+}
+
+.nav-links a:hover{
+  color:var(--text);
+}
+
+/* =========================
+   HERO
+   ========================= */
+
+.hero{
+  padding:65px 0 40px;
+}
+
+.hero-grid{
+  display:grid;
+  grid-template-columns:1.35fr .75fr;
+  gap:28px;
+  align-items:stretch;
+}
+
+.hero h1{
+  font-size:clamp(38px,6vw,68px);
+  line-height:1.02;
+  margin:0 0 20px;
+  max-width:800px;
+}
+
+.hero h1 span{
+  color:var(--accent);
+}
+
+.hero p{
+  color:var(--muted);
+  font-size:18px;
+  max-width:750px;
+  margin:0 0 26px;
+}
+
+.badges{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+.badge{
+  border:1px solid var(--border);
+  background:rgba(16,24,43,.8);
+  border-radius:999px;
+  padding:8px 13px;
+  color:var(--muted);
+  font-size:12px;
+}
+
+.hero-card{
+  background:linear-gradient(145deg,var(--panel),var(--panel2));
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:25px;
+  box-shadow:var(--shadow);
+}
+
+.hero-card h3{
+  margin-top:0;
+}
+
+.flow{
+  display:grid;
+  gap:9px;
+  margin-top:18px;
+}
+
+.flow div{
+  padding:11px 13px;
+  border:1px solid var(--border);
+  border-radius:10px;
+  background:rgba(255,255,255,.025);
+  font-size:13px;
+}
+
+/* =========================
+   LIVE CLOCK / CALENDAR
+   ========================= */
+
+.live-bar{
+  border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+  background:rgba(12,19,35,.78);
+}
+
+.live-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:12px;
+  padding:14px 0;
+}
+
+.live-card{
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:13px 15px;
+  background:var(--panel);
+}
+
+.live-label{
+  color:var(--muted);
+  font-size:10px;
+  text-transform:uppercase;
+  letter-spacing:1px;
+}
+
+.live-value{
+  font-size:18px;
+  font-weight:800;
+  margin-top:3px;
+}
+
+.calendar-card{
+  display:flex;
+  flex-direction:column;
+}
+
+.calendar-card input{
+  margin-top:5px;
+  padding:7px 9px;
+}
+
+/* =========================
+   BUTTONS
+   ========================= */
+
+.btn,
+.action-btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:7px;
+  border:1px solid var(--border2);
+  border-radius:10px;
+  padding:11px 15px;
+  font-weight:700;
+  background:var(--panel3);
+  color:var(--text);
+  transition:.15s ease;
+}
+
+.btn.primary,
+.action-btn.primary{
+  background:var(--accent);
+  border-color:var(--accent);
+  color:#06101a;
+}
+
+.btn:hover,
+.action-btn:hover{
+  transform:translateY(-1px);
+  border-color:var(--accent);
+}
+
+.secondary-link{
+  display:inline-block;
+  margin-top:11px;
+  color:var(--accent);
+  font-size:13px;
+  font-weight:700;
+}
+
+.button-row{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+}
+
+/* =========================
+   SECTIONS
+   ========================= */
+
+section{
+  padding:42px 0;
+}
+
+.section-title{
+  margin-bottom:22px;
+}
+
+.section-kicker{
+  color:var(--accent);
+  font-size:11px;
+  font-weight:800;
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+  margin-bottom:5px;
+}
+
+.section-title h2,
+.card h2{
+  font-size:29px;
+  margin:0 0 7px;
+}
+
+.section-title p,
+.muted{
+  color:var(--muted);
+  margin:0;
+}
+
+/* =========================
+   DASHBOARD
+   ========================= */
+
+.dashboard{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:14px;
+}
+
+.stat{
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:15px;
+  padding:18px;
+  box-shadow:var(--shadow);
+}
+
+.stat-label{
+  color:var(--muted);
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:.8px;
+}
+
+.stat-value{
+  font-size:26px;
+  font-weight:800;
+  margin-top:5px;
+}
+
+/* =========================
+   CARDS
+   ========================= */
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:18px;
+}
+
+.card,
+.form-card{
+  background:linear-gradient(145deg,var(--panel),var(--panel2));
+  border:1px solid var(--border);
+  border-radius:17px;
+  padding:21px;
+  box-shadow:var(--shadow);
+}
+
+.card h3{
+  margin-top:0;
+}
+
+.card p{
+  color:var(--muted);
+}
+
+.icon,
+.link-icon{
+  font-size:25px;
+  margin-bottom:8px;
+}
+
+/* =========================
+   FORMS
+   ========================= */
+
+.form-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:15px;
+}
+
+.field{
+  display:flex;
+  flex-direction:column;
+  gap:7px;
+}
+
+.field.full{
+  grid-column:1/-1;
+}
+
+label{
+  color:var(--muted);
+  font-size:12px;
+  font-weight:600;
+}
+
+input,
+select,
+textarea{
+  width:100%;
+  background:#080e1c;
+  color:var(--text);
+  border:1px solid var(--border);
+  border-radius:9px;
+  padding:11px 12px;
+  outline:none;
+}
+
+input:focus,
+select:focus,
+textarea:focus{
+  border-color:var(--accent);
+  box-shadow:0 0 0 2px rgba(102,217,255,.08);
+}
+
+input[type="checkbox"]{
+  width:auto;
+}
+
+textarea{
+  min-height:100px;
+  resize:vertical;
+}
+
+input[type="date"]{
+  color-scheme:dark;
+}
+
+/* =========================
+   RESULTS
+   ========================= */
+
+.result{
+  margin-top:20px;
+  border:1px solid var(--border);
+  border-radius:14px;
+  padding:20px;
+  background:var(--panel2);
+}
+
+.result-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+}
+
+.result-item{
+  padding:14px;
+  border:1px solid var(--border);
+  border-radius:10px;
+  background:rgba(255,255,255,.02);
+}
+
+.result-item span{
+  display:block;
+  color:var(--muted);
+  font-size:11px;
+}
+
+.result-item strong{
+  font-size:20px;
+}
+
+/* =========================
+   STATUS
+   ========================= */
+
+.status{
+  display:inline-flex;
+  align-items:center;
+  gap:7px;
+  padding:7px 11px;
+  border-radius:999px;
+  font-size:11px;
+  font-weight:700;
+  margin-top:14px;
+}
+
+.status.green{
+  color:var(--green);
+  border:1px solid rgba(84,227,154,.3);
+  background:rgba(84,227,154,.08);
+}
+
+.status.yellow{
+  color:var(--yellow);
+  border:1px solid rgba(255,209,102,.3);
+  background:rgba(255,209,102,.08);
+}
+
+.status.red{
+  color:var(--red);
+  border:1px solid rgba(255,107,107,.3);
+  background:rgba(255,107,107,.08);
+}
+
+/* =========================
+   CAPITAL
+   ========================= */
+
+.capital-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:14px;
+}
+
+.capital{
+  padding:18px;
+  border:1px solid var(--border);
+  border-radius:14px;
+  background:var(--panel);
+}
+
+.capital strong{
+  display:block;
+  margin-bottom:6px;
+}
+
+.capital small{
+  color:var(--muted);
+}
+
+/* =========================
+   CHECKLIST
+   ========================= */
+
+.checklist{
+  display:grid;
+  gap:9px;
+}
+
+.check{
+  display:flex;
+  gap:10px;
+  align-items:flex-start;
+  padding:12px;
+  border:1px solid var(--border);
+  border-radius:10px;
+  color:var(--muted);
+  background:rgba(255,255,255,.015);
+}
+
+.check input{
+  margin-top:4px;
+}
+
+/* =========================
+   RESOURCE LINKS
+   ========================= */
+
+.link-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:16px;
+  margin-top:22px;
+}
+
+.link-card{
+  background:linear-gradient(145deg,var(--panel),var(--panel2));
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:19px;
+  display:flex;
+  flex-direction:column;
+}
+
+.link-card h3{
+  margin:0 0 8px;
+  font-size:17px;
+}
+
+.link-card p{
+  color:var(--muted);
+  font-size:13px;
+  flex:1;
+  margin:0 0 17px;
+}
+
+.link-card .action-btn{
+  width:100%;
+}
+
+.capital-card{
+  border-color:rgba(102,217,255,.28);
+}
+
+.ecosystem-card{
+  border-color:rgba(140,124,255,.28);
+}
+
+/* =========================
+   REHAB BUDGET
+   ========================= */
+
+.budget-table-wrap{
+  overflow-x:auto;
+  margin-top:18px;
+  border:1px solid var(--border);
+  border-radius:12px;
+}
+
+.budget-table{
+  width:100%;
+  border-collapse:collapse;
+  min-width:650px;
+}
+
+.budget-table th,
+.budget-table td{
+  padding:10px 12px;
+  border-bottom:1px solid var(--border);
+  text-align:left;
+}
+
+.budget-table th{
+  color:var(--muted);
+  font-size:11px;
+  text-transform:uppercase;
+}
+
+.budget-table td{
+  font-size:13px;
+}
+
+.budget-table input{
+  padding:8px;
+}
+
+.budget-total{
+  display:flex;
+  justify-content:flex-end;
+  gap:20px;
+  padding:15px;
+  font-weight:800;
+}
+
+/* =========================
+   UNDERWRITING
+   ========================= */
+
+.underwriting-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:14px;
+}
+
+.underwriting-box{
+  border:1px solid var(--border);
+  border-radius:13px;
+  padding:16px;
+  background:var(--panel2);
+}
+
+.underwriting-box span{
+  display:block;
+  color:var(--muted);
+  font-size:11px;
+}
+
+.underwriting-box strong{
+  display:block;
+  font-size:21px;
+  margin-top:3px;
+}
+
+/* =========================
+   FOOTER
+   ========================= */
+
+footer{
+  margin-top:50px;
+  border-top:1px solid var(--border);
+  padding:35px 0;
+  color:var(--muted);
+  font-size:13px;
+}
+
+.footer-title{
+  color:var(--text);
+  font-weight:800;
+  margin-bottom:7px;
+}
+
+/* =========================
+   MOBILE
+   ========================= */
+
+@media(max-width:950px){
+
+  .hero-grid{
+    grid-template-columns:1fr;
+  }
+
+  .dashboard,
+  .capital-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .link-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .underwriting-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .live-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+}
+
+@media(max-width:650px){
+
+  .container{
+    width:94%;
+  }
+
+  .nav{
+    align-items:flex-start;
+    padding:14px 0;
+    flex-direction:column;
+  }
+
+  .nav-links{
+    gap:10px;
+  }
+
+  .hero{
+    padding-top:42px;
+  }
+
+  .hero h1{
+    font-size:41px;
+  }
+
+  .hero p{
+    font-size:16px;
+  }
+
+  .dashboard,
+  .grid,
+  .capital-grid,
+  .link-grid,
+  .underwriting-grid,
+  .result-grid,
+  .live-grid{
+    grid-template-columns:1fr;
+  }
+
+  .form-grid{
+    grid-template-columns:1fr;
+  }
+
+  .field.full{
+    grid-column:auto;
+  }
+
+  section{
+    padding:32px 0;
+  }
+
+  .button-row{
+    flex-direction:column;
+  }
+
+  .button-row .btn,
+  .button-row .action-btn{
+    width:100%;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- =========================================================
+     HEADER
+     ========================================================= -->
+
+<header>
+
+  <div class="container nav">
+
+    <div class="logo">
+      RO<span>'Lyfe</span> Auction Capital Machine™
+    </div>
+
+    <nav class="nav-links">
+      <a href="#dashboard">Dashboard</a>
+      <a href="#intake">Auction Intake</a>
+      <a href="#analysis">Analysis</a>
+      <a href="#rehab">Rehab</a>
+      <a href="#taxLien">Tax/Lien</a>
+      <a href="#underwriting">Underwriting</a>
+      <a href="#capital">Capital</a>
+      <a href="#research">Research</a>
+    </nav>
+
+  </div>
+
+</header>
+
+
+<!-- =========================================================
+     HERO
+     ========================================================= -->
+
+<section class="hero">
+
+  <div class="container hero-grid">
+
+    <div>
+
+      <div class="badge">
+        REAL ESTATE • AUCTION • UNDERWRITING • CAPITAL
+      </div>
+
+      <h1>
+        Find the Property.
+        <span>Build the Deal.</span>
+        Match the Capital.
+      </h1>
 
       <p>
-        Return to the original auction listing and verify the current bid,
-        auction terms, reserve, EMD, occupancy and closing requirements.
+        RO'Lyfe Auction Capital Machine™ organizes auction,
+        REO, foreclosure and tax-sale opportunities into a
+        structured property, rehab, underwriting and capital workflow.
       </p>
 
-      <a
-        class="action-btn primary"
-        href="https://www.auction.com/"
-        target="_blank"
-        rel="noopener noreferrer">
-        Open Auction.com
-      </a>
+      <div class="badges">
+        <div class="badge">Auction Intelligence</div>
+        <div class="badge">Contractor Desk</div>
+        <div class="badge">Rehab Budget</div>
+        <div class="badge">Tax &amp; Lien Research</div>
+        <div class="badge">Underwriting</div>
+        <div class="badge">Capital Routing</div>
+      </div>
+
     </div>
 
 
-    <!-- =====================================
-         PHILADELPHIA PROPERTY RECORDS
-         ===================================== -->
-    <div class="link-card">
-      <div class="link-icon">🏛️</div>
+    <div class="hero-card">
 
-      <h3>Philadelphia Property Records</h3>
+      <h3>Deal Flow</h3>
 
-      <p>
-        Verify property information, assessment information and
-        public-record information through the City of Philadelphia.
-      </p>
+      <div class="flow">
+        <div>🔎 Auction Property</div>
+        <div>🏠 Property Intelligence</div>
+        <div>🔨 Contractor / Buyer</div>
+        <div>🧮 Deal Economics</div>
+        <div>🧱 Rehab Budget</div>
+        <div>📜 Tax / Lien Review</div>
+        <div>📊 Underwriting</div>
+        <div>🏦 Capital Match</div>
+        <div>🏁 Bid / Close / Exit</div>
+      </div>
 
-      <a
-        class="action-btn"
-        href="https://property.phila.gov/"
-        target="_blank"
-        rel="noopener noreferrer">
-        Open Property App
-      </a>
-    </div>
-
-
-    <!-- =====================================
-         ZILLOW
-         ===================================== -->
-    <div class="link-card">
-      <div class="link-icon">🏠</div>
-
-      <h3>Zillow</h3>
-
-      <p>
-        Use Zillow as a secondary property and market-research source.
-      </p>
-
-      <a
-        class="action-btn"
-        href="https://www.zillow.com/"
-        target="_blank"
-        rel="noopener noreferrer">
-        Open Zillow
-      </a>
-    </div>
-
-
-    <!-- =====================================
-         REDFIN
-         ===================================== -->
-    <div class="link-card">
-      <div class="link-icon">📊</div>
-
-      <h3>Redfin</h3>
-
-      <p>
-        Review comparable properties, market information and property history.
-      </p>
-
-      <a
-        class="action-btn"
-        href="https://www.redfin.com/"
-        target="_blank"
-        rel="noopener noreferrer">
-        Open Redfin
-      </a>
-    </div>
-
-
-    <!-- =====================================
-         REALTOR.COM
-         ===================================== -->
-    <div class="link-card">
-      <div class="link-icon">🔎</div>
-
-      <h3>Realtor.com</h3>
-
-      <p>
-        Review additional property, listing and market-reference information.
-      </p>
-
-      <a
-        class="action-btn"
-        href="https://www.realtor.com/"
-        target="_blank"
-        rel="noopener noreferrer">
-        Open Realtor.com
-      </a>
-    </div>
-
-
-    <!-- =====================================
-         KIAVI BROKER
-         ===================================== -->
-    <div class="link-card capital-card">
-      <div class="link-icon">💰</div>
-
-      <h3>Kiavi Broker</h3>
-
-      <p>
-        Move a qualified deal into the Kiavi broker loan workflow after
-        property analysis and due diligence.
-      </p>
-
-      <a
-        class="action-btn primary"
-        href="https://app.kiavi.com/my/loans/origination"
-        target="_blank"
-        rel="noopener noreferrer">
-        Open Kiavi Broker Portal
-      </a>
-    </div>
-
-
-    <!-- =====================================
-         COGO CAPITAL
-         ===================================== -->
-    <div class="link-card capital-card">
-      <div class="link-icon">🏦</div>
-
-      <h3>COGO Capital</h3>
-
-      <p>
-        Access the loan application pathway for eligible financing
-        opportunities.
-      </p>
-
-      <a
-        class="action-btn primary"
-        href="https://www.borrowersviewcentral.com/portal/applynew?id=LCS"
-        target="_blank"
-        rel="noopener noreferrer">
-        Start Loan Application
-      </a>
-
-      <a
-        class="secondary-link"
-        href="https://www.cogocapital.com/"
-        target="_blank"
-        rel="noopener noreferrer">
-        Visit COGO Capital →
-      </a>
-    </div>
-
-
-    <!-- =====================================
-         RO'LYFE RELOCATION INTELLIGENCE
-         ===================================== -->
-    <div class="link-card ecosystem-card">
-      <div class="link-icon">🧭</div>
-
-      <h3>RO'Lyfe Relocation Intelligence</h3>
-
-      <p>
-        Research location, climate, risk, housing, property economics,
-        financial considerations and opportunities.
-      </p>
-
-      <a
-        class="action-btn"
-        href="https://rolrichman.github.io/rolyfe-relocation-intelligence/"
-        target="_blank"
-        rel="noopener noreferrer">
-        Open Relocation Intelligence
-      </a>
     </div>
 
   </div>
 
 </section>
+
+
+<!-- =========================================================
+     LIVE DATE / TIME / CALENDAR
+     ========================================================= -->
+
+<div class="live-bar">
+
+  <div class="container live-grid">
+
+    <div class="live-card">
+      <div class="live-label">Current Date</div>
+      <div class="live-value" id="liveDate">Loading...</div>
+    </div>
+
+    <div class="live-card">
+      <div class="live-label">Current Time</div>
+      <div class="live-value" id="liveTime">Loading...</div>
+    </div>
+
+    <div class="live-card calendar-card">
+      <div class="live-label">Auction / Event Date</div>
+      <input
+        id="auctionDate"
+        type="date"
+        aria-label="Auction or event date"
+      >
+    </div>
+
+    <div class="live-card">
+      <div class="live-label">Days Until Event</div>
+      <div class="live-value" id="daysUntil">—</div>
+    </div>
+
+  </div>
+
+</div>
+
+
+<main>
+
+
+<!-- =========================================================
+     DASHBOARD
+     ========================================================= -->
+
+<section id="dashboard">
+
+  <div class="container">
+
+    <div class="section-title">
+
+      <div class="section-kicker">COMMAND CENTER</div>
+
+      <h2>Acquisition Dashboard</h2>
+
+      <p>
+        Build the deal before you build the bid.
+      </p>
+
+    </div>
+
+    <div class="dashboard">
+
+      <div class="stat">
+        <div class="stat-label">Properties</div>
+        <div class="stat-value" id="propertyCount">0</div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-label">Current Bid</div>
+        <div class="stat-value" id="dashboardBid">$0</div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-label">Maximum Acquisition</div>
+        <div class="stat-value" id="dashboardMax">$0</div>
+      </div>
+
+      <div class="stat">
+        <div class="stat-label">Capital Needed</div>
+        <div class="stat-value" id="dashboardCapital">$0</div>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================================
+     AUCTION PROPERTY INTAKE
+     ========================================================= -->
+
+<section id="intake">
+
+  <div class="container">
+
+    <div class="section-title">
+
+      <div class="section-kicker">01 — AUCTION</div>
+
+      <h2>Auction Property Intake</h2>
+
+      <p>
+        Capture the auction facts before analyzing the opportunity.
+      </p>
+
+    </div>
+
+    <div class="form-card">
+
+      <div class="form-grid">
+
+        <div class="field full">
+          <label for="auctionUrl">Auction Property URL</label>
+
+          <input
+            id="auctionUrl"
+            type="url"
+            placeholder="https://www.auction.com/..."
+          >
+        </div>
+
+
+        <div class="field full">
+
+          <label for="address">
+            Property Address
+          </label>
+
+          <input
+            id="address"
+            type="text"
+            placeholder="2539 62nd St, Philadelphia, PA 19142"
+          >
+
+        </div>
+
+
+        <div class="field">
+
+          <label for="auctionType">
+            Auction Type
+          </label>
+
+          <select id="auctionType">
+
+            <option>Bank Owned / REO</option>
+            <option>Foreclosure</option>
+            <option>Tax Sale</option>
+            <option>Tax Lien</option>
+            <option>Tax Deed</option>
+            <option>Sheriff Sale</option>
+            <option>Online Auction</option>
+            <option>Other</option>
+
+          </select>
+
+        </div>
+
+
+        <div class="field">
+
+          <label for="occupancy">
+            Occupancy
+          </label>
+
+          <select id="occupancy">
+
+            <option>Unknown</option>
+            <option>Vacant</option>
+            <option>Occupied</option>
+            <option>Do Not Disturb</option>
+
+          </select>
+
+        </div>
+
+
+        <div class="field">
+
+          <label for="parcel">
+            Parcel / APN / OPA
+          </label>
+
+          <input
+            id="parcel"
+            type="text"
+            placeholder="Parcel / APN / OPA number"
+          >
+
+        </div>
+
+
+        <div class="field">
+
+          <label for="county">
+            County
+          </label>
+
+          <input
+            id="county"
+            type="text"
+            placeholder="Philadelphia"
+          >
+
+        </div>
+
+
+        <div class="field">
+
+          <label for="openingBid">
+            Opening Bid ($)
+          </label>
+
+          <input
+            id="openingBid"
+            type="number"
+            min="0"
+            placeholder="25000"
+          >
+
+        </div>
+
+
+        <div class="field">
+
+          <label for="currentBid">
+            Current Bid ($)
+          </label>
+
+          <input
+            id="currentBid"
+            type="number"
+            min="0"
+            placeholder="83500"
+          >
+
+        </div>
+
+
+        <div class="field">
+
+          <label for="bidIncrement">
+            Bid Increment ($)
+          </label>
+
+          <input
+            id="bidIncrement"
+            type="number"
+            min="0"
+            placeholder="500"
+          >
+
+        </div>
+
+
+        <div class="field">
+
+          <label for="reserve">
+            Reserve Status
+          </label>
+
+          <select id="reserve">
+
+            <option>Unknown</option>
+            <option>Reserve Met</option>
+            <option>Reserve Not Met</option>
+            <option>No Reserve</option>
+
+          </select>
+
+        </div>
+
+
+        <div class="field">
+
+          <label for="financing">
+            Financing Status
+          </label>
+
+          <select id="financing">
+
+            <option>Needs Verification</option>
+            <option>Cash Only</option>
+            <option>Hard Money Accepted</option>
+            <option>Line of Credit Accepted</option>
+            <option>Other Financing Permitted</option>
+
+          </select>
+
+        </div>
+
+
+        <div class="field">
+
+          <label for="emd">
+            Earnest Money / EMD ($)
+          </label>
+
+          <input
+            id="emd"
+            type="number"
+            min="0"
+            placeholder="2500"
+          >
+
+        </div>
+
+
+        <div class="field">
+
+          <label for="auctionStart">
+            Auction Start
+          </label>
+
+          <input
+            id="auctionStart"
+            type="date"
+          >
+
+        </div>
+
+
+        <div class="field">
+
+          <label for="auctionEnd">
+            Auction End / Bid Deadline
+          </label>
+
+          <input
+            id="auctionEnd"
+            type="date"
+          >
+
+        </div>
+
+
+        <div class="field full">
+
+          <label for="auctionNotes">
+            Auction Notes
+          </label>
+
+          <textarea
+            id="auctionNotes"
+            placeholder="Reserve, occupancy warnings, seller acceptance, closing requirements, financing restrictions, etc."
+          ></textarea>
+
+        </div>
+
+
+        <div class="field full">
+
+          <div class="button-row">
+
+            <button
+              class="btn primary"
+              type="button"
+              onclick="saveProperty()"
+            >
+              Save Opportunity
+            </button>
+
+            <button
+              class="btn"
+              type="button"
+              onclick="loadExample()"
+            >
+              Load Example
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================================
+     DEAL ANALYSIS
+     ========================================================= -->
+
+<section id="analysis">
+
+  <div class="container">
+
+    <div class="section-title">
+
+      <div class="section-kicker">02 — DEAL ENGINE</div>
+
+      <h2>Deal Analysis</h2>
+
+      <p>
+        Estimate the acquisition ceiling before determining whether
+        the current bid fits the deal assumptions.
+      </p>
+
+    </div>
+
+    <div class="form-card">
+
+      <div class="form-grid">
+
+        <div class="field">
+
+          <label for="arv">
+            Estimated ARV ($)
+          </label>
+
+          <input
+            id="arv"
+            type="number"
+            min="0"
+            placeholder="306500"
+          >
+
+        </div>
+
+
+        <div class="field">
+
+          <label for="rehab">
+            Rehab Budget ($)
+          </label>
+
+          <input
+            id="rehab"
+            type="number"
+            min="0"
+            placeholder="60000"
+          >
+
+        </div>
+
+
+        <div class="field">
+
+          <label for="closing">
+            Closing Costs ($)
+          </label>
+
+          <input
+            id="closing"
+            type="number"
+            min="0"
+            placeholder="5000"
+          >
+
+        </div>
+
+
+        <div class="field">
+
+          <label for="holding">
+            Holding Costs ($)
+          </label>
+
+          <input
+            id="holding"
+            type="number"
+            min="0"
+            placeholder="2000"
+          >
+
+        </div>
+
+
+        <div class="field">
+
+          <label for="selling">
+            Selling Costs ($)
+          </label>
+
+          <input
+            id="selling"
+            type="number"
+            min="0"
+            placeholder="15000"
+          >
+
+        </div>
+
+
+        <div class="field">
+
+          <label for="financingCosts">
+            Financing Costs ($)
+          </label>
+
+          <input
+            id="financingCosts"
+            type="number"
+            min="0"
+            placeholder="10000"
+          >
+
+        </div>
+
+
+        <div class="field">
+
+          <label for="profit">
+            Required Profit ($)
+          </label>
+
+          <input
+            id="profit"
+            type="number"
+            min="0"
+            placeholder="40000"
+          >
+
+        </div>
+
+
+        <div class="field">
+
+          <label for="contingency">
+            Contingency ($)
+          </label>
+
+          <input
+            id="contingency"
+            type="number"
+            min="0"
+            placeholder="10000"
+          >
+
+        </div>
+
+
+        <div class="field">
+
+          <label for="buyerCapital">
+            Buyer Available Capital ($)
+          </label>
+
+          <input
+            id="buyerCapital"
+            type="number"
+            min="0"
+            placeholder="14000"
+          >
+
+        </div>
+
+
+        <div class="field full">
+
+          <button
+            class="btn primary"
+            type="button"
+            onclick="calculateDeal()"
+          >
+            Calculate Deal
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <div class="result" id="dealResult">
+
+        <h3>Deal Intelligence</h3>
+
+        <div class="result-grid">
+
+          <div class="result-item">
+            <span>Maximum Acquisition Price</span>
+            <strong id="maxBid">$0</strong>
+          </div>
+
+          <div class="result-item">
+            <span>Total Project Cost</span>
+            <strong id="projectCost">$0</strong>
+          </div>
+
+          <div class="result-item">
+            <span>Potential Capital Requirement</span>
+            <strong id="capitalNeed">$0</strong>
+          </div>
+
+          <div class="result-item">
+            <span>Current Bid</span>
+            <strong id="resultCurrentBid">$0</strong>
+          </div>
+
+          <div class="result-item">
+            <span>Bid Room</span>
+            <strong id="bidRoom">$0</strong>
+          </div>
+
+          <div class="result-item">
+            <span>Gross Spread Before Unlisted Costs</span>
+            <strong id="grossSpread">$0</strong>
+          </div>
+
+        </div>
+
+        <div id="dealStatus"></div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================================
+     CONTRACTOR / BUYER
+     ========================================================= -->
+
+<section id="contractor">
+
+  <div class="container">
+
+    <div class="section-title">
+
+      <div class="section-kicker">03 — EXECUTION</div>
+
+      <h2>Contractor / Buyer Desk</h2>
+
+      <p>
+        Connect the property to the person who can inspect,
+        build, operate or acquire it.
+      </p>
+
+    </div>
+
+    <div class="grid">
+
+      <div class="card">
+
+        <div class="icon">🔨</div>
+
+        <h3>Contractor</h3>
+
+        <p>
+          Track the contractor responsible for inspection,
+          scope of work, rehab estimates and project execution.
+        </p>
+
+        <input
+          id="contractorName"
+          type="text"
+          placeholder="Contractor / Company"
+        >
+
+      </div>
+
+
+      <div class="card">
+
+        <div class="icon">🤝</div>
+
+        <h3>Buyer / Operator</h3>
+
+        <p>
+          Track whether the contractor, investor or another
+          buyer intends to acquire the project.
+        </p>
+
+        <input
+          id="buyerName"
+          type="text"
+          placeholder="Buyer / Operator"
+        >
+
+      </div>
+
+
+      <div class="card">
+
+        <div class="icon">📋</div>
+
+        <h3>Scope of Work</h3>
+
+        <p>
+          Record the major systems, construction requirements,
+          timeline and project assumptions.
+        </p>
+
+        <input
+          id="projectTimeline"
+          type="text"
+          placeholder="Estimated project timeline"
+        >
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================================
+     REHAB BUDGET
+     ========================================================= -->
+
+<section id="rehab">
+
+  <div class="container">
+
+    <div class="section-title">
+
+      <div class="section-kicker">04 — REHAB ENGINE</div>
+
+      <h2>Rehab &amp; Construction Budget</h2>
+
+      <p>
+        Itemize the project instead of relying only on one rehab number.
+        COGO-style contingency can be entered separately.
+      </p>
+
+    </div>
+
+    <div class="form-card">
+
+      <div class="form-grid">
+
+        <div class="field">
+
+          <label for="rehabContingencyPercent">
+            Contractor Contingency %
+          </label>
+
+          <input
+            id="rehabContingencyPercent"
+            type="number"
+            min="0"
+            max="100"
+            value="10"
+            oninput="calculateRehabBudget()"
+          >
+
+        </div>
+
+        <div class="field">
+
+          <label>Rehab Subtotal</label>
+
+          <input
+            id="rehabSubtotal"
+            type="text"
+            value="$0"
+            readonly
+          >
+
+        </div>
+
+        <div class="field">
+
+          <label>Contingency Amount</label>
+
+          <input
+            id="rehabContingencyAmount"
+            type="text"
+            value="$0"
+            readonly
+          >
+
+        </div>
+
+        <div class="field">
+
+          <label>Total Rehab Budget</label>
+
+          <input
+            id="rehabTotal"
+            type="text"
+            value="$0"
+            readonly
+          >
+
+        </div>
+
+      </div>
+
+
+      <div class="budget-table-wrap">
+
+        <table class="budget-table">
+
+          <thead>
+
+            <tr>
+              <th>Item</th>
+              <th>Description</th>
+              <th>Estimated Cost</th>
+            </tr>
+
+          </thead>
+
+          <tbody id="rehabTableBody">
+
+            <tr>
+              <td>01</td>
+              <td>Demolition</td>
+              <td>
+                <input
+                  class="rehab-cost"
+                  data-name="Demolition"
+                  type="number"
+                  min="0"
+                  value="0"
+                  oninput="calculateRehabBudget()"
+                >
+              </td>
+            </tr>
+
+            <tr>
+              <td>02</td>
+              <td>Framing / Rough Carpentry</td>
+              <td>
+                <input
+                  class="rehab-cost"
+                  data-name="Framing"
+                  type="number"
+                  min="0"
+                  value="0"
+                  oninput="calculateRehabBudget()"
+                >
+              </td>
+            </tr>
+
+            <tr>
+              <td>03</td>
+              <td>Roofing</td>
+              <td>
+                <input
+                  class="rehab-cost"
+                  data-name="Roofing"
+                  type="number"
+                  min="0"
+                  value="0"
+                  oninput="calculateRehabBudget()"
+                >
+              </td>
+            </tr>
+
+            <tr>
+              <td>04</td>
+              <td>HVAC</td>
+              <td>
+                <input
+                  class="rehab-cost"
+                  data-name="HVAC"
+                  type="number"
+                  min="0"
+                  value="0"
+                  oninput="calculateRehabBudget()"
+                >
+              </td>
+            </tr>
+
+            <tr>
+              <td>05</td>
+              <td>Plumbing</td>
+              <td>
+                <input
+                  class="rehab-cost"
+                  data-name="Plumbing"
+                  type="number"
+                  min="0"
+                  value="0"
+                  oninput="calculateRehabBudget()"
+                >
+              </td>
+            </tr>
+
+            <tr>
+              <td>06</td>
+              <td>Electrical</td>
+              <td>
+                <input
+                  class="rehab-cost"
+                  data-name="Electrical"
+                  type="number"
+                  min="0"
+                  value="0"
+                  oninput="calculateRehabBudget()"
+                >
+              </td>
+            </tr>
+
+            <tr>
+              <td>07</td>
+              <td>Windows / Doors</td>
+              <td>
+                <input
+                  class="rehab-cost"
+                  data-name="Windows Doors"
+                  type="number"
+                  min="0"
+                  value="0"
+                  oninput="calculateRehabBudget()"
+                >
+              </td>
+            </tr>
+
+            <tr>
+              <td>08</td>
+              <td>Kitchen</td>
+              <td>
+                <input
+                  class="rehab-cost"
+                  data-name="Kitchen"
+                  type="number"
+                  min="0"
+                  value="0"
+                  oninput="calculateRehabBudget()"
+                >
+              </td>
+            </tr>
+
+            <tr>
+              <td>09</td>
+              <td>Bathrooms</td>
+              <td>
+                <input
+                  class="rehab-cost"
+                  data-name="Bathrooms"
+                  type="number"
+                  min="0"
+                  value="0"
+                  oninput="calculateRehabBudget()"
+                >
+              </td>
+            </tr>
+
+            <tr>
+              <td>10</td>
+              <td>Flooring</td>
+              <td>
+                <input
+                  class="rehab-cost"
+                  data-name="Flooring"
+                  type="number"
+                  min="0"
+                  value="0"
+                  oninput="calculateRehabBudget()"
+                >
+              </td>
+            </tr>
+
+            <tr>
+              <td>11</td>
+              <td>Drywall / Finish</td>
+              <td>
+                <input
+                  class="rehab-cost"
+                  data-name="Drywall"
+                  type="number"
+                  min="0"
+                  value="0"
+                  oninput="calculateRehabBudget()"
+                >
+              </td>
+            </tr>
+
+            <tr>
+              <td>12</td>
+              <td>Interior / Exterior Paint</td>
+              <td>
+                <input
+                  class="rehab-cost"
+                  data-name="Painting"
+                  type="number"
+                  min="0"
+                  value="0"
+                  oninput="calculateRehabBudget()"
+                >
+              </td>
+            </tr>
+
+            <tr>
+              <td>13</td>
+              <td>Permits / Inspections</td>
+              <td>
+                <input
+                  class="rehab-cost"
+                  data-name="Permits"
+                  type="number"
+                  min="0"
+                  value="0"
+                  oninput="calculateRehabBudget()"
+                >
+              </td>
+            </tr>
+
+            <tr>
+              <td>14</td>
+              <td>Exterior / Siding / Masonry</td>
+              <td>
+                <input
+                  class="rehab-cost"
+                  data-name="Exterior"
+                  type="number"
+                  min="0"
+                  value="0"
+                  oninput="calculateRehabBudget()"
+                >
+              </td>
+            </tr>
+
+            <tr>
+              <td>15</td>
+              <td>Landscaping / Site Work</td>
+              <td>
+                <input
+                  class="rehab-cost"
+                  data-name="Landscaping"
+                  type="number"
+                  min="0"
+                  value="0"
+                  oninput="calculateRehabBudget()"
+                >
+              </td>
+            </tr>
+
+            <tr>
+              <td>16</td>
+              <td>Structural / Other</td>
+              <td>
+                <input
+                  class="rehab-cost"
+                  data-name="Structural"
+                  type="number"
+                  min="0"
+                  value="0"
+                  oninput="calculateRehabBudget()"
+                >
+              </td>
+            </tr>
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================================
+     TAX / LIEN INTELLIGENCE
+     ========================================================= -->
+
+<section id="taxLien">
+
+  <div class="container">
+
+    <div class="section-title">
+
+      <div class="section-kicker">05 — TAX / LIEN</div>
+
+      <h2>Tax &amp; Lien Intelligence</h2>
+
+      <p>
+        Track delinquent taxes, water/sewer balances, liens,
+        tax-sale status and verification sources.
+      </p>
+
+    </div>
+
+    <div class="form-card">
+
+      <div class="form-grid">
+
+        <div class="field">
+          <label for="taxAuthority">Tax Authority</label>
+          <input
+            id="taxAuthority"
+            type="text"
+            placeholder="City / County / Municipality"
+          >
+        </div>
+
+        <div class="field">
+          <label for="delinquentTaxes">Delinquent Taxes ($)</label>
+          <input
+            id="delinquentTaxes"
+            type="number"
+            min="0"
+            placeholder="0"
+          >
+        </div>
+
+        <div class="field">
+          <label for="interestPenalty">Interest / Penalties ($)</label>
+          <input
+            id="interestPenalty"
+            type="number"
+            min="0"
+            placeholder="0"
+          >
+        </div>
+
+        <div class="field">
+          <label for="waterSewer">Water / Sewer ($)</label>
+          <input
+            id="waterSewer"
+            type="number"
+            min="0"
+            placeholder="0"
+          >
+        </div>
+
+        <div class="field">
+          <label for="lienStatus">Lien Status</label>
+          <select id="lienStatus">
+            <option>Unknown</option>
+            <option>No Known Lien — Verify</option>
+            <option>Potential Lien</option>
+            <option>Recorded Lien</option>
+            <option>Multiple Liens</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="saleStatus">Sale Status</label>
+          <select id="saleStatus">
+            <option>Not Applicable</option>
+            <option>Research Required</option>
+            <option>Tax Sale Scheduled</option>
+            <option>Tax Lien Certificate</option>
+            <option>Tax Deed</option>
+            <option>Foreclosure / Sheriff Sale</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="redemptionPeriod">Redemption Period</label>
+          <input
+            id="redemptionPeriod"
+            type="text"
+            placeholder="Jurisdiction-specific"
+          >
+        </div>
+
+        <div class="field">
+          <label for="taxSaleDate">Tax / Sale Date</label>
+          <input
+            id="taxSaleDate"
+            type="date"
+          >
+        </div>
+
+        <div class="field full">
+          <label for="taxSource">Official Verification Source</label>
+          <input
+            id="taxSource"
+            type="url"
+            placeholder="Official county / city / tax authority URL"
+          >
+        </div>
+
+        <div class="field full">
+          <label for="taxNotes">Tax / Lien Notes</label>
+          <textarea
+            id="taxNotes"
+            placeholder="Tax balances, lien documents, water balances, sale status, title notes, redemption information, etc."
+          ></textarea>
+        </div>
+
+      </div>
+
+      <div style="margin-top:18px">
+
+        <div class="status yellow">
+          ⚠ LIEN / TAX INFORMATION REQUIRES SOURCE VERIFICATION
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================================
+     PROPERTY TRACK RECORD / REO
+     ========================================================= -->
+
+<section id="trackRecord">
+
+  <div class="container">
+
+    <div class="section-title">
+
+      <div class="section-kicker">06 — BORROWER HISTORY</div>
+
+      <h2>Property Track Record &amp; REO Schedule</h2>
+
+      <p>
+        Organize prior projects and currently owned properties
+        for lender and underwriting preparation.
+      </p>
+
+    </div>
+
+    <div class="grid">
+
+      <div class="card">
+
+        <div class="icon">🏗️</div>
+
+        <h3>Property Track Record</h3>
+
+        <p>
+          Track properties sold in the applicable history period,
+          including purchase price, rehab budget and disposition.
+        </p>
+
+        <input
+          id="trackRecordCount"
+          type="number"
+          min="0"
+          placeholder="Number of completed projects"
+        >
+
+      </div>
+
+
+      <div class="card">
+
+        <div class="icon">🏠</div>
+
+        <h3>Current REO Schedule</h3>
+
+        <p>
+          Track properties still owned, entity ownership,
+          purchase price, current value and rehab/construction budget.
+        </p>
+
+        <input
+          id="reoCount"
+          type="number"
+          min="0"
+          placeholder="Number of current properties"
+        >
+
+      </div>
+
+
+      <div class="card">
+
+        <div class="icon">📑</div>
+
+        <h3>Borrowing Entity</h3>
+
+        <p>
+          Identify the entity being used for the current transaction
+          and preserve the ownership information needed for underwriting.
+        </p>
+
+        <input
+          id="borrowingEntity"
+          type="text"
+          placeholder="Borrowing entity"
+        >
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================================
+     UNDERWRITING
+     ========================================================= -->
+
+<section id="underwriting">
+
+  <div class="container">
+
+    <div class="section-title">
+
+      <div class="section-kicker">07 — UNDERWRITING</div>
+
+      <h2>Underwriting Snapshot</h2>
+
+      <p>
+        Bring property economics, capital requirements and risk
+        information into one review layer.
+      </p>
+
+    </div>
+
+    <div class="underwriting-grid">
+
+      <div class="underwriting-box">
+        <span>ARV</span>
+        <strong id="uwArv">$0</strong>
+      </div>
+
+      <div class="underwriting-box">
+        <span>Maximum Acquisition</span>
+        <strong id="uwMax">$0</strong>
+      </div>
+
+      <div class="underwriting-box">
+        <span>Rehab Budget</span>
+        <strong id="uwRehab">$0</strong>
+      </div>
+
+      <div class="underwriting-box">
+        <span>Current Bid</span>
+        <strong id="uwBid">$0</strong>
+      </div>
+
+      <div class="underwriting-box">
+        <span>Capital Required</span>
+        <strong id="uwCapital">$0</strong>
+      </div>
+
+      <div class="underwriting-box">
+        <span>Bid Room</span>
+        <strong id="uwBidRoom">$0</strong>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================================
+     CAPITAL ROUTING
+     ========================================================= -->
+
+<section id="capital">
+
+  <div class="container">
+
+    <div class="section-title">
+
+      <div class="section-kicker">08 — CAPITAL</div>
+
+      <h2>Capital Routing</h2>
+
+      <p>
+        Route a qualified opportunity to the appropriate funding pathway
+        after property analysis and due diligence.
+      </p>
+
+    </div>
+
+    <div class="capital-grid">
+
+      <div class="capital">
+
+        <strong>🏦 Kiavi Broker</strong>
+
+        <small>
+          Potential bridge, fix-and-flip or rental financing.
+          Verify current program requirements directly with Kiavi.
+        </small>
+
+      </div>
+
+
+      <div class="capital">
+
+        <strong>💰 Private Money</strong>
+
+        <small>
+          Private capital relationships for qualifying acquisition
+          and project structures.
+        </small>
+
+      </div>
+
+
+      <div class="capital">
+
+        <strong>⚡ Hard Money</strong>
+
+        <small>
+          Short-term investment-property financing subject to
+          lender terms and underwriting.
+        </small>
+
+      </div>
+
+
+      <div class="capital">
+
+        <strong>💵 Buyer Cash</strong>
+
+        <small>
+          Cash acquisition or equity contribution when available.
+        </small>
+
+      </div>
+
+    </div>
+
+    <div class="button-row" style="margin-top:20px">
+
+      <a
+        class="btn primary"
+        href="https://app.kiavi.com/my/loans/origination"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Open Kiavi Broker Portal
+      </a>
+
+      <a
+        class="btn"
+        href="https://www.borrowersviewcentral.com/portal/applynew?id=LCS"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Start COGO Loan Application
+      </a>
+
+      <a
+        class="btn"
+        href="https://www.cogocapital.com/"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Visit COGO Capital
+      </a>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================================
+     DUE DILIGENCE
+     ========================================================= -->
+
+<section id="risk">
+
+  <div class="container">
+
+    <div class="section-title">
+
+      <div class="section-kicker">09 — RISK</div>
+
+      <h2>Auction Due Diligence</h2>
+
+      <p>
+        Cheap property does not automatically mean low-risk property.
+      </p>
+
+    </div>
+
+    <div class="form-card">
+
+      <div class="checklist">
+
+        <label class="check">
+          <input type="checkbox" class="due-check">
+          Auction purchase agreement reviewed
+        </label>
+
+        <label class="check">
+          <input type="checkbox" class="due-check">
+          Financing restrictions verified
+        </label>
+
+        <label class="check">
+          <input type="checkbox" class="due-check">
+          Proof-of-funds requirements confirmed
+        </label>
+
+        <label class="check">
+          <input type="checkbox" class="due-check">
+          Earnest-money requirement confirmed
+        </label>
+
+        <label class="check">
+          <input type="checkbox" class="due-check">
+          Occupancy status verified
+        </label>
+
+        <label class="check">
+          <input type="checkbox" class="due-check">
+          Property condition / inspection information reviewed
+        </label>
+
+        <label class="check">
+          <input type="checkbox" class="due-check">
+          Preliminary title information reviewed
+        </label>
+
+        <label class="check">
+          <input type="checkbox" class="due-check">
+          Liens / taxes / HOA / COA reviewed
+        </label>
+
+        <label class="check">
+          <input type="checkbox" class="due-check">
+          Contractor rehab estimate completed
+        </label>
+
+        <label class="check">
+          <input type="checkbox" class="due-check">
+          ARV and comparable sales reviewed
+        </label>
+
+        <label class="check">
+          <input type="checkbox" class="due-check">
+          Exit strategy identified
+        </label>
+
+        <label class="check">
+          <input type="checkbox" class="due-check">
+          Capital source identified
+        </label>
+
+      </div>
+
+      <div
+        id="dueProgress"
+        class="status yellow"
+      >
+        🟡 0% OF DUE DILIGENCE COMPLETE
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================================
+     DEAL READINESS
+     ========================================================= -->
+
+<section id="readiness">
+
+  <div class="container">
+
+    <div class="section-title">
+
+      <div class="section-kicker">10 — READINESS</div>
+
+      <h2>Deal Readiness</h2>
+
+      <p>
+        The machine organizes information. Final decisions remain subject
+        to human review, lender requirements and property-specific diligence.
+      </p>
+
+    </div>
+
+    <div class="grid">
+
+      <div class="card">
+
+        <h3>🔴 NOT READY</h3>
+
+        <p>
+          Major property, financing, contractor, title,
+          tax or underwriting information is missing.
+        </p>
+
+      </div>
+
+
+      <div class="card">
+
+        <h3>🟡 UNDER REVIEW</h3>
+
+        <p>
+          The opportunity is being analyzed and requires additional
+          due diligence or capital review.
+        </p>
+
+      </div>
+
+
+      <div class="card">
+
+        <h3>🟢 BID-READY</h3>
+
+        <p>
+          Required information has been collected and the opportunity
+          is prepared for final human review.
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- =========================================================
+     CAPITAL + RESEARCH
+     ========================================================= -->
+
+<section id="research">
+
+  <div class="container">
+
+    <div class="section-kicker">CAPITAL + RESEARCH</div>
+
+    <div class="card">
+
+      <h2>
+        Applications, Property Research &amp; Capital Pathways
+      </h2>
+
+      <p class="muted">
+        Move an analyzed auction opportunity through property research,
+        due diligence, financing, capital and underwriting.
+      </p>
+
+
+      <div class="link-grid">
+
+
+        <!-- AUCTION -->
+
+        <div class="link-card">
+
+          <div class="link-icon">🏷️</div>
+
+          <h3>Auction Property</h3>
+
+          <p>
+            Return to the auction source and verify the current bid,
+            auction terms, reserve, EMD, occupancy and closing requirements.
+          </p>
+
+          <a
+            class="action-btn primary"
+            href="https://www.auction.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Open Auction.com
+          </a>
+
+        </div>
+
+
+        <!-- PHILADELPHIA PROPERTY -->
+
+        <div class="link-card">
+
+          <div class="link-icon">🏛️</div>
+
+          <h3>Philadelphia Property Records</h3>
+
+          <p>
+            Verify property information, assessment information and
+            public-record information through the City of Philadelphia.
+          </p>
+
+          <a
+            class="action-btn"
+            href="https://property.phila.gov/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Open Property App
+          </a>
+
+        </div>
+
+
+        <!-- ZILLOW -->
+
+        <div class="link-card">
+
+          <div class="link-icon">🏠</div>
+
+          <h3>Zillow</h3>
+
+          <p>
+            Use Zillow as a secondary property and market-research source.
+          </p>
+
+          <a
+            class="action-btn"
+            href="https://www.zillow.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Open Zillow
+          </a>
+
+        </div>
+
+
+        <!-- REDFIN -->
+
+        <div class="link-card">
+
+          <div class="link-icon">📊</div>
+
+          <h3>Redfin</h3>
+
+          <p>
+            Review comparable properties, market information and property history.
+          </p>
+
+          <a
+            class="action-btn"
+            href="https://www.redfin.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Open Redfin
+          </a>
+
+        </div>
+
+
+        <!-- REALTOR -->
+
+        <div class="link-card">
+
+          <div class="link-icon">🔎</div>
+
+          <h3>Realtor.com</h3>
+
+          <p>
+            Review additional property, listing and market-reference information.
+          </p>
+
+          <a
+            class="action-btn"
+            href="https://www.realtor.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Open Realtor.com
+          </a>
+
+        </div>
+
+
+        <!-- KIAVI -->
+
+        <div class="link-card capital-card">
+
+          <div class="link-icon">💰</div>
+
+          <h3>Kiavi Broker</h3>
+
+          <p>
+            Move a qualified deal into the Kiavi broker workflow after
+            property analysis and due diligence.
+          </p>
+
+          <a
+            class="action-btn primary"
+            href="https://app.kiavi.com/my/loans/origination"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Open Kiavi Broker Portal
+          </a>
+
+        </div>
+
+
+        <!-- COGO -->
+
+        <div class="link-card capital-card">
+
+          <div class="link-icon">🏦</div>
+
+          <h3>COGO Capital</h3>
+
+          <p>
+            Access the COGO loan application pathway for eligible
+            financing opportunities.
+          </p>
+
+          <a
+            class="action-btn primary"
+            href="https://www.borrowersviewcentral.com/portal/applynew?id=LCS"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Start Loan Application
+          </a>
+
+          <a
+            class="secondary-link"
+            href="https://www.cogocapital.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Visit COGO Capital →
+          </a>
+
+        </div>
+
+
+        <!-- RELOCATION -->
+
+        <div class="link-card ecosystem-card">
+
+          <div class="link-icon">🧭</div>
+
+          <h3>RO'Lyfe Relocation Intelligence</h3>
+
+          <p>
+            Research location, climate, risk, housing, property economics,
+            financial considerations and opportunities.
+          </p>
+
+          <a
+            class="action-btn"
+            href="https://rolrichman.github.io/rolyfe-relocation-intelligence/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Open Relocation Intelligence
+          </a>
+
+        </div>
+
+
+        <!-- LIENHUB -->
+
+        <div class="link-card">
+
+          <div class="link-icon">📜</div>
+
+          <h3>LienHub</h3>
+
+          <p>
+            Research available tax-lien and county-held certificate
+            information where supported.
+          </p>
+
+          <a
+            class="action-btn"
+            href="https://lienhub.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Open LienHub
+          </a>
+
+        </div>
+
+
+        <!-- REALAUCTION -->
+
+        <div class="link-card">
+
+          <div class="link-icon">⚖️</div>
+
+          <h3>RealAuction</h3>
+
+          <p>
+            Access participating tax-lien, foreclosure and tax-sale
+            auction systems.
+          </p>
+
+          <a
+            class="action-btn"
+            href="https://realauction.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Open RealAuction
+          </a>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+</main>
+
+
+<!-- =========================================================
+     FOOTER
+     ========================================================= -->
+
+<footer>
+
+  <div class="container">
+
+    <div class="footer-title">
+      RO'Lyfe Auction Capital Machine™
+    </div>
+
+    <div>
+      Find the Property. Build the Deal. Match the Capital.
+    </div>
+
+    <p>
+      Informational and deal-analysis software only.
+      No financing, approval, profit, valuation, acquisition price,
+      or investment outcome is guaranteed.
+    </p>
+
+    <div>
+      © 2026 RO'Lyfe. All rights reserved.
+    </div>
+
+  </div>
+
+</footer>
+
+
+<!-- =========================================================
+     PRODUCTION JAVASCRIPT
+     ========================================================= -->
+
+<script>
+/* =========================================================
+   BASIC MACHINE FUNCTIONS
+   ========================================================= */
+
+let propertySaved = false;
+
+function money(value){
+
+  return new Intl.NumberFormat("en-US",{
+    style:"currency",
+    currency:"USD",
+    maximumFractionDigits:0
+  }).format(Number(value) || 0);
+
+}
+
+
+function number(id){
+
+  const el = document.getElementById(id);
+
+  if(!el){
+    return 0;
+  }
+
+  return Number(el.value) || 0;
+
+}
+
+
+/* =========================================================
+   LIVE DATE / TIME
+   ========================================================= */
+
+function updateClock(){
+
+  const now = new Date();
+
+  const dateText = now.toLocaleDateString(
+    "en-US",
+    {
+      weekday:"short",
+      month:"short",
+      day:"numeric",
+      year:"numeric"
+    }
+  );
+
+  const timeText = now.toLocaleTimeString(
+    "en-US",
+    {
+      hour:"numeric",
+      minute:"2-digit",
+      second:"2-digit"
+    }
+  );
+
+  const dateEl = document.getElementById("liveDate");
+  const timeEl = document.getElementById("liveTime");
+
+  if(dateEl){
+    dateEl.textContent = dateText;
+  }
+
+  if(timeEl){
+    timeEl.textContent = timeText;
+  }
+
+}
+
+
+updateClock();
+
+setInterval(updateClock,1000);
+
+
+/* =========================================================
+   AUCTION CALENDAR
+   ========================================================= */
+
+function updateDaysUntil(){
+
+  const input = document.getElementById("auctionDate");
+  const output = document.getElementById("daysUntil");
+
+  if(!input || !output){
+    return;
+  }
+
+  if(!input.value){
+
+    output.textContent = "—";
+
+    return;
+  }
+
+  const today = new Date();
+
+  today.setHours(0,0,0,0);
+
+  const target = new Date(input.value + "T00:00:00");
+
+  const difference =
+    Math.ceil(
+      (target.getTime() - today.getTime()) /
+      86400000
+    );
+
+  if(difference > 0){
+
+    output.textContent =
+      difference + " day" +
+      (difference === 1 ? "" : "s");
+
+  }else if(difference === 0){
+
+    output.textContent = "TODAY";
+
+  }else{
+
+    output.textContent =
+      Math.abs(difference) +
+      " day" +
+      (Math.abs(difference) === 1 ? "" : "s") +
+      " ago";
+
+  }
+
+}
+
+
+document
+  .getElementById("auctionDate")
+  .addEventListener("change",updateDaysUntil);
+
+
+/* =========================================================
+   SAVE AUCTION OPPORTUNITY
+   ========================================================= */
+
+function saveProperty(){
+
+  const address =
+    document.getElementById("address").value.trim();
+
+  if(!address){
+
+    alert("Enter a property address first.");
+
+    return;
+
+  }
+
+  propertySaved = true;
+
+  document.getElementById("propertyCount").textContent = "1";
+
+  document.getElementById("dashboardBid").textContent =
+    money(number("currentBid"));
+
+  updateUnderwriting();
+
+  alert("Auction opportunity saved for analysis.");
+
+}
+
+
+/* =========================================================
+   LOAD EXAMPLE
+   ========================================================= */
+
+function loadExample(){
+
+  document.getElementById("address").value =
+    "2539 62nd St, Philadelphia, PA 19142";
+
+  document.getElementById("auctionType").value =
+    "Bank Owned / REO";
+
+  document.getElementById("occupancy").value =
+    "Do Not Disturb";
+
+  document.getElementById("parcel").value =
+    "402104100";
+
+  document.getElementById("county").value =
+    "Philadelphia";
+
+  document.getElementById("openingBid").value =
+    "25000";
+
+  document.getElementById("currentBid").value =
+    "83500";
+
+  document.getElementById("bidIncrement").value =
+    "500";
+
+  document.getElementById("reserve").value =
+    "Unknown";
+
+  document.getElementById("financing").value =
+    "Hard Money Accepted";
+
+  document.getElementById("emd").value =
+    "2500";
+
+  document.getElementById("arv").value =
+    "306500";
+
+  document.getElementById("rehab").value =
+    "60000";
+
+  document.getElementById("closing").value =
+    "5000";
+
+  document.getElementById("holding").value =
+    "2000";
+
+  document.getElementById("selling").value =
+    "15000";
+
+  document.getElementById("financingCosts").value =
+    "10000";
+
+  document.getElementById("profit").value =
+    "40000";
+
+  document.getElementById("contingency").value =
+    "10000";
+
+  document.getElementById("buyerCapital").value =
+    "14000";
+
+  document.getElementById("propertyCount").textContent =
+    "1";
+
+  calculateDeal();
+
+}
+
+
+/* =========================================================
+   DEAL CALCULATOR
+   ========================================================= */
+
+function calculateDeal(){
+
+  const arv = number("arv");
+  const rehab = number("rehab");
+  const closing = number("closing");
+  const holding = number("holding");
+  const selling = number("selling");
+  const financingCosts = number("financingCosts");
+  const profit = number("profit");
+  const contingency = number("contingency");
+  const buyerCapital = number("buyerCapital");
+  const currentBid = number("currentBid");
+
+  if(!arv){
+
+    alert("Enter an estimated ARV before calculating.");
+
+    return;
+
+  }
+
+
+  /*
+    Simplified acquisition ceiling:
+
+    ARV
+    - Rehab
+    - Closing
+    - Holding
+    - Selling
+    - Financing
+    - Required Profit
+    - Contingency
+
+    = Maximum Acquisition Price
+
+    This is an analytical planning formula.
+    Actual lender underwriting may use different assumptions.
+  */
+
+  const maxAcquisition =
+    arv -
+    rehab -
+    closing -
+    holding -
+    selling -
+    financingCosts -
+    profit -
+    contingency;
+
+
+  const projectCost =
+    Math.max(maxAcquisition,0) +
+    rehab +
+    closing +
+    holding +
+    financingCosts +
+    contingency;
+
+
+  const capitalNeed =
+    Math.max(projectCost - buyerCapital,0);
+
+
+  const bidRoom =
+    maxAcquisition - currentBid;
+
+
+  const grossSpread =
+    arv - projectCost - selling;
+
+
+  document.getElementById("maxBid").textContent =
+    money(maxAcquisition);
+
+  document.getElementById("projectCost").textContent =
+    money(projectCost);
+
+  document.getElementById("capitalNeed").textContent =
+    money(capitalNeed);
+
+  document.getElementById("resultCurrentBid").textContent =
+    money(currentBid);
+
+  document.getElementById("bidRoom").textContent =
+    money(bidRoom);
+
+  document.getElementById("grossSpread").textContent =
+    money(grossSpread);
+
+
+  document.getElementById("dashboardMax").textContent =
+    money(maxAcquisition);
+
+  document.getElementById("dashboardCapital").textContent =
+    money(capitalNeed);
+
+  document.getElementById("dashboardBid").textContent =
+    money(currentBid);
+
+
+  const status =
+    document.getElementById("dealStatus");
+
+
+  if(maxAcquisition <= 0){
+
+    status.innerHTML =
+      '<div class="status red">🔴 ECONOMICS REQUIRE REVIEW</div>';
+
+  }else if(currentBid > maxAcquisition){
+
+    status.innerHTML =
+      '<div class="status red">🔴 CURRENT BID EXCEEDS CALCULATED ACQUISITION CEILING</div>';
+
+  }else if(currentBid > 0){
+
+    status.innerHTML =
+      '<div class="status yellow">🟡 WITHIN CALCULATED ACQUISITION CEILING — COMPLETE DUE DILIGENCE</div>';
+
+  }else{
+
+    status.innerHTML =
+      '<div class="status yellow">🟡 UNDER REVIEW — ENTER CURRENT BID</div>';
+
+  }
+
+
+  document.getElementById("dealResult").scrollIntoView({
+    behavior:"smooth",
+    block:"nearest"
+  });
+
+
+  updateUnderwriting();
+
+}
+
+
+/* =========================================================
+   REHAB BUDGET
+   ========================================================= */
+
+function calculateRehabBudget(){
+
+  const inputs =
+    document.querySelectorAll(".rehab-cost");
+
+  let subtotal = 0;
+
+  inputs.forEach(function(input){
+
+    subtotal +=
+      Number(input.value) || 0;
+
+  });
+
+
+  const percent =
+    Number(
+      document.getElementById(
+        "rehabContingencyPercent"
+      ).value
+    ) || 0;
+
+
+  const contingency =
+    subtotal * (percent / 100);
+
+
+  const total =
+    subtotal + contingency;
+
+
+  document.getElementById(
+    "rehabSubtotal"
+  ).value = money(subtotal);
+
+
+  document.getElementById(
+    "rehabContingencyAmount"
+  ).value = money(contingency);
+
+
+  document.getElementById(
+    "rehabTotal"
+  ).value = money(total);
+
+
+  document.getElementById(
+    "uwRehab"
+  ).textContent = money(total);
+
+}
+
+
+calculateRehabBudget();
+
+
+/* =========================================================
+   UNDERWRITING SNAPSHOT
+   ========================================================= */
+
+function updateUnderwriting(){
+
+  const arv = number("arv");
+  const bid = number("currentBid");
+
+  const maxText =
+    document.getElementById("maxBid");
+
+  const capitalText =
+    document.getElementById("capitalNeed");
+
+  const bidRoomText =
+    document.getElementById("bidRoom");
+
+
+  document.getElementById("uwArv").textContent =
+    money(arv);
+
+  document.getElementById("uwBid").textContent =
+    money(bid);
+
+
+  if(maxText){
+
+    document.getElementById("uwMax").textContent =
+      maxText.textContent;
+
+  }
+
+
+  if(capitalText){
+
+    document.getElementById("uwCapital").textContent =
+      capitalText.textContent;
+
+  }
+
+
+  if(bidRoomText){
+
+    document.getElementById("uwBidRoom").textContent =
+      bidRoomText.textContent;
+
+  }
+
+}
+
+
+/* =========================================================
+   DUE DILIGENCE PROGRESS
+   ========================================================= */
+
+function updateDueProgress(){
+
+  const checks =
+    document.querySelectorAll(".due-check");
+
+  let complete = 0;
+
+  checks.forEach(function(check){
+
+    if(check.checked){
+      complete++;
+    }
+
+  });
+
+
+  const percent =
+    checks.length
+      ? Math.round((complete / checks.length) * 100)
+      : 0;
+
+
+  const progress =
+    document.getElementById("dueProgress");
+
+
+  if(percent === 100){
+
+    progress.className =
+      "status green";
+
+    progress.textContent =
+      "🟢 100% OF DUE DILIGENCE COMPLETE";
+
+  }else if(percent > 0){
+
+    progress.className =
+      "status yellow";
+
+    progress.textContent =
+      "🟡 " + percent +
+      "% OF DUE DILIGENCE COMPLETE";
+
+  }else{
+
+    progress.className =
+      "status yellow";
+
+    progress.textContent =
+      "🟡 0% OF DUE DILIGENCE COMPLETE";
+
+  }
+
+}
+
+
+document
+  .querySelectorAll(".due-check")
+  .forEach(function(check){
+
+    check.addEventListener(
+      "change",
+      updateDueProgress
+    );
+
+  });
+
+
+/* =========================================================
+   EXISTING MODULAR ENGINES
+   =========================================================
+
+   These are loaded after the core machine is initialized.
+   Each engine can independently enhance this interface
+   without replacing the production index.
+   ========================================================= */
+
+</script>
+
+
+<!-- Existing RO'Lyfe production modules -->
+
+<script src="./js/app.js"></script>
+<script src="./js/auction-engine.js"></script>
+<script src="./js/deal-engine.js"></script>
+<script src="./js/capital-engine.js"></script>
+<script src="./js/contractor-engine.js"></script>
+<script src="./js/risk-engine.js"></script>
+<script src="./js/rehab-budget-engine.js"></script>
+<script src="./js/tax-lien-engine.js"></script>
+<script src="./js/underwriting-engine.js"></script>
+<script src="./js/resource-router.js"></script>
+
+
+<!-- =========================================================
+     FINAL INITIALIZATION
+     ========================================================= -->
+
+<script>
+
+document.addEventListener(
+  "DOMContentLoaded",
+  function(){
+
+    updateClock();
+
+    updateDaysUntil();
+
+    calculateRehabBudget();
+
+    updateDueProgress();
+
+    updateUnderwriting();
+
+  }
+);
+
+</script>
+
+</body>
+     </html>
