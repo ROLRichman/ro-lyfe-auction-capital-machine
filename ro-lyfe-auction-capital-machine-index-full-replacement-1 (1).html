@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="RO'Lyfe Auction Capital Machine™ — auction property intelligence, deal analysis, rehab, tax and lien research, underwriting, contractor coordination and capital routing.">
+<title>RO'Lyfe Auction Capital Machine™</title>
+<link rel="stylesheet" href="./css/machine.css">
+
+<style>
+:root{
+  --bg:#070b16;--panel:#10182b;--panel2:#0c1323;--panel3:#111d34;
+  --border:#263451;--border2:#34476a;--text:#f4f7fb;--muted:#91a0b8;
+  --accent:#66d9ff;--accent2:#8c7cff;--green:#54e39a;--yellow:#ffd166;
+  --red:#ff6b6b;--orange:#ff9f43;--shadow:0 18px 45px rgba(0,0,0,.28);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:radial-gradient(circle at top right,rgba(102,217,255,.07),transparent 30%),radial-gradient(circle at top left,rgba(140,124,255,.06),transparent 28%),var(--bg);color:var(--text);font-family:Arial,Helvetica,sans-serif;line-height:1.5}
+a{color:inherit;text-decoration:none} button,input,select,textarea{font:inherit} button{cursor:pointer}
+.container{width:min(1220px,94%);margin:auto}
+header{position:sticky;top:0;z-index:1000;background:rgba(7,11,22,.96);backdrop-filter:blur(14px);border-bottom:1px solid var(--border)}
+.nav{min-height:70px;display:flex;align-items:center;justify-content:space-between;gap:18px}.logo{font-size:18px;font-weight:800}.logo span{color:var(--accent)}
+.nav-links{display:flex;gap:13px;flex-wrap:wrap}.nav-links a{color:var(--muted);font-size:12px}.nav-links a:hover{color:var(--text)}
+.hero{padding:55px 0 35px}.hero-grid{display:grid;grid-template-columns:1.35fr .75fr;gap:24px;align-items:stretch}
+.hero h1{font-size:clamp(38px,6vw,68px);line-height:1.02;margin:18px 0;max-width:800px}.hero h1 span{color:var(--accent)}
+.hero p{color:var(--muted);font-size:17px;max-width:760px}.badge,.pill{border:1px solid var(--border);background:rgba(16,24,43,.8);border-radius:999px;padding:7px 11px;color:var(--muted);font-size:11px;display:inline-flex;align-items:center;gap:5px}
+.badges{display:flex;gap:8px;flex-wrap:wrap}.hero-card,.card,.form-card,.section-shell,.link-card,.stat,.capital,.underwriting-box{background:linear-gradient(145deg,var(--panel),var(--panel2));border:1px solid var(--border);border-radius:17px;box-shadow:var(--shadow)}
+.hero-card{padding:22px}.flow{display:grid;gap:8px;margin-top:15px}.flow div{padding:10px 12px;border:1px solid var(--border);border-radius:10px;background:rgba(255,255,255,.025);font-size:13px}
+.live-bar{border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:rgba(12,19,35,.78)}.live-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;padding:13px 0}.live-card{border:1px solid var(--border);border-radius:12px;padding:12px 14px;background:var(--panel)}.live-label{color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:1px}.live-value{font-size:17px;font-weight:800;margin-top:3px}
+section{padding:34px 0}.section-title{margin-bottom:17px}.section-kicker{color:var(--accent);font-size:10px;font-weight:800;letter-spacing:1.4px;text-transform:uppercase}.section-title h2{font-size:28px;margin:3px 0 5px}.section-title p,.muted{color:var(--muted);margin:0}
+.section-shell{overflow:hidden}.section-shell.open .section-content{display:block}.section-content{display:none;padding:0 20px 21px;border-top:1px solid var(--border)}
+.section-toggle{width:100%;border:0;background:transparent;color:var(--text);padding:17px 19px;display:flex;align-items:center;justify-content:space-between;text-align:left}.section-toggle:hover{background:rgba(102,217,255,.035)}
+.section-toggle-left{display:flex;align-items:center;gap:12px}.section-toggle-icon{width:36px;height:36px;border:1px solid var(--border);border-radius:10px;display:flex;align-items:center;justify-content:center;background:var(--panel3)}.section-toggle-title small{display:block;color:var(--accent);font-size:9px;font-weight:800;letter-spacing:1.2px;text-transform:uppercase}.section-toggle-title strong{display:block;font-size:17px;margin-top:2px}.section-chevron{color:var(--muted);transition:.2s}.section-shell.open .section-chevron{transform:rotate(180deg)}
+.dashboard{display:grid;grid-template-columns:repeat(4,1fr);gap:13px}.stat{padding:17px}.stat-label{color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.8px}.stat-value{font-size:24px;font-weight:800;margin-top:4px}
+.form-card{padding:20px}.form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:13px}.field{display:flex;flex-direction:column;gap:6px}.field.full{grid-column:1/-1}label{color:var(--muted);font-size:11px;font-weight:600}
+input,select,textarea{width:100%;background:#080e1c;color:var(--text);border:1px solid var(--border);border-radius:9px;padding:10px 11px;outline:none}input:focus,select:focus,textarea:focus{border-color:var(--accent);box-shadow:0 0 0 2px rgba(102,217,255,.08)}textarea{min-height:90px;resize:vertical}input[type=checkbox]{width:auto}input[type=date],input[type=time]{color-scheme:dark}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}.card{padding:18px}.card h3{margin-top:0}.card p{color:var(--muted);font-size:13px}
+.result{margin-top:16px;border:1px solid var(--border);border-radius:13px;padding:17px;background:var(--panel2)}.result-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.result-item{padding:12px;border:1px solid var(--border);border-radius:10px;background:rgba(255,255,255,.02)}.result-item span{display:block;color:var(--muted);font-size:10px}.result-item strong{font-size:19px}
+.status{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;font-size:10px;font-weight:700;margin-top:12px}.status.green{color:var(--green);border:1px solid rgba(84,227,154,.3);background:rgba(84,227,154,.08)}.status.yellow{color:var(--yellow);border:1px solid rgba(255,209,102,.3);background:rgba(255,209,102,.08)}.status.red{color:var(--red);border:1px solid rgba(255,107,107,.3);background:rgba(255,107,107,.08)}
+.button-row{display:flex;flex-wrap:wrap;gap:9px;margin-top:14px}.btn,.action-btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;border:1px solid var(--border2);border-radius:9px;padding:10px 13px;font-weight:700;background:var(--panel3);color:var(--text);transition:.15s}.btn.primary,.action-btn.primary{background:var(--accent);border-color:var(--accent);color:#06101a}.btn:hover,.action-btn:hover{transform:translateY(-1px);border-color:var(--accent)}
+.checklist{display:grid;gap:8px}.check{display:flex;gap:9px;align-items:flex-start;padding:11px;border:1px solid var(--border);border-radius:10px;color:var(--muted);background:rgba(255,255,255,.015)}.check input{margin-top:3px}
+.capital-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.capital{padding:16px}.capital strong{display:block;margin-bottom:5px}.capital small{color:var(--muted)}
+.link-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:13px}.link-card{padding:16px;display:flex;flex-direction:column}.link-card h3{margin:0 0 6px;font-size:15px}.link-card p{color:var(--muted);font-size:12px;flex:1;margin:0 0 13px}
+.budget-table-wrap{overflow-x:auto;border:1px solid var(--border);border-radius:12px;margin-top:15px}.budget-table{width:100%;border-collapse:collapse;min-width:700px}.budget-table th,.budget-table td{padding:8px 10px;border-bottom:1px solid var(--border);text-align:left}.budget-table th{color:var(--muted);font-size:10px;text-transform:uppercase}.budget-table td{font-size:12px}.budget-table input{padding:7px}.budget-total{display:flex;justify-content:flex-end;gap:20px;padding:13px;font-weight:800}
+.underwriting-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.underwriting-box{padding:14px;background:var(--panel2)}.underwriting-box span{display:block;color:var(--muted);font-size:10px}.underwriting-box strong{display:block;font-size:20px;margin-top:2px}
+.dynamic-row{border:1px solid var(--border);border-radius:12px;padding:13px;margin-top:10px;background:rgba(255,255,255,.015)}.row-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}
+.ai-underwriter-float{position:fixed;right:18px;bottom:18px;z-index:2000}.ai-underwriter-button{position:relative;width:58px;height:58px;border-radius:50%;border:1px solid rgba(102,217,255,.45);background:linear-gradient(145deg,#10263b,#111d34);color:var(--accent);box-shadow:0 0 0 4px rgba(102,217,255,.05),0 15px 40px rgba(0,0,0,.4);font-size:23px}.ai-dot{position:absolute;width:9px;height:9px;border-radius:50%;background:var(--green);right:3px;top:3px;box-shadow:0 0 12px rgba(84,227,154,.7)}
+.ai-underwriter-panel{position:fixed;right:18px;bottom:88px;z-index:2001;width:min(400px,calc(100vw - 28px));height:520px;background:rgba(10,16,30,.985);border:1px solid var(--border2);border-radius:18px;box-shadow:0 25px 70px rgba(0,0,0,.55);display:none;flex-direction:column;overflow:hidden}.ai-underwriter-panel.open{display:flex}
+.ai-header{padding:14px 16px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;background:linear-gradient(145deg,var(--panel),var(--panel2))}.ai-header-main{display:flex;align-items:center;gap:9px}.ai-avatar{width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;background:rgba(102,217,255,.1);border:1px solid rgba(102,217,255,.25)}.ai-header-title strong{display:block;font-size:14px}.ai-header-title span{display:block;color:var(--green);font-size:9px;margin-top:2px}.ai-close{border:0;background:transparent;color:var(--muted);font-size:20px}
+.ai-messages{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:9px}.ai-message{max-width:90%;padding:9px 11px;border-radius:11px;font-size:12px;line-height:1.45}.ai-message.system{align-self:flex-start;background:var(--panel3);border:1px solid var(--border)}.ai-message.user{align-self:flex-end;background:rgba(102,217,255,.12);border:1px solid rgba(102,217,255,.25)}.ai-message small{display:block;color:var(--muted);margin-top:4px;font-size:8px}
+.ai-quick{display:flex;gap:6px;overflow-x:auto;padding:8px 10px;border-top:1px solid var(--border)}.ai-quick button{flex:0 0 auto;padding:6px 8px;border:1px solid var(--border);border-radius:999px;background:var(--panel3);color:var(--muted);font-size:9px}.ai-input-row{display:flex;gap:6px;padding:10px;border-top:1px solid var(--border)}.ai-input-row input{flex:1}.ai-send{width:42px;border:1px solid var(--accent);border-radius:9px;background:var(--accent);color:#06101a;font-weight:800}
+.ai-toast{position:fixed;right:18px;bottom:88px;z-index:1999;width:min(350px,calc(100vw - 30px));padding:12px 14px;border:1px solid rgba(102,217,255,.35);border-radius:13px;background:rgba(12,19,35,.97);box-shadow:0 18px 50px rgba(0,0,0,.4);display:none}.ai-toast.show{display:block}.ai-toast strong{display:block;color:var(--accent);font-size:10px;margin-bottom:3px}.ai-toast div{font-size:11px}
+.back-to-top{position:fixed;right:86px;bottom:22px;z-index:1998;width:43px;height:43px;border-radius:50%;border:1px solid var(--border2);background:rgba(16,24,43,.94);color:var(--accent);opacity:0;visibility:hidden;transition:.2s}.back-to-top.show{opacity:1;visibility:visible}
+footer{margin-top:35px;border-top:1px solid var(--border);padding:30px 0;color:var(--muted);font-size:12px}.footer-title{color:var(--text);font-weight:800;margin-bottom:6px}
+@media(max-width:950px){.hero-grid{grid-template-columns:1fr}.dashboard,.capital-grid{grid-template-columns:repeat(2,1fr)}.grid,.underwriting-grid{grid-template-columns:repeat(2,1fr)}.link-grid{grid-template-columns:repeat(2,1fr)}.live-grid{grid-template-columns:repeat(2,1fr)}.row-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:650px){.nav{align-items:flex-start;padding:12px 0;flex-direction:column}.nav-links{gap:9px}.hero{padding-top:38px}.dashboard,.grid,.capital-grid,.link-grid,.underwriting-grid,.result-grid,.live-grid,.form-grid,.row-grid{grid-template-columns:1fr}.field.full{grid-column:auto}.button-row{flex-direction:column}.button-row .btn,.button-row .action-btn{width:100%}.section-content{padding:0 13px 17px}.section-toggle{padding:15px 13px}.ai-underwriter-panel{right:13px;bottom:82px;height:500px}.back-to-top{right:80px;bottom:18px}}
+</style>
+</head>
+
+<body>
+<header>
+  <div class="container nav">
+    <div class="logo">RO<span>'Lyfe</span> Auction Capital Machine™</div>
+    <nav class="nav-links">
+      <a href="#dashboard">Dashboard</a><a href="#intake">Auction</a><a href="#analysis">Deal</a>
+      <a href="#contractor">Contractor</a><a href="#rehab">Rehab</a><a href="#taxLien">Tax/Lien</a>
+      <a href="#underwriting">Underwriting</a><a href="#capital">Capital</a><a href="#research">Research</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="container hero-grid">
+    <div>
+      <div class="badge">REAL ESTATE • AUCTION • UNDERWRITING • CAPITAL</div>
+      <h1>Find the Property. <span>Build the Deal.</span> Match the Capital.</h1>
+      <p>RO'Lyfe Auction Capital Machine™ organizes auction, REO, foreclosure and tax-sale opportunities into a structured property, rehab, underwriting and capital workflow.</p>
+      <div class="badges">
+        <span class="badge">Auction Intelligence</span><span class="badge">Contractor Desk</span><span class="badge">Rehab Budget</span>
+        <span class="badge">Tax &amp; Lien Research</span><span class="badge">Underwriting</span><span class="badge">Capital Routing</span>
+      </div>
+    </div>
+    <div class="hero-card">
+      <h3>Deal Flow</h3>
+      <div class="flow">
+        <div>🔎 Auction Property</div><div>🏠 Property Intelligence</div><div>🔨 Contractor / Buyer</div>
+        <div>🧮 Deal Economics</div><div>🧱 Rehab Budget</div><div>📜 Tax / Lien Review</div>
+        <div>📊 Underwriting</div><div>🏦 Capital Match</div><div>🏁 Bid / Close / Exit</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="live-bar">
+  <div class="container live-grid">
+    <div class="live-card"><div class="live-label">Current Date</div><div class="live-value" id="liveDate">Loading...</div></div>
+    <div class="live-card"><div class="live-label">Current Time</div><div class="live-value" id="liveTime">Loading...</div></div>
+    <div class="live-card"><div class="live-label">Auction / Event Date</div><input id="auctionDate" type="date"></div>
+    <div class="live-card"><div class="live-label">Days Until Event</div><div class="live-value" id="daysUntil">—</div></div>
+  </div>
+</div>
+
+<main>
+
+<section id="dashboard"><div class="container">
+  <div class="section-title"><div class="section-kicker">COMMAND CENTER</div><h2>Acquisition Dashboard</h2><p>Build the deal before you build the bid.</p></div>
+  <div class="dashboard">
+    <div class="stat"><div class="stat-label">Properties</div><div class="stat-value" id="propertyCount">0</div></div>
+    <div class="stat"><div class="stat-label">Current Bid</div><div class="stat-value" id="dashboardBid">$0</div></div>
+    <div class="stat"><div class="stat-label">Maximum Acquisition</div><div class="stat-value" id="dashboardMax">$0</div></div>
+    <div class="stat"><div class="stat-label">Capital Needed</div><div class="stat-value" id="dashboardCapital">$0</div></div>
+  </div>
+</div></section>
+
+<section id="intake"><div class="container">
+<div class="section-shell open">
+<button class="section-toggle" type="button" onclick="toggleSection(this)"><div class="section-toggle-left"><div class="section-toggle-icon">🏷️</div><div class="section-toggle-title"><small>01 — AUCTION</small><strong>Auction Property Intake</strong></div></div><span class="section-chevron">▼</span></button>
+<div class="section-content">
+<div class="form-card"><div class="form-grid">
+  <div class="field full"><label for="auctionUrl">Auction Property URL</label><input id="auctionUrl" type="url" placeholder="https://www.auction.com/..."></div>
+  <div class="field full"><label for="address">Property Address</label><input id="address" placeholder="Street, City, State ZIP"></div>
+  <div class="field"><label for="propertyState">Property State</label><input id="propertyState" placeholder="PA"></div>
+  <div class="field"><label for="county">County</label><input id="county" placeholder="County"></div>
+  <div class="field"><label for="taxCity">City / Municipality</label><input id="taxCity" placeholder="City"></div>
+  <div class="field"><label for="parcel">Parcel / APN</label><input id="parcel" placeholder="APN / Parcel"></div>
+  <div class="field"><label for="auctionType">Auction Type</label><select id="auctionType"><option value="">Select</option><option>Bank Owned / REO</option><option>Foreclosure</option><option>Sheriff Sale</option><option>Tax Sale</option><option>Tax Lien</option><option>Tax Deed</option><option>Other</option></select></div>
+  <div class="field"><label for="occupancy">Occupancy</label><select id="occupancy"><option value="">Select</option><option>Vacant</option><option>Occupied</option><option>Unknown</option></select></div>
+  <div class="field"><label for="auctionDate">Auction Date</label><input id="auctionDate" type="date"></div>
+  <div class="field"><label for="auctionTime">Auction Time</label><input id="auctionTime" type="time"></div>
+  <div class="field"><label for="openingBid">Opening Bid</label><input id="openingBid" type="number" min="0" step="500"></div>
+  <div class="field"><label for="currentBid">Current Bid</label><input id="currentBid" type="number" min="0" step="500"></div>
+  <div class="field"><label for="bidIncrement">Bid Increment</label><input id="bidIncrement" type="number" min="0" step="100"></div>
+  <div class="field"><label for="reserve">Reserve Status</label><select id="reserve"><option value="">Select</option><option>Reserve Met</option><option>Reserve Not Met</option><option>Unknown</option></select></div>
+  <div class="field"><label for="financing">Auction Financing Terms</label><input id="financing" placeholder="Cash only / hard money / LOC / verify"></div>
+  <div class="field"><label for="emd">Earnest Money / EMD</label><input id="emd" type="number" min="0" step="100"></div>
+  <div class="field"><label for="auctionStart">Auction Start</label><input id="auctionStart" type="datetime-local"></div>
+  <div class="field"><label for="auctionEnd">Auction End</label><input id="auctionEnd" type="datetime-local"></div>
+  <div class="field full"><label for="auctionNotes">Auction Notes / Terms</label><textarea id="auctionNotes" placeholder="Possession, title, seller acceptance, inspection, POF, closing terms, restrictions, etc."></textarea></div>
+</div>
+<div class="button-row"><button class="btn primary" type="button" onclick="saveProperty()">Save Snapshot</button><button class="btn" type="button" onclick="loadExample()">Load Example</button><button class="btn" type="button" onclick="openAuctionSource()">Open Auction Source</button></div>
+<div id="auctionStatus"></div><div class="result"><div class="result-grid">
+  <div class="result-item"><span>Auction Countdown</span><strong id="auctionCountdown">—</strong></div>
+  <div class="result-item"><span>Next Bid</span><strong id="nextBid">$0</strong></div>
+  <div class="result-item"><span>Saved Snapshots</span><strong id="savedCount">0</strong></div>
+</div></div>
+</div>
+</div></div></div>
+</section>
+
+<section id="analysis"><div class="container">
+<div class="section-shell">
+<button class="section-toggle" type="button" onclick="toggleSection(this)"><div class="section-toggle-left"><div class="section-toggle-icon">🧮</div><div class="section-toggle-title"><small>02 — ECONOMICS</small><strong>Deal Analysis</strong></div></div><span class="section-chevron">▼</span></button>
+<div class="section-content">
+<div class="form-card"><div class="form-grid">
+  <div class="field"><label for="arv">ARV / After Repair Value</label><input id="arv" type="number" min="0"></div>
+  <div class="field"><label for="rehab">Rehab / Construction</label><input id="rehab" type="number" min="0"></div>
+  <div class="field"><label for="closing">Closing Costs</label><input id="closing" type="number" min="0"></div>
+  <div class="field"><label for="holding">Holding Costs</label><input id="holding" type="number" min="0"></div>
+  <div class="field"><label for="selling">Selling / Exit Costs</label><input id="selling" type="number" min="0"></div>
+  <div class="field"><label for="financingCosts">Financing Costs</label><input id="financingCosts" type="number" min="0"></div>
+  <div class="field"><label for="profit">Required Profit</label><input id="profit" type="number" min="0"></div>
+  <div class="field"><label for="contingency">Deal Contingency</label><input id="contingency" type="number" min="0"></div>
+  <div class="field"><label for="buyerCapital">Buyer / Sponsor Capital</label><input id="buyerCapital" type="number" min="0"></div>
+</div>
+<div class="button-row"><button class="btn primary" type="button" onclick="calculateDealUI()">Calculate Deal</button></div>
+<div class="result"><div class="result-grid">
+  <div class="result-item"><span>Maximum Acquisition</span><strong id="maxAcquisition">$0</strong></div>
+  <div class="result-item"><span>Total Project Cost</span><strong id="projectCost">$0</strong></div>
+  <div class="result-item"><span>Capital Needed</span><strong id="capitalNeed">$0</strong></div>
+  <div class="result-item"><span>Bid Room</span><strong id="bidRoom">$0</strong></div>
+  <div class="result-item"><span>Gross Spread</span><strong id="grossSpread">$0</strong></div>
+  <div class="result-item"><span>Next Bid</span><strong id="analysisNextBid">$0</strong></div>
+</div><div id="dealStatus"></div></div>
+</div>
+</div></div></div>
+</section>
+
+<section id="contractor"><div class="container">
+<div class="section-shell">
+<button class="section-toggle" type="button" onclick="toggleSection(this)"><div class="section-toggle-left"><div class="section-toggle-icon">🔨</div><div class="section-toggle-title"><small>03 — EXECUTION</small><strong>Contractor / Buyer Desk</strong></div></div><span class="section-chevron">▼</span></button>
+<div class="section-content">
+<div class="form-card"><div class="form-grid">
+  <div class="field"><label for="contractorName">Contractor / Buyer Name</label><input id="contractorName"></div>
+  <div class="field"><label for="contractorCompany">Company</label><input id="contractorCompany"></div>
+  <div class="field"><label for="contractorPhone">Phone</label><input id="contractorPhone"></div>
+  <div class="field"><label for="contractorEmail">Email</label><input id="contractorEmail" type="email"></div>
+  <div class="field"><label for="contractorRole">Role</label><select id="contractorRole"><option>Contractor</option><option>Investor / Buyer</option><option>GC</option><option>Developer</option><option>Other</option></select></div>
+  <div class="field"><label for="contractorBudget">Target Construction Budget</label><input id="contractorBudget" type="number"></div>
+  <div class="field full"><label for="contractorNotes">Scope / Quote / Buyer Notes</label><textarea id="contractorNotes"></textarea></div>
+</div></div>
+</div></div></div></section>
+
+<section id="rehab"><div class="container">
+<div class="section-shell">
+<button class="section-toggle" type="button" onclick="toggleSection(this)"><div class="section-toggle-left"><div class="section-toggle-icon">🧱</div><div class="section-toggle-title"><small>04 — CONSTRUCTION</small><strong>Rehab Budget</strong></div></div><span class="section-chevron">▼</span></button>
+<div class="section-content">
+<div class="form-card">
+<div class="form-grid">
+  <div class="field"><label for="rehabContingencyPercent">Rehab Contingency %</label><input id="rehabContingencyPercent" type="number" min="0" step=".5" value="0"></div>
+  <div class="field"><label for="rehabLenderName">Lender Rule / Name</label><input id="rehabLenderName" placeholder="Optional"></div>
+</div>
+<div class="button-row"><button class="btn" type="button" onclick="loadReferenceRehab()">Load Reference Budget</button><button class="btn" type="button" onclick="clearRehabBudget()">Clear Rehab</button><button class="btn primary" type="button" onclick="calculateRehabUI()">Calculate Rehab</button></div>
+<div class="budget-table-wrap"><table class="budget-table"><thead><tr><th>Category</th><th>Budget</th><th>Group</th></tr></thead><tbody id="rehabRows"></tbody></table></div>
+<div class="budget-total"><span>Subtotal: <strong id="rehabSubtotal">$0</strong></span><span>Contingency: <strong id="rehabContingency">$0</strong></span><span>Total: <strong id="rehabTotal">$0</strong></span></div>
+</div>
+</div></div></div>
+</section>
+
+<section id="taxLien"><div class="container">
+<div class="section-shell">
+<button class="section-toggle" type="button" onclick="toggleSection(this)"><div class="section-toggle-left"><div class="section-toggle-icon">📜</div><div class="section-toggle-title"><small>05 — TITLE / TAX</small><strong>Tax &amp; Lien Intelligence</strong></div></div><span class="section-chevron">▼</span></button>
+<div class="section-content">
+<div class="form-card"><div class="form-grid">
+  <div class="field"><label for="taxState">Tax State</label><input id="taxState" placeholder="PA / NJ / FL"></div>
+  <div class="field"><label for="taxCounty">Tax County</label><input id="taxCounty"></div>
+  <div class="field"><label for="taxSaleType">Tax Sale Type</label><select id="taxSaleType"><option value="">Select</option><option>Tax Lien</option><option>Tax Deed</option><option>Tax Sale</option><option>Sheriff Sale</option><option>Unknown</option></select></div>
+  <div class="field"><label for="taxAuthority">Tax Authority</label><input id="taxAuthority"></div>
+  <div class="field"><label for="delinquentTaxes">Delinquent Taxes</label><input id="delinquentTaxes" type="number"></div>
+  <div class="field"><label for="taxLienAmount">Tax Lien Amount</label><input id="taxLienAmount" type="number"></div>
+  <div class="field"><label for="taxInterestRate">Interest Rate %</label><input id="taxInterestRate" type="number" step=".01"></div>
+  <div class="field"><label for="taxPenalties">Penalties</label><input id="taxPenalties" type="number"></div>
+  <div class="field"><label for="taxFees">Tax / Sale Fees</label><input id="taxFees" type="number"></div>
+  <div class="field"><label for="taxTotalDue">Total Due</label><input id="taxTotalDue" type="number"></div>
+  <div class="field"><label for="taxOpeningBid">Tax Opening Bid</label><input id="taxOpeningBid" type="number"></div>
+  <div class="field"><label for="taxCurrentBid">Tax Current Bid</label><input id="taxCurrentBid" type="number"></div>
+  <div class="field"><label for="taxBidIncrement">Tax Bid Increment</label><input id="taxBidIncrement" type="number"></div>
+  <div class="field"><label for="taxDeposit">Tax Deposit</label><input id="taxDeposit" type="number"></div>
+  <div class="field"><label for="taxAuctionDate">Tax Auction Date</label><input id="taxAuctionDate" type="date"></div>
+  <div class="field"><label for="taxAuctionTime">Tax Auction Time</label><input id="taxAuctionTime" type="time"></div>
+  <div class="field"><label for="taxRegistrationDeadline">Registration Deadline</label><input id="taxRegistrationDeadline" type="date"></div>
+  <div class="field"><label for="redemptionApplicable">Redemption Applicable?</label><select id="redemptionApplicable"><option value="">Unknown</option><option>Yes</option><option>No</option></select></div>
+  <div class="field"><label for="redemptionDeadline">Redemption Deadline</label><input id="redemptionDeadline" type="date"></div>
+  <div class="field"><label for="redemptionAmount">Redemption Amount</label><input id="redemptionAmount" type="number"></div>
+  <div class="field"><label for="lienStatus">Lien Status</label><input id="lienStatus" placeholder="Unknown / Clear / Liens found"></div>
+  <div class="field"><label for="saleStatus">Sale Status</label><input id="saleStatus"></div>
+  <div class="field"><label for="redemptionPeriod">Redemption Period</label><input id="redemptionPeriod"></div>
+  <div class="field"><label for="taxSaleDate">Tax Sale Date</label><input id="taxSaleDate" type="date"></div>
+  <div class="field full"><label for="taxSource">Tax / Lien Source</label><input id="taxSource" placeholder="County tax portal, LienHub, RealAuction, title report, etc."></div>
+  <div class="field full"><label for="taxNotes">Tax / Lien Notes</label><textarea id="taxNotes"></textarea></div>
+</div>
+<div class="button-row"><button class="btn primary" type="button" onclick="calculateTaxUI()">Run Tax/Lien Snapshot</button></div>
+<div id="taxOutput" class="result">Enter jurisdiction and tax/lien facts, then run the snapshot.</div>
+</div>
+</div></div></div>
+</section>
+
+<section id="underwriting"><div class="container">
+<div class="section-shell">
+<button class="section-toggle" type="button" onclick="toggleSection(this)"><div class="section-toggle-left"><div class="section-toggle-icon">📊</div><div class="section-toggle-title"><small>06 — CREDIT / EXPERIENCE</small><strong>Underwriting &amp; Track Record</strong></div></div><span class="section-chevron">▼</span></button>
+<div class="section-content">
+<div class="form-card"><div class="form-grid">
+  <div class="field"><label for="primaryGuarantor">Primary Guarantor Name</label><input id="primaryGuarantor"></div>
+  <div class="field"><label for="borrowingEntity">Borrowing Entity</label><input id="borrowingEntity"></div>
+  <div class="field"><label for="salesHistoryDate">Sales History Date</label><input id="salesHistoryDate" type="date"></div>
+  <div class="field"><label for="experienceYears">Experience Years</label><input id="experienceYears" type="number"></div>
+  <div class="field"><label for="completedDeals">Completed Deals</label><input id="completedDeals" type="number"></div>
+  <div class="field"><label for="relevantDeals">Relevant Deals</label><input id="relevantDeals" type="number"></div>
+  <div class="field"><label for="groundUpExperience">Ground-Up Deals</label><input id="groundUpExperience" type="number"></div>
+  <div class="field"><label for="rehabExperience">Rehab Deals</label><input id="rehabExperience" type="number"></div>
+  <div class="field"><label for="liquidity">Liquidity</label><input id="liquidity" type="number"></div>
+  <div class="field"><label for="netWorth">Net Worth</label><input id="netWorth" type="number"></div>
+  <div class="field"><label for="creditScore">Credit Score</label><input id="creditScore" type="number"></div>
+  <div class="field"><label for="trackRecordCount">Track Record Count</label><input id="trackRecordCount" type="number"></div>
+  <div class="field"><label for="reoCount">REO Count</label><input id="reoCount" type="number"></div>
+</div>
+
+<h3>Property Track Record</h3><p class="muted">Add past flips/builds using the lender-style fields. These rows are collected by the underwriting engine.</p>
+<div id="trackRecordRows"></div>
+<div class="button-row"><button class="btn" type="button" onclick="addTrackRow()">+ Add Sold Property</button></div>
+
+<h3 style="margin-top:22px">REO Schedule</h3><div id="reoRows"></div>
+<div class="button-row"><button class="btn" type="button" onclick="addREORow()">+ Add Owned Property</button></div>
+
+<div class="result"><div class="result-grid">
+  <div class="result-item"><span>ARV</span><strong id="uwArv">$0</strong></div>
+  <div class="result-item"><span>Maximum Acquisition</span><strong id="uwMax">$0</strong></div>
+  <div class="result-item"><span>Rehab</span><strong id="uwRehab">$0</strong></div>
+  <div class="result-item"><span>Current Bid</span><strong id="uwBid">$0</strong></div>
+  <div class="result-item"><span>Capital Needed</span><strong id="uwCapital">$0</strong></div>
+  <div class="result-item"><span>Bid Room</span><strong id="uwBidRoom">$0</strong></div>
+</div></div>
+</div>
+</div></div></div>
+</section>
+
+<section id="capital"><div class="container">
+<div class="section-shell">
+<button class="section-toggle" type="button" onclick="toggleSection(this)"><div class="section-toggle-left"><div class="section-toggle-icon">🏦</div><div class="section-toggle-title"><small>07 — FUNDING</small><strong>Capital Routing</strong></div></div><span class="section-chevron">▼</span></button>
+<div class="section-content">
+<div class="capital-grid">
+  <div class="capital"><strong>Kiavi</strong><small>Investor / rehab financing workflow. Verify current product, property and borrower requirements.</small><a class="secondary-link" href="https://app.kiavi.com/my/loans/origination" target="_blank" rel="noopener">Open Broker Portal →</a></div>
+  <div class="capital"><strong>COGO Capital</strong><small>Business / equipment / working-capital financing pathway. Terms are lender-dependent.</small><a class="secondary-link" href="https://www.borrowersviewcentral.com/portal/applynew?id=LCS" target="_blank" rel="noopener">Open Application →</a></div>
+  <div class="capital"><strong>Private Capital</strong><small>Private-money and capital-network routing for deals that fit the applicable program.</small><a class="secondary-link" href="https://privatemoneyexchange.com/aff-page/richman/" target="_blank" rel="noopener">Open Resource →</a></div>
+  <div class="capital"><strong>RO'Lyfe Intake</strong><small>Capture the borrower, property and funding request before routing to a provider.</small><a class="secondary-link" href="https://form.jotform.com/253154859148062" target="_blank" rel="noopener">Open Intake →</a></div>
+</div>
+<div class="result"><div class="result-grid">
+  <div class="result-item"><span>Capital Need</span><strong id="capitalRouteNeed">$0</strong></div>
+  <div class="result-item"><span>Buyer Capital</span><strong id="capitalRouteBuyer">$0</strong></div>
+  <div class="result-item"><span>Funding Gap</span><strong id="capitalRouteGap">$0</strong></div>
+</div></div>
+</div>
+</div></div></div>
+</section>
+
+<section id="dueDiligence"><div class="container">
+<div class="section-shell">
+<button class="section-toggle" type="button" onclick="toggleSection(this)"><div class="section-toggle-left"><div class="section-toggle-icon">✅</div><div class="section-toggle-title"><small>08 — VERIFICATION</small><strong>Due Diligence Checklist</strong></div></div><span class="section-chevron">▼</span></button>
+<div class="section-content">
+<div class="checklist">
+<label class="check"><input type="checkbox" data-due> Auction terms verified from source</label>
+<label class="check"><input type="checkbox" data-due> Occupancy / access verified</label>
+<label class="check"><input type="checkbox" data-due> Parcel / APN verified</label>
+<label class="check"><input type="checkbox" data-due> Title / lien search completed</label>
+<label class="check"><input type="checkbox" data-due> Taxes / water / municipal balances reviewed</label>
+<label class="check"><input type="checkbox" data-due> ARV supported by comparable sales / valuation work</label>
+<label class="check"><input type="checkbox" data-due> Contractor scope and rehab estimate reviewed</label>
+<label class="check"><input type="checkbox" data-due> Financing eligibility and auction funding rules verified</label>
+<label class="check"><input type="checkbox" data-due> EMD / POF / registration requirements verified</label>
+<label class="check"><input type="checkbox" data-due> Exit strategy / buyer / contractor identified</label>
+</div>
+<div class="result"><strong id="dueProgress">0 / 10 complete</strong></div>
+</div></div></div>
+</section>
+
+<section id="research"><div class="container">
+<div class="section-shell">
+<button class="section-toggle" type="button" onclick="toggleSection(this)"><div class="section-toggle-left"><div class="section-toggle-icon">🔎</div><div class="section-toggle-title"><small>09 — RESEARCH</small><strong>Research &amp; Resource Router</strong></div></div><span class="section-chevron">▼</span></button>
+<div class="section-content">
+<div class="link-grid">
+  <div class="link-card"><h3>Auction.com</h3><p>Auction listings, terms and property research.</p><a class="action-btn" href="https://www.auction.com/" target="_blank" rel="noopener">Open Auction.com</a></div>
+  <div class="link-card"><h3>Philadelphia Property App</h3><p>Philadelphia property, parcel and assessment research.</p><a class="action-btn" href="https://property.phila.gov/" target="_blank" rel="noopener">Open Property App</a></div>
+  <div class="link-card"><h3>Zillow</h3><p>Property history, photos, listing context and market research.</p><a class="action-btn" href="https://www.zillow.com/" target="_blank" rel="noopener">Open Zillow</a></div>
+  <div class="link-card"><h3>Redfin</h3><p>Property research, comparable listings and market context.</p><a class="action-btn" href="https://www.redfin.com/" target="_blank" rel="noopener">Open Redfin</a></div>
+  <div class="link-card"><h3>Realtor</h3><p>Additional property and market research.</p><a class="action-btn" href="https://www.realtor.com/" target="_blank" rel="noopener">Open Realtor</a></div>
+  <div class="link-card"><h3>Kiavi</h3><p>Investor financing / broker workflow.</p><a class="action-btn capital-card" href="https://app.kiavi.com/my/loans/origination" target="_blank" rel="noopener">Open Kiavi</a></div>
+  <div class="link-card"><h3>COGO Capital</h3><p>Business and equipment funding workflow.</p><a class="action-btn capital-card" href="https://www.cogocapital.com/" target="_blank" rel="noopener">Open COGO</a></div>
+  <div class="link-card"><h3>Relocation Intelligence</h3><p>Separate RO'Lyfe relocation project.</p><a class="action-btn" href="https://rolrichman.github.io/rolyfe-relocation-intelligence/" target="_blank" rel="noopener">Open Relocation</a></div>
+  <div class="link-card"><h3>LienHub</h3><p>Use where applicable for tax/lien research.</p><a class="action-btn" href="https://www.lienhub.com/" target="_blank" rel="noopener">Open LienHub</a></div>
+  <div class="link-card"><h3>RealAuction</h3><p>Jurisdiction-specific tax sale and foreclosure portals.</p><a class="action-btn" href="https://www.realauction.com/" target="_blank" rel="noopener">Open RealAuction</a></div>
+  <div class="link-card"><h3>RO'Lyfe Market Terminal</h3><p>Separate market intelligence system.</p><a class="action-btn" href="https://rolrichman.github.io/rolyfe-market-terminal/" target="_blank" rel="noopener">Open Market Terminal</a></div>
+  <div class="link-card"><h3>RO'Lyfe Machine</h3><p>Business and funding ecosystem routing.</p><a class="action-btn" href="https://rolrichman.github.io/rolyfe-machine/" target="_blank" rel="noopener">Open RO'Lyfe Machine</a></div>
+</div>
+</div></div></div>
+</section>
+
+</main>
+
+<footer>
+<div class="container">
+<div class="footer-title">RO'Lyfe Auction Capital Machine™</div>
+Find the Property. Build the Deal. Match the Capital.<br>
+Planning and underwriting support only. No valuation, financing, approval, profit, acquisition price or investment outcome is guaranteed. Verify property, auction, title, tax, lender and legal requirements with the applicable source or professional.
+</div>
+</footer>
+
+<div id="aiToast" class="ai-toast"><strong>RO'Lyfe AI Underwriter™</strong><div id="aiToastText"></div></div>
+<div class="ai-underwriter-panel" id="aiPanel" aria-hidden="true">
+  <div class="ai-header">
+    <div class="ai-header-main"><div class="ai-avatar">🤖</div><div class="ai-header-title"><strong>RO'Lyfe AI Underwriter™</strong><span>LIVE MACHINE SNAPSHOT</span></div></div>
+    <button class="ai-close" type="button" onclick="toggleAI(false)">×</button>
+  </div>
+  <div class="ai-messages" id="aiMessages"></div>
+  <div class="ai-quick">
+    <button type="button" onclick="askAI('What is my max acquisition?')">Max acquisition</button>
+    <button type="button" onclick="askAI('How much capital is needed?')">Capital needed</button>
+    <button type="button" onclick="askAI('What is my bid room?')">Bid room</button>
+    <button type="button" onclick="askAI('What are my missing items?')">Missing items</button>
+    <button type="button" onclick="askAI('Give me an underwriting snapshot.')">Snapshot</button>
+  </div>
+  <div class="ai-input-row"><input id="aiInput" placeholder="Ask the underwriter about this deal..." onkeydown="if(event.key==='Enter') askAI()"><button class="ai-send" type="button" onclick="askAI()">➤</button></div>
+</div>
+<div class="ai-underwriter-float"><button class="ai-underwriter-button" type="button" onclick="toggleAI()" aria-label="Open AI Underwriter">🤖<span class="ai-dot"></span></button></div>
+<button id="backToTop" class="back-to-top" type="button" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">↑</button>
+
+<!-- ONE production engine stack. Do not duplicate these scripts. -->
+<script src="./js/app.js"></script>
+<script src="./js/auction-engine.js"></script>
+<script src="./js/deal-engine.js"></script>
+<script src="./js/capital-engine.js"></script>
+<script src="./js/contractor-engine.js"></script>
+<script src="./js/risk-engine.js"></script>
+<script src="./js/rehab-budget-engine.js"></script>
+<script src="./js/tax-lien-engine.js"></script>
+<script src="./js/underwriting-engine.js"></script>
+<script src="./js/resource-router.js"></script>
+
+<script>
+"use strict";
+
+const $ = id => document.getElementById(id);
+const num = id => Number($(id)?.value || 0) || 0;
+const val = id => ($(id)?.value || "").trim();
+const money = n => new Intl.NumberFormat("en-US",{style:"currency",currency:"USD",maximumFractionDigits:0}).format(Number(n)||0);
+
+function toggleSection(button){
+  const shell=button.closest(".section-shell");
+  if(shell) shell.classList.toggle("open");
+}
+
+function updateClock(){
+  const now=new Date();
+  $("liveDate").textContent=now.toLocaleDateString(undefined,{weekday:"short",year:"numeric",month:"short",day:"numeric"});
+  $("liveTime").textContent=now.toLocaleTimeString(undefined,{hour:"numeric",minute:"2-digit",second:"2-digit"});
+  const d=$("auctionDate")?.value;
+  if(d){
+    const target=new Date(d+"T23:59:59");
+    $("daysUntil").textContent=Math.ceil((target-now)/86400000);
+  }else $("daysUntil").textContent="—";
+}
+setInterval(updateClock,1000); updateClock();
+
+function calculateDealUI(){
+  if(window.ROLyfeDealEngine?.calculate){
+    try{ window.ROLyfeDealEngine.calculate(); }catch(e){ console.warn(e); }
+  }
+  const arv=num("arv"),rehab=num("rehab"),closing=num("closing"),holding=num("holding"),selling=num("selling"),
+        financing=num("financingCosts"),profit=num("profit"),contingency=num("contingency"),buyer=num("buyerCapital"),bid=num("currentBid");
+  const max=Math.max(arv-rehab-closing-holding-selling-financing-profit-contingency,0);
+  const project=max+rehab+closing+holding+financing+contingency;
+  const need=Math.max(project-buyer,0),room=max-bid,spread=arv-project-selling;
+  $("maxAcquisition").textContent=money(max); $("projectCost").textContent=money(project); $("capitalNeed").textContent=money(need);
+  $("bidRoom").textContent=money(room); $("grossSpread").textContent=money(spread);
+  $("analysisNextBid").textContent=money(bid+(num("bidIncrement")||0));
+  $("dashboardBid").textContent=money(bid); $("dashboardMax").textContent=money(max); $("dashboardCapital").textContent=money(need);
+  $("capitalRouteNeed").textContent=money(need); $("capitalRouteBuyer").textContent=money(buyer); $("capitalRouteGap").textContent=money(need);
+  $("uwArv").textContent=money(arv); $("uwMax").textContent=money(max); $("uwRehab").textContent=money(rehab);
+  $("uwBid").textContent=money(bid); $("uwCapital").textContent=money(need); $("uwBidRoom").textContent=money(room);
+  const status=$("dealStatus");
+  if(status) status.innerHTML=room<0?'<div class="status red">CURRENT BID IS ABOVE YOUR CALCULATED ACQUISITION CEILING</div>':room===0?'<div class="status yellow">CURRENT BID IS AT THE CALCULATED CEILING</div>':'<div class="status green">CURRENT BID IS BELOW THE CALCULATED CEILING</div>';
+  return {arv,rehab,closing,holding,selling,financing,profit,contingency,buyer,bid,max,project,need,room,spread};
+}
+
+function calculateRehabUI(){
+  const r=window.ROLyfeRehabBudgetEngine;
+  if(r?.calculate){ try{r.calculate()}catch(e){console.warn(e)} }
+  let subtotal=0;
+  document.querySelectorAll("#rehabRows input").forEach(i=>subtotal+=Number(i.value)||0);
+  const pct=Math.max(num("rehabContingencyPercent"),0),cont=subtotal*pct/100,total=subtotal+cont;
+  $("rehabSubtotal").textContent=money(subtotal);$("rehabContingency").textContent=money(cont);$("rehabTotal").textContent=money(total);
+  if($("rehab")) $("rehab").value=total;
+  calculateDealUI();
+  return {subtotal,cont,total};
+}
+
+const REHAB_DEFAULTS={
+  drywall:15000,dumpster:2000,electricalLabor:8000,exteriorDoors:2500,flooringGeneral:15000,
+  framingLabor:15000,hvac:13000,interiorPainting:3000,kitchen:20000,lightFixturesFans:1200,
+  permitFees:3000,plumbingLabor:18000,roofing:12000,siding:8000,sinksToiletsTubs:3000,
+  stairsRailings:1000,structural:15000,waterHookupHeater:1300,windows:8000
+};
+
+function buildRehabTable(){
+  const engine=window.ROLyfeRehabBudgetEngine;
+  const cats=engine?.categories || [
+    {id:"architect",name:"Architect",group:"Professional"},
+    {id:"asphaltPaving",name:"Asphalt & Paving",group:"Exterior"},
+    {id:"basement",name:"Basement",group:"Structural"},
+    {id:"bathroomAccessories",name:"Bathroom Accessories / Mirror",group:"Bathroom"},
+    {id:"bathroomTile",name:"Bathroom Tile",group:"Bathroom"},
+    {id:"bathroomVanity",name:"Bathroom Vanity & Countertop",group:"Bathroom"},
+    {id:"bedroomHardware",name:"Bedroom Hardware",group:"Interior"},
+    {id:"carpentryRough",name:"Carpentry Rough",group:"Structural / Interior"},
+    {id:"carpets",name:"Carpets",group:"Flooring"},
+    {id:"ceilingWork",name:"Ceiling Work",group:"Interior"},
+    {id:"closetsShelves",name:"Closet / Shelves",group:"Interior"},
+    {id:"concreteMaterial",name:"Concrete Material",group:"Exterior"},
+    {id:"curbsGuttersWalkways",name:"Curbs / Gutters / Walkways",group:"Exterior"},
+    {id:"deckingPorchPatio",name:"Decking / Porch / Patio",group:"Exterior"},
+    {id:"demolition",name:"Demolition",group:"Site / Preparation"},
+    {id:"downspoutsGutters",name:"Downspouts / Gutters",group:"Exterior"},
+    {id:"driveway",name:"Driveway",group:"Exterior"},
+    {id:"drywall",name:"Drywall / Tape / Texture / Sheetrock",group:"Interior"},
+    {id:"dumpster",name:"Dumpster",group:"Site / Preparation"},
+    {id:"electricalFinish",name:"Electrical Finish",group:"Electrical"},
+    {id:"electricalLabor",name:"Electrical Labor",group:"Electrical"},
+    {id:"electricalRough",name:"Electrical Rough",group:"Electrical"},
+    {id:"exteriorDoors",name:"Exterior Doors",group:"Exterior"},
+    {id:"exteriorPainting",name:"Exterior Painting",group:"Exterior"},
+    {id:"fasciaSoffit",name:"Fascia / Soffit",group:"Exterior"},
+    {id:"fencing",name:"Fencing",group:"Exterior"},
+    {id:"finalCleanupStaging",name:"Final Clean Up / Staging",group:"Closeout"},
+    {id:"finishCarpentry",name:"Finish Carpentry",group:"Interior"},
+    {id:"finishHardware",name:"Finish Hardware",group:"Interior"},
+    {id:"finishLaborOtherSiteWork",name:"Finish Labor / Other Site Work",group:"Labor"},
+    {id:"fireAlarms",name:"Fire Alarms",group:"Life Safety"},
+    {id:"fireplaceChimney",name:"Fireplace / Chimney / Mantles",group:"Exterior / Structural"},
+    {id:"flooringGeneral",name:"Flooring / General / Sub",group:"Flooring"},
+    {id:"footingsFoundationSlab",name:"Footings / Foundation / Slab",group:"Structural"},
+    {id:"framingLabor",name:"Framing Labor / Rough Carpentry",group:"Structural"},
+    {id:"framingLumber",name:"Framing Lumber Material",group:"Structural"},
+    {id:"garage",name:"Garage",group:"Exterior"},
+    {id:"garageDoor",name:"Garage Door / Opener",group:"Exterior"},
+    {id:"hardwoodFloors",name:"Hardwood Floors",group:"Flooring"},
+    {id:"hvac",name:"HVAC",group:"Mechanical"},
+    {id:"insulation",name:"Insulation",group:"Interior"},
+    {id:"interiorDoorsHardware",name:"Interior Doors / Hardware",group:"Interior"},
+    {id:"interiorPainting",name:"Interior Painting",group:"Interior"},
+    {id:"kitchen",name:"Kitchen",group:"Kitchen"},
+    {id:"kitchenAppliances",name:"Kitchen Appliances",group:"Kitchen"},
+    {id:"kitchenCabinetsHardware",name:"Kitchen Cabinets / Hardware",group:"Kitchen"},
+    {id:"kitchenCounterTops",name:"Kitchen Counter Tops",group:"Kitchen"},
+    {id:"kitchenHardware",name:"Kitchen Hardware",group:"Kitchen"},
+    {id:"kitchenSink",name:"Kitchen Sink",group:"Kitchen"},
+    {id:"landscaping",name:"Landscaping",group:"Exterior"},
+    {id:"laundryRoom",name:"Laundry Room",group:"Interior"},
+    {id:"lightFixturesFans",name:"Light Fixtures / Ceiling Fans",group:"Electrical"},
+    {id:"linoleumVinylLaminate",name:"Linoleum / Vinyl / Laminate",group:"Flooring"},
+    {id:"managementSupervisedFees",name:"Management / Supervised Fees",group:"Management"},
+    {id:"masonryVeneerStone",name:"Masonry / Veneer / Stone",group:"Exterior"},
+    {id:"mirrorsAccessories",name:"Mirrors & Accessories",group:"Interior"},
+    {id:"misc",name:"Misc.",group:"Other"},
+    {id:"oilTankReplacement",name:"Oil Tank Replacement",group:"Mechanical"},
+    {id:"otherLabor",name:"Other Labor",group:"Labor"},
+    {id:"permitFees",name:"Permit Fees & Inspections",group:"Professional"},
+    {id:"plans",name:"Plans",group:"Professional"},
+    {id:"plumbingFinish",name:"Plumbing Finish",group:"Plumbing"},
+    {id:"plumbingLabor",name:"Plumbing Labor",group:"Plumbing"},
+    {id:"plumbingRough",name:"Plumbing Rough",group:"Plumbing"},
+    {id:"pool",name:"Pool",group:"Exterior"},
+    {id:"portableJohn",name:"Portable John",group:"Site / Preparation"},
+    {id:"powerWash",name:"Power Wash",group:"Exterior"},
+    {id:"roofing",name:"Roofing",group:"Exterior"},
+    {id:"septicSewer",name:"Septic / Sewer",group:"Utilities"},
+    {id:"siding",name:"Siding",group:"Exterior"},
+    {id:"sinksToiletsTubs",name:"Sinks / Toilets / Tubs / Showers",group:"Bathroom"},
+    {id:"soilTesting",name:"Soil / Termite / Lead / Mold / Testing",group:"Due Diligence"},
+    {id:"stairsRailings",name:"Stairs / Railings",group:"Structural"},
+    {id:"structural",name:"Structural",group:"Structural"},
+    {id:"stuccoPlaster",name:"Stucco / Plaster",group:"Exterior"},
+    {id:"tempUtilities",name:"Temporary Utilities",group:"Utilities"},
+    {id:"tilePrepFinish",name:"Tile / Prep / Finish",group:"Interior"},
+    {id:"trashOut",name:"Trash Out",group:"Site / Preparation"},
+    {id:"trussesBeams",name:"Trusses / Beams",group:"Structural"},
+    {id:"wallWork",name:"Wall Work",group:"Interior"},
+    {id:"wallcovering",name:"Wallcovering / Wallpaper / Paneling",group:"Interior"},
+    {id:"waterHookupHeater",name:"Water Hook-up / Water Heater",group:"Utilities"},
+    {id:"windows",name:"Windows",group:"Exterior"}
+  ];
+  const body=$("rehabRows"); if(!body)return;
+  body.innerHTML=cats.map(c=>`<tr><td>${c.name}</td><td><input id="rehab-${c.id}" type="number" min="0" step="100" value="0"></td><td>${c.group||""}</td></tr>`).join("");
+}
+function loadReferenceRehab(){
+  buildRehabTable();
+  Object.entries(REHAB_DEFAULTS).forEach(([id,v])=>{const el=$("rehab-"+id);if(el)el.value=v});
+  calculateRehabUI();
+}
+function clearRehabBudget(){document.querySelectorAll("#rehabRows input").forEach(i=>i.value=0);calculateRehabUI()}
+
+function calculateTaxUI(){
+  const e=window.ROLyfeTaxLienEngine;
+  let snap=null;
+  try{snap=e?.snapshot?.() || e?.getSnapshot?.()}catch(err){console.warn(err)}
+  const total=num("taxTotalDue")||num("delinquentTaxes")+num("taxPenalties")+num("taxFees");
+  const state=val("taxState")||"Not entered",type=val("taxSaleType")||val("auctionType")||"Unknown";
+  $("taxOutput").innerHTML=`<div class="result-grid"><div class="result-item"><span>Jurisdiction</span><strong>${state}</strong></div><div class="result-item"><span>Sale Type</span><strong>${type}</strong></div><div class="result-item"><span>Estimated Total Due</span><strong>${money(total)}</strong></div></div><p class="muted" style="margin-top:12px">Tax/lien results are research flags, not a title opinion. Confirm the applicable county/state process, redemption rules, liens, municipal balances and title requirements.</p>`;
+  return snap;
+}
+
+function addTrackRow(){
+  const wrap=$("trackRecordRows"),i=wrap.children.length+1;
+  const row=document.createElement("div");row.className="dynamic-row track-record-row";
+  row.innerHTML=`<div class="row-grid">
+    <div class="field"><label>Street Address</label><input data-field="streetAddress"></div><div class="field"><label>City</label><input data-field="city"></div>
+    <div class="field"><label>State</label><input data-field="state"></div><div class="field"><label>ZIP</label><input data-field="zip"></div>
+    <div class="field"><label>Owner / Entity</label><input data-field="owner"></div><div class="field"><label>% Ownership</label><input data-field="ownership"></div>
+    <div class="field"><label>Purchase Date</label><input data-field="purchaseDate" type="date"></div><div class="field"><label>Purchase Price</label><input data-field="purchasePrice" type="number"></div>
+    <div class="field"><label>Ground Up?</label><select data-field="groundUp"><option>No</option><option>Yes</option></select></div><div class="field"><label>Rehab / Construction Budget</label><input data-field="rehabBudget" type="number"></div>
+    <div class="field"><label>Disposition / Value</label><input data-field="dispositionPrice" type="number"></div><div class="field"><label>Disposition Date</label><input data-field="dispositionDate" type="date"></div>
+  </div><button class="btn" type="button" onclick="this.closest('.dynamic-row').remove()">Remove Property</button>`;
+  wrap.appendChild(row);
+}
+function addREORow(){
+  const wrap=$("reoRows"),row=document.createElement("div");row.className="dynamic-row reo-row";
+  row.innerHTML=`<div class="row-grid">
+    <div class="field"><label>Street Address</label><input data-field="streetAddress"></div><div class="field"><label>City</label><input data-field="city"></div>
+    <div class="field"><label>State</label><input data-field="state"></div><div class="field"><label>ZIP</label><input data-field="zip"></div>
+    <div class="field"><label>Owner / Entity</label><input data-field="owner"></div><div class="field"><label>% Ownership</label><input data-field="ownership"></div>
+    <div class="field"><label>Purchase Date</label><input data-field="purchaseDate" type="date"></div><div class="field"><label>Purchase Price</label><input data-field="purchasePrice" type="number"></div>
+    <div class="field"><label>Ground Up?</label><select data-field="groundUp"><option>No</option><option>Yes</option></select></div><div class="field"><label>Rehab / Construction Budget</label><input data-field="rehabBudget" type="number"></div>
+    <div class="field"><label>Current Value</label><input data-field="currentValue" type="number"></div>
+  </div><button class="btn" type="button" onclick="this.closest('.dynamic-row').remove()">Remove Property</button>`;
+  wrap.appendChild(row);
+}
+
+function getSnapshot(){
+  const d=calculateDealUI();
+  return {
+    property:{address:val("address"),state:val("propertyState"),county:val("county"),parcel:val("parcel"),type:val("auctionType"),occupancy:val("occupancy")},
+    auction:{url:val("auctionUrl"),date:val("auctionDate"),time:val("auctionTime"),openingBid:num("openingBid"),currentBid:num("currentBid"),increment:num("bidIncrement"),reserve:val("reserve"),financing:val("financing"),emd:num("emd")},
+    deal:d, borrower:{guarantor:val("primaryGuarantor"),entity:val("borrowingEntity"),liquidity:num("liquidity"),netWorth:num("netWorth"),creditScore:num("creditScore")},
+    tax:{state:val("taxState"),county:val("taxCounty"),type:val("taxSaleType"),totalDue:num("taxTotalDue")||num("delinquentTaxes")+num("taxPenalties")+num("taxFees")}
+  };
+}
+
+function saveProperty(){
+  const snap=getSnapshot(),saved=JSON.parse(localStorage.getItem("rolyfeAuctionSnapshots")||"[]");
+  saved.unshift({...snap,savedAt:new Date().toISOString()});localStorage.setItem("rolyfeAuctionSnapshots",JSON.stringify(saved.slice(0,50)));
+  $("savedCount").textContent=Math.min(saved.length,50); $("propertyCount").textContent=saved.length;
+  showAIToast("Deal snapshot saved locally on this device.");
+}
+function loadExample(){
+  const values={address:"2539 62nd St, Philadelphia, PA 19142",propertyState:"PA",county:"Philadelphia",parcel:"402104100",auctionType:"Bank Owned / REO",occupancy:"Occupied",openingBid:25000,currentBid:83500,bidIncrement:500,reserve:"Unknown",financing:"Cash; hard money / LOC may be accepted — verify auction terms",emd:4175,auctionDate:"2026-09-24",arv:306500,rehab:60000,closing:5000,holding:2000,selling:15000,financingCosts:10000,profit:40000,contingency:10000,buyerCapital:14000};
+  Object.entries(values).forEach(([id,v])=>{if($(id))$(id).value=v});
+  calculateDealUI();updateClock();showAIToast("Example auction loaded. Replace the facts with verified property data before relying on the analysis.");
+}
+function openAuctionSource(){if(window.ROLyfeAuctionEngine?.openAuction)window.ROLyfeAuctionEngine.openAuction();else if(val("auctionUrl"))window.open(val("auctionUrl"),"_blank","noopener,noreferrer");else alert("Enter the auction property URL first.");}
+
+function updateDueProgress(){const all=[...document.querySelectorAll("[data-due]")],done=all.filter(x=>x.checked).length;$("dueProgress").textContent=`${done} / ${all.length} complete`}
+document.addEventListener("change",e=>{if(e.target.matches("[data-due]"))updateDueProgress()});
+
+function toggleAI(force){
+  const p=$("aiPanel"),open=force===undefined?!p.classList.contains("open"):force;
+  p.classList.toggle("open",open);p.setAttribute("aria-hidden",String(!open));
+  if(open&&!$("aiMessages").children.length){
+    addAIMessage("system","I’m your RO'Lyfe AI Underwriter. I can read the machine snapshot, calculate the deal, identify missing diligence, explain bid room/capital need, and flag items that still require verification.");
+  }
+}
+function addAIMessage(type,text){const m=document.createElement("div");m.className="ai-message "+type;m.innerHTML=text.replace(/\n/g,"<br>");$("aiMessages").appendChild(m);$("aiMessages").scrollTop=$("aiMessages").scrollHeight}
+function showAIToast(text){$("aiToastText").textContent=text;$("aiToast").classList.add("show");clearTimeout(window.__aiToastTimer);window.__aiToastTimer=setTimeout(()=>$("aiToast").classList.remove("show"),3200)}
+function missingItems(s){
+  const miss=[];if(!s.property.address)miss.push("property address");if(!s.auction.url)miss.push("auction URL");if(!s.auction.currentBid&&!s.auction.openingBid)miss.push("opening/current bid");if(!s.deal.arv)miss.push("ARV");if(!s.deal.rehab)miss.push("rehab budget");if(!s.auction.financing)miss.push("auction financing terms");if(!s.property.occupancy)miss.push("occupancy");if(!s.tax.state)miss.push("tax jurisdiction");return miss;
+}
+function aiAnswer(q){
+  const s=getSnapshot(),l=q.toLowerCase(),m=missingItems(s);
+  if(l.includes("max acquisition")||l.includes("maximum acquisition")||l.includes("mao"))return `Maximum acquisition ceiling: <strong>${money(s.deal.max)}</strong>.<br>Formula uses ARV less rehab, closing, holding, selling, financing, required profit and deal contingency.`;
+  if(l.includes("capital"))return `Calculated project cost: <strong>${money(s.deal.project)}</strong>.<br>Buyer/sponsor capital: <strong>${money(s.deal.buyer)}</strong>.<br>Funding gap: <strong>${money(s.deal.need)}</strong>.`;
+  if(l.includes("bid room")||l.includes("bid"))return `Current bid: <strong>${money(s.deal.bid)}</strong>.<br>Calculated acquisition ceiling: <strong>${money(s.deal.max)}</strong>.<br>Bid room: <strong>${money(s.deal.room)}</strong>. ${s.deal.room<0?"The current bid is above the calculated ceiling.":"The current bid is below the calculated ceiling."}`;
+  if(l.includes("missing")||l.includes("diligence"))return m.length?`Current missing/verification queue:<br>• ${m.join("<br>• ")}<br><br>Also verify title, liens, taxes/water, auction terms, access/occupancy, contractor scope, lender eligibility and exit strategy.`:"Core intake fields are populated. Continue title/lien, auction-term, contractor, valuation and financing verification.";
+  if(l.includes("rehab"))return `Current rehab input: <strong>${money(s.deal.rehab)}</strong>. Use the Rehab section to build the category budget. The COGO reference values are a planning reference, not a universal lender rule.`;
+  if(l.includes("risk"))return `Risk review starts with the facts entered: occupancy, auction financing, title/lien status, rehab, ARV support, bid level and exit. I will flag missing or contradictory facts, but the machine does not replace a title report, appraisal, inspection, legal review or lender underwriting.`;
+  return `Machine snapshot: <strong>${s.property.address||"Property not entered"}</strong>.<br>ARV ${money(s.deal.arv)} · Max acquisition ${money(s.deal.max)} · Current bid ${money(s.deal.bid)} · Capital need ${money(s.deal.need)}.<br><br>Ask me about max acquisition, bid room, capital, rehab, missing diligence or risk.`;
+}
+function askAI(preset){
+  const input=$("aiInput"),q=preset||input.value.trim();if(!q)return;
+  addAIMessage("user",q);input.value="";
+  setTimeout(()=>addAIMessage("system",aiAnswer(q)),180);
+}
+document.addEventListener("input",e=>{
+  if(e.target.matches("input,select,textarea")&&!e.target.closest("#aiPanel")){
+    clearTimeout(window.__calcTimer);window.__calcTimer=setTimeout(()=>{calculateDealUI();if(window.ROLyfeUnderwritingEngine?.updateUI)try{window.ROLyfeUnderwritingEngine.updateUI()}catch(err){}},120);
+  }
+});
+
+window.addEventListener("scroll",()=>{ $("backToTop").classList.toggle("show",window.scrollY>500) });
+
+document.addEventListener("DOMContentLoaded",()=>{
+  buildRehabTable(); updateDueProgress(); calculateDealUI();
+  const saved=JSON.parse(localStorage.getItem("rolyfeAuctionSnapshots")||"[]");$("savedCount").textContent=Math.min(saved.length,50);$("propertyCount").textContent=saved.length;
+  if(window.ROLyfeUnderwritingEngine?.updateUI)try{window.ROLyfeUnderwritingEngine.updateUI()}catch(e){}
+});
+</script>
+</body>
+</html>
