@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RO’Lyfe Map Repair — Smoke Test</title>
+<style>
+body{font:16px/1.5 system-ui,sans-serif;max-width:850px;margin:2rem auto;padding:0 1rem;color:#182230}
+h1{line-height:1.2}li{margin:.65rem 0}.note{padding:1rem;border:1px solid #ccd5df;border-radius:.6rem;background:#f6f8fa}
+</style>
+</head>
+<body>
+<h1>RO’Lyfe Auction Capital Machine — Map Smoke Test</h1>
+<p class="note">Checklist for the live application after the map bridge is integrated. This page is documentation only; it does not load the production app.</p>
+<ol>
+<li>Confirm the map renders tiles and displays OpenStreetMap attribution.</li>
+<li>Click <strong>Global</strong>: reference city pins appear and the status explicitly says live weather/news is not connected.</li>
+<li>Click <strong>States</strong>: state-capital pins appear and the status says boundaries are not loaded.</li>
+<li>Enter a county and state, then click <strong>Counties</strong>: a location pin is shown if lookup succeeds; no polygon is implied.</li>
+<li>Enter a complete property address, click <strong>Map Current Property</strong>, and verify the returned pin against an independent map.</li>
+<li>Click <strong>Street</strong>: the map zooms closer to the address if a result is found.</li>
+<li>Click <strong>Reset</strong>: returns to Global view without a blank map.</li>
+<li>Test with the internet disconnected: status reports that the map/location service is unavailable instead of silently claiming success.</li>
+<li>Check mobile layout, button states, console errors, and that no duplicate Leaflet map initialization occurs after repeated mode changes.</li>
+<li>Confirm that no screen labels the reference pins as live weather, live auction, verified parcel, or official boundaries.</li>
+</ol>
+</body>
+</html>
