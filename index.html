@@ -144,7 +144,7 @@ footer{margin-top:35px;border-top:1px solid var(--border);padding:30px 0;color:v
         <div>
           <div class="section-kicker">GLOBAL INTELLIGENCE</div>
           <h2>🌎 Global Weather &amp; Tax-Yield Map</h2>
-          <p class="muted">Live weather context with state tax-yield reference data. Click a state or weather node for more detail.</p>
+          <p class="muted">Current weather when the provider responds, paired with a tax-yield research index. Click a weather marker for current conditions; verify tax rules with official sources.</p>
         </div>
         <div class="global-controls">
           <label class="switch-label"><input id="globalAutoRotate" type="checkbox" checked> <span>Auto Rotate</span></label>
@@ -941,21 +941,8 @@ document.addEventListener("DOMContentLoaded",()=>{
  const oldClear=window.clearRehabBudget;
  if(typeof oldClear==='function')window.clearRehabBudget=function(){oldClear();enhanceRehab();calcRehabV2()};
  document.addEventListener('input',e=>{if(e.target?.id==='rehabContingencyPercent')calcRehabV2()});
- // Visible sample city/state markers with a transparent, explicitly non-live risk score until a weather API is connected.
- // Scores are illustrative weather-watch indicators, not forecasts or investment percentages.
- const cities=[
-  {city:'Philadelphia',state:'PA',x:72,y:31,condition:'Weather lookup needed',score:25,tone:'yellow'},
-  {city:'Miami',state:'FL',x:77,y:65,condition:'Weather lookup needed',score:40,tone:'orange'},
-  {city:'Dallas',state:'TX',x:43,y:59,condition:'Weather lookup needed',score:20,tone:'green'},
-  {city:'Chicago',state:'IL',x:48,y:34,condition:'Weather lookup needed',score:25,tone:'yellow'},
-  {city:'Denver',state:'CO',x:32,y:43,condition:'Weather lookup needed',score:20,tone:'green'},
-  {city:'Los Angeles',state:'CA',x:15,y:52,condition:'Weather lookup needed',score:20,tone:'green'},
-  {city:'Seattle',state:'WA',x:17,y:22,condition:'Weather lookup needed',score:25,tone:'yellow'},
-  {city:'New York',state:'NY',x:82,y:28,condition:'Weather lookup needed',score:25,tone:'yellow'}
- ];
- function renderCityNodes(){const stage=$('globeStage');if(!stage)return;let overlay=$('weatherCityOverlay');if(!overlay){overlay=document.createElement('div');overlay.id='weatherCityOverlay';overlay.className='weather-city-overlay';stage.appendChild(overlay)}overlay.innerHTML=cities.map(c=>`<button type="button" class="weather-city ${c.tone}" style="left:${c.x}%;top:${c.y}%" title="Illustrative watch score only; connect a weather source for current conditions"><strong>${c.city}, ${c.state}</strong><span>${c.condition}</span><span class="city-score">Watch score: ${c.score}/100</span></button>`).join('');}
  function safeMapFallback(){const map=$('auctionMap');if(!map)return;map.style.backgroundColor='#101b2d';if(!map.querySelector('.leaflet-container')&&!map.querySelector('.map-fallback-note')){const note=document.createElement('div');note.className='map-fallback-note';note.style.cssText='padding:18px;color:#eaf2ff;font:13px system-ui';note.innerHTML='<strong>Map layer not initialized.</strong><br>Check that Leaflet and the repository JavaScript files loaded, then refresh. The dark background prevents a blank white panel.';map.appendChild(note)}}
- function initPatch(){enhanceRehab();renderCityNodes();safeMapFallback();setTimeout(()=>{const map=$('auctionMap');if(window.L&&map){try{Object.values(window).filter(x=>x&&typeof x.invalidateSize==='function').forEach(x=>x.invalidateSize())}catch(e){}}},1200)}
+ function initPatch(){enhanceRehab();safeMapFallback();setTimeout(()=>{const map=$('auctionMap');if(window.L&&map){try{Object.values(window).filter(x=>x&&typeof x.invalidateSize==='function').forEach(x=>x.invalidateSize())}catch(e){}}},1200)}
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',initPatch);else initPatch();
  // Re-run checkbox setup if existing scripts rebuild the rehab table after startup.
  const target=$('rehabRows');if(target)new MutationObserver(()=>{if(target.dataset.v2!=='1')enhanceRehab()}).observe(target,{childList:true});
