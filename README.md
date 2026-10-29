@@ -310,3 +310,10 @@ No financing, approval, profit, acquisition price, or investment outcome is guar
 Funding. Credit. Strategy. Built for People Who Move With Purpose.
 
 **Find the Property. Build the Deal. Match the Capital.**
+
+## Shared Property Research Dock
+
+This project loads the reusable RO’Lyfe Property Research Dock from the canonical property research site. It links to the same address-targeted research sources for listing/comps, tax sales/auctions, parcel and official property/tax research, flood maps, capital routes, and closing documents. The dock opens provider pages and web searches; it does not scrape or import verified listing, title, lien, tax, or comp data.
+
+Shared workflow standard: https://github.com/ROLRichman/rolyfe-property-research-intelligence/blob/main/PROPERTY_RESEARCH_STANDARD.md
+Shared component: https://github.com/ROLRichman/rolyfe-property-research-intelligence/blob/main/shared/property-research-dock.js
