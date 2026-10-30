@@ -862,7 +862,7 @@ function askAI(preset){
 function saveAIConversation(){
   const messages=[...document.querySelectorAll("#aiMessages .ai-message")].map(m=>(m.classList.contains("user")?"YOU: ":"RO'LYFE AI: ")+m.innerText.trim());
   if(!messages.length){showAIToast("There is no conversation to save yet.");return;}
-  const body="RO'Lyfe AI Underwriter conversation\\nSaved: "+new Date().toLocaleString()+"\\n\\n"+messages.join("\\n\\n");
+  const body="RO'Lyfe AI Underwriter conversation\nSaved: "+new Date().toLocaleString()+"\n\n"+messages.join("\n\n");
   try{localStorage.setItem("rolyfe-ai-underwriter-last-save",body);}catch(e){}
   const blob=new Blob([body],{type:"text/plain;charset=utf-8"}),url=URL.createObjectURL(blob),a=document.createElement("a");
   a.href=url;a.download="ROLyfe-AI-Conversation-"+new Date().toISOString().slice(0,10)+".txt";a.click();URL.revokeObjectURL(url);
