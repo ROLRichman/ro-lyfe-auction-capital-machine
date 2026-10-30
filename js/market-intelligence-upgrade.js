@@ -298,9 +298,17 @@
     const heightText = $("rolChartHeightValue");
     const applyChartHeight = function () {
       const h = Number(heightSlider.value) || 430;
-      chartFrame.style.setProperty("height", h + "px", "important");
-      if (heightText) heightText.textContent = h + " px";
+      chartFrame.style.setProperty("height", "1650px", "important");
+      if (heightText) heightText.textContent = h + " px · candles";
+      try {
+        if (chartFrame.contentWindow && chartFrame.contentWindow.ROLyfeChartDesk) {
+          chartFrame.contentWindow.ROLyfeChartDesk.setChartHeight(h);
+        } else if (chartFrame.contentWindow) {
+          chartFrame.contentWindow.postMessage({type:"rol-set-chart-height",height:h}, "https://rolrichman.github.io");
+        }
+      } catch (e) {}
     };
+    chartFrame.addEventListener("load", applyChartHeight);
     heightSlider.addEventListener("input", applyChartHeight);
     heightSlider.addEventListener("change", applyChartHeight);
     applyChartHeight();
