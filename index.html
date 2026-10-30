@@ -916,9 +916,30 @@ document.addEventListener("DOMContentLoaded",()=>{
 })();
 
 window.addEventListener("message",function(event){
- if(event.origin!=="https://rolrichman.github.io"||!event.data||event.data.type!=="rol-live-chart-symbol")return;
- const field=document.getElementById("boSymbol");if(field)field.value=event.data.symbol||field.value;
- const label=document.getElementById("symbolStatus");if(label)label.textContent=(event.data.symbol||"Symbol")+" • synced from live candlestick chart";
+ if(event.origin!=="https://rolrichman.github.io"||!event.data)return;
+ const type=event.data.type;
+ if(type==="rol-live-chart-symbol"){
+  const field=document.getElementById("boSymbol");
+  if(field){field.value=event.data.symbol||field.value;field.dispatchEvent(new Event("input",{bubbles:true}));}
+  const optionSymbol=document.getElementById("rolOptionSymbol");
+  if(optionSymbol)optionSymbol.value=event.data.symbol||optionSymbol.value;
+  const label=document.getElementById("symbolStatus");
+  if(label)label.textContent=(event.data.symbol||"Symbol")+" • synced from live candlestick chart";
+  return;
+ }
+ if(type==="rol-live-chart-quote"){
+  const symbol=String(event.data.symbol||"").toUpperCase();
+  const selected=String(document.getElementById("boSymbol")?.value||"").toUpperCase().split(":").pop();
+  if(!symbol||selected&&symbol!==selected)return;
+  const price=Number(event.data.price);
+  if(!Number.isFinite(price)||price<=0)return;
+  const optionSymbol=document.getElementById("rolOptionSymbol");
+  if(optionSymbol)optionSymbol.value=symbol;
+  const underlying=document.getElementById("rolUnderlyingPrice");
+  if(underlying){underlying.value=String(price);underlying.dispatchEvent(new Event("input",{bubbles:true}));}
+  const label=document.getElementById("symbolStatus");
+  if(label)label.textContent=symbol+" • "+(event.data.provider||"provider")+" · "+(event.data.stamp||"timestamp not supplied")+" · spot synced to option calculator";
+ }
 });
 </script>
 
