@@ -9,7 +9,7 @@
   }[c]));
   const style = document.createElement("style");
   style.textContent = [
-    ".rol-map-search{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:8px;align-items:center;padding:10px 12px;background:#0b1426;border-top:1px solid #263451}",
+    ".rol-map-search{display:grid;grid-template-columns:minmax(0,1fr) repeat(4,auto);gap:8px;align-items:center;padding:10px 12px;background:#0b1426;border-top:1px solid #263451}",
     ".rol-map-search input,.rol-map-search select{min-width:0;width:100%;padding:9px;background:#080f1d;color:#f4f7fb;border:1px solid #344a69;border-radius:8px}",
     ".rol-map-search button,.rol-lookup-links a,.rol-market button{border:1px solid #405574;background:#13213a;color:#eef6ff;border-radius:8px;padding:9px 11px;font-size:11px;font-weight:700;text-decoration:none;cursor:pointer}",
     ".rol-map-search button.primary,.rol-market button.primary{background:#66d9ff;color:#06101a;border-color:#66d9ff}",
@@ -117,8 +117,10 @@
       search.className = "rol-map-search";
       search.id = "rolMapSearchRow";
       search.innerHTML =
-        "<input id='rolMapAddress' type='text' autocomplete='street-address' placeholder='Enter a property address or paste an auction URL'>" +
+        "<input id='rolMapAddress' type='text' autocomplete='street-address' placeholder='Enter a property address or paste an Auction.com URL'>" +
         "<button class='primary' id='rolLocateAddress' type='button'>📍 Locate</button>" +
+        "<button id='rolWeatherAddress' type='button'>☁ Weather here</button>" +
+        "<button id='rolRegridLookup' type='button'>🧭 Regrid parcel</button>" +
         "<button id='rolBuildAuctionLinks' type='button'>🏠 Find home auction links</button>";
       const links = document.createElement("div");
       links.className = "rol-lookup-links";
@@ -130,19 +132,25 @@
       const priorAddress = $("address");
       if (priorAddress && priorAddress.value) addressInput.value = priorAddress.value;
       $("rolLocateAddress").addEventListener("click", function () {
-        const q = addressInput.value.trim();
-        if (!q) { const s=$("rolMapStatus"); if(s)s.textContent="Enter a property address first."; return; }
+        const raw = addressInput.value.trim();
+        if (!raw) { const s=$("rolMapStatus"); if(s)s.textContent="Enter a property address or Auction.com URL first."; return; }
+        const q = addressFromInput(raw);
         if (priorAddress) { priorAddress.value = q; priorAddress.dispatchEvent(new Event("input",{bubbles:true})); }
-        if (/^https?:\/\//i.test(q)) {
-          const s=$("rolMapStatus"); if(s)s.textContent="URL received. Use the research links below; the map needs a street address.";
-          return;
-        }
         if (window.ROLyfeAuctionMap && window.ROLyfeAuctionMap.locate) {
           window.ROLyfeAuctionMap.locate(q, "property");
-          if ($("rolMapStatus")) $("rolMapStatus").textContent="Locating " + q + "…";
-        } else if (typeof window.mapCurrentAuctionProperty === "function") {
-          window.mapCurrentAuctionProperty();
+          if ($("rolMapStatus")) $("rolMapStatus").textContent="Locating property and loading address weather…";
         }
+        weatherForAddress(q);
+      });
+      $("rolWeatherAddress").addEventListener("click", function () {
+        const q = addressFromInput(addressInput.value.trim());
+        if (!q) { $("rolMapStatus").textContent="Enter an address or Auction.com URL first."; return; }
+        weatherForAddress(q);
+      });
+      $("rolRegridLookup").addEventListener("click", function () {
+        const q = addressFromInput(addressInput.value.trim());
+        if (!q) { $("rolMapStatus").textContent="Enter an address or Auction.com URL first."; return; }
+        lookupRegrid(q);
       });
       addressInput.addEventListener("keydown", function (e) {
         if (e.key === "Enter") $("rolBuildAuctionLinks").click();
@@ -152,6 +160,92 @@
         if (!q) { $("rolMapStatus").textContent="Enter an address or auction URL to build the research links."; return; }
         buildPropertyLinks(q);
       });
+    }
+  }
+
+  function addressFromInput(raw) {
+    const value=String(raw||"").trim();
+    if(!/^https?:\/\//i.test(value))return value;
+    try{
+      const url=new URL(value);
+      const slug=url.pathname.split("/").filter(Boolean).pop()||"";
+      return slug.replace(/-\d+$/,"").replace(/-/g," ").replace(/\s+/g," ").trim();
+    }catch(e){return value;}
+  }
+
+  async function weatherForAddress(address) {
+    const status=$("rolMapStatus");
+    if(status)status.textContent="Finding the address and checking current weather…";
+    try{
+      const geoUrl="https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&q="+encodeURIComponent(address);
+      const geoResponse=await fetch(geoUrl,{headers:{"Accept":"application/json"}});
+      if(!geoResponse.ok)throw new Error("Address lookup HTTP "+geoResponse.status);
+      const geo=await geoResponse.json();
+      if(!Array.isArray(geo)||!geo.length)throw new Error("Address not found. Add city, state and ZIP.");
+      const lat=Number(geo[0].lat),lon=Number(geo[0].lon);
+      if(!Number.isFinite(lat)||!Number.isFinite(lon))throw new Error("Address coordinates were not valid.");
+      const url="https://api.open-meteo.com/v1/forecast?latitude="+lat+"&longitude="+lon+"&current=temperature_2m,apparent_temperature,wind_speed_10m,relative_humidity_2m,weather_code&temperature_unit=fahrenheit&timezone=auto";
+      const response=await fetch(url);
+      if(!response.ok)throw new Error("Weather service HTTP "+response.status);
+      const data=await response.json();
+      if(!data.current)throw new Error("No current weather returned for this location.");
+      const c=data.current;
+      const item={
+        name:geo[0].name||address,lat,lon,
+        temperature:Math.round(c.temperature_2m)+"°F",
+        feels:Math.round(c.apparent_temperature)+"°F",
+        wind:Math.round(c.wind_speed_10m)+" mph",
+        humidity:c.relative_humidity_2m+"%"
+      };
+      let card=$("rolAddressWeather");
+      if(!card){card=document.createElement("div");card.id="rolAddressWeatherCard";card.className="rol-weather";const bar=document.querySelector(".rol-mapbar");if(bar)bar.insertAdjacentElement("afterend",card);}
+      card.id="rolAddressWeatherCard";
+      card.innerHTML="<div><b>Weather at searched address</b><strong>"+esc(item.temperature)+"</strong>Feels "+esc(item.feels)+" · Wind "+esc(item.wind)+"<br>Humidity "+esc(item.humidity)+"<br><small>"+esc(item.name)+" · Open-Meteo</small></div>";
+      const mapped=window.ROLyfeAuctionMap&&window.ROLyfeAuctionMap.addWeatherMarkers
+        ?window.ROLyfeAuctionMap.addWeatherMarkers([item]):false;
+      if(status)status.textContent=mapped?"Address weather loaded · marker added to map":"Address weather loaded in card · map layer is not initialized yet";
+    }catch(error){
+      if(status)status.textContent="Address weather unavailable: "+(error&&error.message?error.message:"Check address and connection.");
+    }
+  }
+
+  async function lookupRegrid(address) {
+    const box=$("rolAuctionLookupLinks"),status=$("rolMapStatus");
+    if(status)status.textContent="Requesting one matched parcel from Regrid…";
+    const base="https://ykmdyfbklvuoseqdjnxy.supabase.co/functions/v1/regrid-parcel-lookup";
+    const anon="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlrbWR5ZmJrbHZ1b3NlcWRqbnh5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTI3ODk5OTQsImV4cCI6MjEwODM2NTk5NH0._YEZj2GSnPcLGXmwgj98V_JzXdJIhTmOFoAH9BSia2I";
+    try{
+      const response=await fetch(base+"?address="+encodeURIComponent(address),{
+        headers:{apikey:anon,Authorization:"Bearer "+anon,Accept:"application/json"},
+        cache:"no-store"
+      });
+      const data=await response.json();
+      if(!response.ok)throw new Error(data.error||("Regrid lookup HTTP "+response.status));
+      if(!data.found){
+        if(box)box.innerHTML="<div class='rol-lookup-note'>No Regrid parcel match: "+esc(data.message||"Try a more complete address.")+"</div>";
+        if(status)status.textContent="Regrid returned no parcel match.";
+        return;
+      }
+      const fields=[
+        ["Matched address",data.match],["Parcel / APN",data.parcelNumber],["Owner of record",data.owner],
+        ["Property use",data.propertyUse],["Zoning",data.zoning],["Year built",data.yearBuilt],
+        ["Assessed value",data.assessedValue==null?null:"$"+Number(data.assessedValue).toLocaleString("en-US")],
+        ["Last recorded sale",data.lastSalePrice==null?null:"$"+Number(data.lastSalePrice).toLocaleString("en-US")],
+        ["Last sale date",data.lastSaleDate],["Annual property tax",data.annualTax==null?null:"$"+Number(data.annualTax).toLocaleString("en-US")],
+        ["Tax year",data.taxYear],["Lot acres",data.acreage],["Parcel sq ft",data.parcelSquareFeet],
+        ["Building sq ft",data.buildingSquareFeet],["FEMA flood zone",data.floodZone],
+        ["County / State / ZIP",[data.county,data.state,data.zip].filter(Boolean).join(" · ")]
+      ];
+      if(box){
+        box.innerHTML="<div class='rol-lookup-note'><strong>Regrid parcel match · one record returned</strong></div>"+
+          fields.filter(x=>x[1]!==null&&x[1]!==undefined&&x[1]!=="").map(x=>"<div class='rol-lookup-note'><strong>"+esc(x[0])+":</strong> "+esc(x[1])+"</div>").join("")+
+          "<div class='rol-lookup-note'>Source: Regrid. Assessed value is not ARV or a current appraisal. Parcel match does not establish clear title, lien status, auction status, interior condition or legal ownership. Verify county records and source documents.</div>";
+      }
+      if(status)status.textContent="Regrid parcel returned · 1 result · verify county records and title separately";
+    }catch(error){
+      const message=error&&error.message?error.message:"Request failed.";
+      if(box)box.innerHTML="<div class='rol-lookup-note'><strong>Regrid lookup:</strong> "+esc(message)+"</div>";
+      if(status)status.textContent="Regrid not ready: "+message;
     }
   }
 
@@ -188,7 +282,7 @@
     tools.innerHTML =
       "<div class='rol-chart-actions'><button class='primary' id='rolRefreshChart' type='button'>↻ Refresh chart</button><button id='rolUseStockFirst' type='button'>Stock-first view</button><span id='rolChartHeightText' style='font-size:10px;color:#91a0b8'>Chart controls</span></div>" +
       "<label class='rol-chart-height'>Chart height <input id='rolChartHeight' type='range' min='260' max='760' step='20' value='430'><b id='rolChartHeightValue'>430 px</b></label>" +
-      "<details class='rol-chart-explain'><summary>How to read this chart — simple steps</summary><ol><li>Start with the stock, not the option. Confirm the business/news context and broad market direction.</li><li>Read 6M/1D first, then 4H → 1H → 15M → 5M. Do not let a fast candle overrule the higher timeframe.</li><li>Mark support, resistance and the price that proves the idea wrong before planning entry.</li><li>Check trend, VWAP, momentum and volume together. One indicator alone is not a trade signal.</li><li>Only then review option expiry, spread, open interest, premium and maximum loss in the calculator below.</li></ol><p>TradingView controls the chart inside this embedded frame. The guides below explain indicators but do not claim to draw live study overlays into the frame.</p></details>";
+      "<details class='rol-chart-explain'><summary>How to read this chart — simple steps</summary><ol><li>Start with the stock, not the option. Confirm the business/news context and broad market direction.</li><li>Read 6M/1D first, then 4H → 1H → 15M → 5M. Do not let a fast candle overrule the higher timeframe.</li><li>Mark support, resistance and the price that proves the idea wrong before planning entry.</li><li>Check trend, VWAP, momentum and volume together. One indicator alone is not a trade signal.</li><li>Only then review option expiry, spread, open interest, premium and maximum loss in the calculator below.</li></ol><p>RO’Lyfe Live Chart Desk draws the calculated studies from returned OHLCV bars. The data timestamp and provider coverage still depend on Tickerbot access.</p></details>";
     chartFrame.insertAdjacentElement("afterend", tools);
     $("rolRefreshChart").addEventListener("click", function () {
       if (loadChart) loadChart.click();
@@ -269,7 +363,7 @@
     }
     const groupData = {
       stocks: stocks.map((s) => ({name:s, tv:(["JPM","BAC","GS","MS","WFC","C","V","MA","XOM","CVX","OXY","COP","SLB","CAT","DE","GE","RTX","LMT","BA","FDX","UPS","WMT","COST","TGT","HD","LOW","NKE","DIS","NFLX","LLY"].includes(s) ? "NYSE:" : (["SPY","DIA","IWM","XLF","XLK","XLE","SMH","TLT","GLD"].includes(s) ? "AMEX:" : "NASDAQ:"))+s})),
-      crypto: cryptos.map((s) => ({name:s, tv:"BINANCE:"+s+"USDT"})),
+      crypto: cryptos.map((s) => ({name:s, tv:s+"-USD"})),
       futures: futures.map((s) => ({name:s.split(":").pop(), tv:s}))
     };
     let currentGroup = "stocks";
@@ -288,10 +382,15 @@
     $("rolSymbolList").addEventListener("click", function (event) {
       const button = event.target.closest("[data-tv]");
       if (!button) return;
-      if (chartSymbol) chartSymbol.value = button.getAttribute("data-tv");
-      if ($("rolOptionSymbol")) $("rolOptionSymbol").value = button.getAttribute("data-tv");
+      const selected=button.getAttribute("data-tv");
+      if(currentGroup==="futures"){
+        $("rolScanStatus").textContent=selected+" selected. Futures quotes/candles are not connected to this data provider yet; no synthetic price will be shown.";
+        return;
+      }
+      if (chartSymbol) chartSymbol.value = selected;
+      if ($("rolOptionSymbol")) $("rolOptionSymbol").value = selected;
       if (loadChart) loadChart.click();
-      $("rolScanStatus").textContent = button.getAttribute("data-tv")+" sent to the TradingView chart. Quote fields are not connected.";
+      $("rolScanStatus").textContent=selected+" sent to the RO’Lyfe live candlestick chart. Quote availability is shown by the provider response.";
     });
     function syncSymbol() {
       if ($("rolOptionSymbol")) $("rolOptionSymbol").value = chartSymbol ? chartSymbol.value.trim().toUpperCase() : "NASDAQ:AAPL";
