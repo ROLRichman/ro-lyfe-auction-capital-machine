@@ -47,7 +47,7 @@ input,select,textarea{width:100%;background:#080e1c;color:var(--text);border:1px
 .underwriting-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.underwriting-box{padding:14px;background:var(--panel2)}.underwriting-box span{display:block;color:var(--muted);font-size:10px}.underwriting-box strong{display:block;font-size:20px;margin-top:2px}
 .dynamic-row{border:1px solid var(--border);border-radius:12px;padding:13px;margin-top:10px;background:rgba(255,255,255,.015)}.row-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}
 .ai-underwriter-float{position:fixed;right:18px;bottom:18px;z-index:2000}.ai-underwriter-button{position:relative;width:58px;height:58px;border-radius:50%;border:1px solid rgba(102,217,255,.45);background:linear-gradient(145deg,#10263b,#111d34);color:var(--accent);box-shadow:0 0 0 4px rgba(102,217,255,.05),0 15px 40px rgba(0,0,0,.4);font-size:23px}.ai-dot{position:absolute;width:9px;height:9px;border-radius:50%;background:var(--green);right:3px;top:3px;box-shadow:0 0 12px rgba(84,227,154,.7)}
-.ai-underwriter-panel{position:fixed;right:18px;bottom:88px;z-index:30000;width:min(400px,calc(100vw - 28px));height:520px;background:rgba(10,16,30,.985);border:1px solid var(--border2);border-radius:18px;box-shadow:0 25px 70px rgba(0,0,0,.55);display:none;flex-direction:column;overflow:hidden}.ai-underwriter-panel.open{display:flex}
+.surplus-dropdown{margin-top:12px}.surplus-shine,.surplus-calculate-shine{display:flex;align-items:center;justify-content:space-between;gap:10px;width:100%;border:1px solid rgba(102,217,255,.55);border-radius:13px;padding:13px 15px;color:#eafaff;background:linear-gradient(115deg,rgba(19,55,83,.96),rgba(35,25,83,.96),rgba(19,55,83,.96));box-shadow:0 0 12px rgba(102,217,255,.22),inset 0 0 14px rgba(102,217,255,.08);font-weight:800;cursor:pointer;list-style:none}.surplus-shine::-webkit-details-marker{display:none}.surplus-shine:after{content:"";position:absolute}.surplus-dropdown[open]>.surplus-shine{border-color:rgba(110,235,190,.7);box-shadow:0 0 17px rgba(110,235,190,.22)}.surplus-body{padding-top:12px}.surplus-calculate-row{margin-top:12px}.surplus-calculate-shine{justify-content:center;background:linear-gradient(110deg,#00a6c8,#6455d9,#00a878);color:#fff;letter-spacing:.06em;box-shadow:0 0 18px rgba(0,190,220,.3)}.surplus-case-note{font-size:10px;color:var(--muted);margin-top:8px;line-height:1.45}.ai-panel-tools{display:flex;gap:5px;flex-wrap:wrap;justify-content:flex-end}.ai-panel-tools button{font-size:9px;padding:5px 7px;border:1px solid var(--border2);border-radius:7px;background:var(--panel3);color:var(--text)}@media(max-width:520px){.ai-header{align-items:flex-start;gap:5px;padding:9px}.ai-panel-tools button{font-size:8px;padding:5px}.ai-header-title strong{font-size:12px}}.ai-underwriter-panel{position:fixed;right:18px;bottom:88px;z-index:30000;width:min(400px,calc(100vw - 28px));height:520px;background:rgba(10,16,30,.985);border:1px solid var(--border2);border-radius:18px;box-shadow:0 25px 70px rgba(0,0,0,.55);display:none;flex-direction:column;overflow:hidden}.ai-underwriter-panel.open{display:flex}
 .ai-header{padding:14px 16px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;background:linear-gradient(145deg,var(--panel),var(--panel2))}.ai-header-main{display:flex;align-items:center;gap:9px}.ai-avatar{width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;background:rgba(102,217,255,.1);border:1px solid rgba(102,217,255,.25)}.ai-header-title strong{display:block;font-size:14px}.ai-header-title span{display:block;color:var(--green);font-size:9px;margin-top:2px}.ai-close{border:0;background:transparent;color:var(--muted);font-size:20px}
 .ai-messages{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:9px}.ai-message{max-width:90%;padding:9px 11px;border-radius:11px;font-size:12px;line-height:1.45}.ai-message.system{align-self:flex-start;background:var(--panel3);border:1px solid var(--border)}.ai-message.user{align-self:flex-end;background:rgba(102,217,255,.12);border:1px solid rgba(102,217,255,.25)}.ai-message small{display:block;color:var(--muted);margin-top:4px;font-size:8px}
 .ai-voice-controls{display:flex;gap:7px;flex-wrap:wrap;padding:8px 10px 2px;border-top:1px solid var(--border)}.ai-voice-controls .btn{flex:1;min-width:90px;padding:8px 9px;font-size:11px}.ai-voice-status{padding:3px 12px 7px;color:var(--muted);font-size:9px;line-height:1.35}.ai-quick{display:flex;gap:6px;overflow-x:auto;padding:8px 10px;border-top:1px solid var(--border)}.ai-quick button{flex:0 0 auto;padding:6px 8px;border:1px solid var(--border);border-radius:999px;background:var(--panel3);color:var(--muted);font-size:9px}.ai-input-row{display:flex;gap:6px;padding:10px;border-top:1px solid var(--border)}.ai-input-row input{flex:1}.ai-send{width:42px;border:1px solid var(--accent);border-radius:9px;background:var(--accent);color:#06101a;font-weight:800}
@@ -500,9 +500,33 @@ footer{margin-top:35px;border-top:1px solid var(--border);padding:30px 0;color:v
       <div class="bo-form"><div class="bo-field"><label for="boInvestment">Investment / lien amount ($)</label><input id="boInvestment" type="number" value="5000" min="0"></div><div class="bo-field"><label for="boInterestRate">Annual interest rate (%)</label><input id="boInterestRate" type="number" value="12" step="0.1" min="0"></div><div class="bo-field"><label for="boLienMonths">Months held</label><input id="boLienMonths" type="number" value="12" min="0"></div><div class="bo-field"><label for="boFees">Costs / fees ($)</label><input id="boFees" type="number" value="100" min="0"></div></div>
       <div class="bo-results"><div class="bo-result"><small>Estimated interest</small><strong id="boLienInterest">$600</strong></div><div class="bo-result"><small>Net estimated return</small><strong id="boLienNet">$500</strong></div><div class="bo-result"><small>Net yield on investment</small><strong id="boLienYield">10.0%</strong></div><div class="bo-result"><small>Estimated proceeds</small><strong id="boLienProceeds">$5,500</strong></div></div><div class="bo-actions"><button id="boCalcLien" class="primary" type="button">Calculate Yield</button></div>
     </article>
-    <article class="bo-card"><h3>Overage / Three-Tier Offer</h3><div class="bo-note">Estimate an overage spread and create three offer reference points from a maximum offer. Confirm legal entitlement, fees, and county procedures.</div>
-      <div class="bo-form"><div class="bo-field"><label for="boSurplus">Potential surplus / overage ($)</label><input id="boSurplus" type="number" value="25000" min="0"></div><div class="bo-field"><label for="boCosts">Estimated costs ($)</label><input id="boCosts" type="number" value="2500" min="0"></div><div class="bo-field"><label for="boMaxOffer">Maximum offer ($)</label><input id="boMaxOffer" type="number" value="10000" min="0"></div><div class="bo-field"><label for="boOfferPct">Target offer % of max</label><input id="boOfferPct" type="number" value="80" min="0" max="100"></div></div>
-      <div class="bo-results"><div class="bo-result"><small>Estimated net surplus</small><strong id="boNetSurplus">$22,500</strong></div><div class="bo-result"><small>Target offer</small><strong id="boTargetOffer">$8,000</strong></div><div class="bo-result"><small>Tier 1 / conservative</small><strong id="boTier1">$6,000</strong></div><div class="bo-result"><small>Tier 2 / target</small><strong id="boTier2">$8,000</strong></div><div class="bo-result bo-wide"><small>Tier 3 / ceiling</small><strong id="boTier3">$10,000</strong></div></div><div class="bo-actions"><button id="boCalcOffers" class="primary" type="button">Calculate Offers</button></div>
+    <article class="bo-card" id="surplus-recovery">
+      <h3>Foreclosure Surplus Recovery Desk</h3>
+      <div class="bo-note">Illustrative claimant-recovery estimate. An address is optional for the calculator; use verified county or trustee figures before contacting a claimant or quoting a fee.</div>
+      <details class="surplus-dropdown">
+        <summary class="surplus-shine">✨ Open Surplus Recovery Calculator <span aria-hidden="true">⌄</span></summary>
+        <div class="surplus-body">
+          <div class="bo-form">
+            <div class="bo-field"><label for="surplusAddress">Property address (optional)</label><input id="surplusAddress" type="text" placeholder="Example: 123 Main Street"></div>
+            <div class="bo-field"><label for="surplusState">State</label><input id="surplusState" type="text" value="PA" maxlength="2" placeholder="PA"></div>
+            <div class="bo-field"><label for="surplusCounty">County / jurisdiction</label><input id="surplusCounty" type="text" value="Philadelphia" placeholder="County or city"></div>
+            <div class="bo-field"><label for="surplusGross">Estimated gross surplus ($)</label><input id="surplusGross" type="number" min="0" step="0.01" value="25000"></div>
+            <div class="bo-field"><label for="surplusCosts">Estimated approved costs ($)</label><input id="surplusCosts" type="number" min="0" step="0.01" value="500"></div>
+            <div class="bo-field"><label for="surplusFeePct">Proposed recovery fee</label><select id="surplusFeePct"><option value="20">20%</option><option value="25">25%</option><option value="30" selected>30%</option><option value="35">35%</option><option value="40">40%</option></select></div>
+          </div>
+          <div class="bo-warning">Fee percentages are planning scenarios only. State statutes, court rules, program terms, licensing requirements and fee caps may restrict or prohibit a proposed fee. Confirm the applicable rules and use a compliant written agreement before offering recovery services.</div>
+          <div class="bo-results">
+            <div class="bo-result"><small>Estimated surplus after costs</small><strong id="surplusNet">$24,500</strong></div>
+            <div class="bo-result"><small>Illustrative service fee</small><strong id="surplusFee">$7,350</strong></div>
+            <div class="bo-result"><small>Estimated claimant balance</small><strong id="surplusClaimant">$17,150</strong></div>
+            <div class="bo-result"><small>Fee scenario</small><strong id="surplusRate">30%</strong></div>
+          </div>
+          <div class="surplus-case-note" id="surplusCaseNote">Example mode · No property address entered. These are sample inputs, not verified available funds.</div>
+          <div class="bo-actions"><button id="surplusSave" type="button" class="surplus-shine">💾 Save Example / Case</button><button id="surplusReset" type="button">↺ Reset Example</button></div>
+        </div>
+      </details>
+      <div class="bo-actions surplus-calculate-row"><button id="surplusCalculate" type="button" class="surplus-calculate-shine">✦ CALCULATE SURPLUS ✦</button></div>
+      <div class="bo-note" id="surplusSaveStatus" aria-live="polite">Enter a property address if available, or run the sample calculation without one.</div>
     </article>
   </div>
 </div></section>
@@ -531,7 +555,7 @@ Planning and underwriting support only. No valuation, financing, approval, profi
 <div class="ai-underwriter-panel" id="aiPanel" aria-hidden="true">
   <div class="ai-header">
     <div class="ai-header-main"><div class="ai-avatar">🤖</div><div class="ai-header-title"><strong>RO'Lyfe AI Underwriter™</strong><span>LIVE MACHINE SNAPSHOT</span></div></div>
-    <button class="ai-close" type="button" onclick="toggleAI(false)">×</button>
+    <div class="ai-panel-tools"><button type="button" onclick="saveAIConversation()">💾 Save</button><button type="button" onclick="window.location.reload()">↻ Refresh</button><button type="button" onclick="resetAIConversation()">Reset</button><button class="ai-close" type="button" onclick="toggleAI(false)">×</button></div>
   </div>
   <div class="ai-messages" id="aiMessages"></div>
   <div class="ai-quick">
@@ -835,6 +859,20 @@ function askAI(preset){
   addAIMessage("user",q);input.value="";
   setTimeout(()=>addAIMessage("system",aiAnswer(q)),180);
 }
+function saveAIConversation(){
+  const messages=[...document.querySelectorAll("#aiMessages .ai-message")].map(m=>(m.classList.contains("user")?"YOU: ":"RO'LYFE AI: ")+m.innerText.trim());
+  if(!messages.length){showAIToast("There is no conversation to save yet.");return;}
+  const body="RO'Lyfe AI Underwriter conversation\\nSaved: "+new Date().toLocaleString()+"\\n\\n"+messages.join("\\n\\n");
+  try{localStorage.setItem("rolyfe-ai-underwriter-last-save",body);}catch(e){}
+  const blob=new Blob([body],{type:"text/plain;charset=utf-8"}),url=URL.createObjectURL(blob),a=document.createElement("a");
+  a.href=url;a.download="ROLyfe-AI-Conversation-"+new Date().toISOString().slice(0,10)+".txt";a.click();URL.revokeObjectURL(url);
+  showAIToast("Conversation saved to your device and this browser.");
+}
+function resetAIConversation(){
+  rolAiStopVoice();$("aiMessages").innerHTML="";
+  addAIMessage("system","I’m your RO'Lyfe AI Underwriter. I can read the machine snapshot, calculate the deal, identify missing diligence, explain bid room/capital need, and flag items that still require verification.");
+  $("aiInput").value="";if($("aiVoiceStatus"))$("aiVoiceStatus").textContent="Conversation reset. Ready for a new question.";
+}
 let rolAiRecognition=null;
 function rolAiStopVoice(){if(window.speechSynthesis)window.speechSynthesis.cancel();if(rolAiRecognition){try{rolAiRecognition.stop()}catch(e){}}const s=$("aiVoiceStatus");if(s)s.textContent="Speech stopped.";}
 function rolAiReadLatest(){
@@ -847,15 +885,22 @@ function rolAiReadLatest(){
   utterance.onerror=()=>{$("aiVoiceStatus").textContent="Speech playback could not finish. Try again.";};
   window.speechSynthesis.speak(utterance);
 }
+let rolAiTranscript="";
 function rolAiListen(){
   const SpeechRecognition=window.SpeechRecognition||window.webkitSpeechRecognition;
   if(!SpeechRecognition){$("aiVoiceStatus").textContent="Speech input is not supported here. You can still use Read answer.";return;}
   if(rolAiRecognition){try{rolAiRecognition.stop()}catch(e){}}
-  rolAiRecognition=new SpeechRecognition();rolAiRecognition.lang="en-US";rolAiRecognition.interimResults=false;rolAiRecognition.maxAlternatives=1;
-  rolAiRecognition.onstart=()=>{$("aiVoiceStatus").textContent="Listening… speak your question.";};
-  rolAiRecognition.onresult=e=>{const heard=e.results?.[0]?.[0]?.transcript||"";if(heard){$("aiInput").value=heard;$("aiVoiceStatus").textContent="Heard: "+heard;askAI();}};
-  rolAiRecognition.onerror=e=>{$("aiVoiceStatus").textContent="Microphone: "+(e.error||"could not start");};
-  rolAiRecognition.onend=()=>{rolAiRecognition=null;};
+  rolAiTranscript="";rolAiRecognition=new SpeechRecognition();rolAiRecognition.lang="en-US";rolAiRecognition.continuous=true;rolAiRecognition.interimResults=true;rolAiRecognition.maxAlternatives=1;
+  rolAiRecognition.onstart=()=>{$("aiVoiceStatus").textContent="Listening… speak naturally. Tap Stop when finished.";};
+  rolAiRecognition.onresult=e=>{
+    let finalText="",interimText="";
+    for(let i=e.resultIndex;i<e.results.length;i++){const part=e.results[i][0]?.transcript||"";if(e.results[i].isFinal)finalText+=part+" ";else interimText+=part;}
+    if(finalText)rolAiTranscript+=finalText;
+    $("aiInput").value=(rolAiTranscript+interimText).trim();
+    $("aiVoiceStatus").textContent="Listening… captured "+$("aiInput").value.length+" characters. Tap Stop, then send.";
+  };
+  rolAiRecognition.onerror=e=>{$("aiVoiceStatus").textContent="Microphone: "+(e.error||"could not start")+". Any captured words remain in the question box.";};
+  rolAiRecognition.onend=()=>{rolAiRecognition=null;if($("aiInput").value.trim())$("aiVoiceStatus").textContent="Recording ended. Your words are in the question box — review and tap send.";};
   try{rolAiRecognition.start();}catch(e){$("aiVoiceStatus").textContent="Microphone is already active or unavailable.";}
 }
 document.addEventListener("input",e=>{
@@ -866,7 +911,21 @@ document.addEventListener("input",e=>{
 
 window.addEventListener("scroll",()=>{ $("backToTop").classList.toggle("show",window.scrollY>500) });
 
+function calculateSurplusRecovery(){
+ const gross=Math.max(0,Number($("surplusGross")?.value)||0),costs=Math.max(0,Number($("surplusCosts")?.value)||0),pct=Math.max(0,Math.min(100,Number($("surplusFeePct")?.value)||0));
+ const net=Math.max(0,gross-costs),fee=net*pct/100,claimant=net-fee;
+ const fmt=n=>new Intl.NumberFormat("en-US",{style:"currency",currency:"USD",maximumFractionDigits:2}).format(n);
+ $("surplusNet").textContent=fmt(net);$("surplusFee").textContent=fmt(fee);$("surplusClaimant").textContent=fmt(claimant);$("surplusRate").textContent=pct.toFixed(0)+"%";
+ const address=$("surplusAddress").value.trim(),county=$("surplusCounty").value.trim(),state=$("surplusState").value.trim().toUpperCase();
+ $("surplusCaseNote").textContent=(address?address+" · ":"Example mode · No property address entered. ")+(county||"Jurisdiction not entered")+(state?", "+state:"")+" · Illustrative only; verify funds, costs, claimant rights and fee rules.";
+ return {address,county,state,gross,costs,pct,net,fee,claimant,calculatedAt:new Date().toISOString()};
+}
 document.addEventListener("DOMContentLoaded",()=>{
+  $("surplusCalculate")?.addEventListener("click",()=>{calculateSurplusRecovery();$("surplusSaveStatus").textContent="Calculation updated. Confirm the official surplus amount and jurisdiction rules.";});
+  ["surplusGross","surplusCosts","surplusFeePct","surplusAddress","surplusCounty","surplusState"].forEach(id=>$(id)?.addEventListener("input",()=>calculateSurplusRecovery()));
+  $("surplusSave")?.addEventListener("click",()=>{const record=calculateSurplusRecovery();let cases=[];try{cases=JSON.parse(localStorage.getItem("rolyfeSurplusCases")||"[]");}catch(e){}cases.unshift(record);localStorage.setItem("rolyfeSurplusCases",JSON.stringify(cases.slice(0,100)));$("surplusSaveStatus").textContent="Saved in this browser on this device. It does not sync to another device.";});
+  $("surplusReset")?.addEventListener("click",()=>{$("surplusAddress").value="";$("surplusState").value="PA";$("surplusCounty").value="Philadelphia";$("surplusGross").value="25000";$("surplusCosts").value="500";$("surplusFeePct").value="30";calculateSurplusRecovery();$("surplusSaveStatus").textContent="Example inputs restored.";});
+  calculateSurplusRecovery();
   buildRehabTable(); updateDueProgress(); calculateDealUI();
   const qs=window.ROLyfeTaxYieldRules?.researchQuestions?.()||[]; const ql=$("countyScriptList"); if(ql) ql.innerHTML=qs.map(x=>`<li>${x}</li>`).join("");
   const saved=JSON.parse(localStorage.getItem("rolyfeAuctionSnapshots")||"[]");$("savedCount").textContent=Math.min(saved.length,50);$("propertyCount").textContent=saved.length;
