@@ -197,7 +197,7 @@
         wind:Math.round(c.wind_speed_10m)+" mph",
         humidity:c.relative_humidity_2m+"%"
       };
-      let card=$("rolAddressWeather");
+      let card=$("rolAddressWeatherCard");
       if(!card){card=document.createElement("div");card.id="rolAddressWeatherCard";card.className="rol-weather";const bar=document.querySelector(".rol-mapbar");if(bar)bar.insertAdjacentElement("afterend",card);}
       card.id="rolAddressWeatherCard";
       card.innerHTML="<div><b>Weather at searched address</b><strong>"+esc(item.temperature)+"</strong>Feels "+esc(item.feels)+" · Wind "+esc(item.wind)+"<br>Humidity "+esc(item.humidity)+"<br><small>"+esc(item.name)+" · Open-Meteo</small></div>";
