@@ -50,7 +50,7 @@ const r=await fetch(url,{method:"POST",headers:{apikey:anon,Authorization:"Beare
 const d=await r.json();if(!r.ok)throw new Error(d.error||("AI service HTTP "+r.status));
 $("rolAiAnswer").textContent=d.answer||"No answer returned.";
 $("rolAiStatus").textContent="Answered by "+(d.model||"RO'Lyfe AI")+". Verify live prices and official property records before acting.";
-}catch(e){$("rolAiAnswer").textContent=e.message;$("rolAiStatus").textContent="If OPENAI_API_KEY is missing, add it in this Supabase project's Edge Function Secrets. Never put the key in page code.";}
+}catch(e){$("rolAiAnswer").textContent=e.message;$("rolAiStatus").textContent="The secure AI service is not configured or could not be reached. Voice playback can still read the on-screen message.";}
 finally{$("rolAiAsk").disabled=false;}
 }
 $("rolAiAsk").onclick=ask;
