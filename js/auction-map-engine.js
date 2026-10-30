@@ -18,6 +18,7 @@
     map: null,
     tileLayer: null,
     markers: null,
+    weatherMarkers: null,
     mode: "global",
     busy: false,
     lastLookupAt: 0
@@ -91,6 +92,7 @@
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap</a> contributors'
     }).addTo(state.map);
     state.markers = window.L.layerGroup().addTo(state.map);
+    state.weatherMarkers = window.L.layerGroup().addTo(state.map);
 
     // Keep wheel zoom opt-in to reduce accidental zooming on mobile/trackpads.
     state.map.on("click", () => {});
@@ -239,6 +241,32 @@
     return showGlobal();
   }
 
+  function setWeatherMarkers(items) {
+    if (!ensureMap()) return false;
+    if (!state.weatherMarkers) state.weatherMarkers = window.L.layerGroup().addTo(state.map);
+    state.weatherMarkers.clearLayers();
+    (Array.isArray(items) ? items : []).forEach((item) => {
+      const lat = Number(item.lat), lon = Number(item.lon);
+      if (!Number.isFinite(lat) || !Number.isFinite(lon)) return;
+      const popup = "<strong>" + escapeHtml(item.name || "Weather") + "</strong>" +
+        "<br>" + escapeHtml(item.temperature || "—") +
+        (item.feels ? "<br>Feels " + escapeHtml(item.feels) : "") +
+        (item.wind ? "<br>Wind " + escapeHtml(item.wind) : "") +
+        (item.humidity ? "<br>Humidity " + escapeHtml(item.humidity) : "");
+      window.L.circleMarker([lat, lon], {
+        radius: 8, color: "#07111f", weight: 2, fillColor: "#66d9ff",
+        fillOpacity: 0.95
+      }).bindPopup(popup).addTo(state.weatherMarkers);
+    });
+    return true;
+  }
+
+  function resize() {
+    if (!state.map) return ensureMap();
+    state.map.invalidateSize({ pan: false });
+    return true;
+  }
+
   // Expose the names already called by the current HTML.
   window.setAuctionMapMode = setMode;
   window.mapCurrentAuctionProperty = mapCurrentProperty;
@@ -252,7 +280,11 @@
     setMode,
     mapCurrentProperty,
     resetMap,
-    refresh: refreshGlobalIntelligence
+    refresh: refreshGlobalIntelligence,
+    locate: lookupLocation,
+    addWeatherMarkers: setWeatherMarkers,
+    resize,
+    getMap: () => state.map
   };
 
   function init() {
