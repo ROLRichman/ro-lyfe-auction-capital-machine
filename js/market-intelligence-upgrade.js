@@ -485,5 +485,115 @@
     };
   }
 
+
+  // Find a Gapper: five educational deal examples with lender-style screening.
+  const gapperStyle=document.createElement("style");
+  gapperStyle.textContent=[
+    ".rol-gapper-trigger{position:fixed;left:12px;bottom:18px;z-index:2250;border:1px solid #66d9ff;border-radius:22px;padding:10px 14px;background:#10243b;color:#66d9ff;font-size:12px;font-weight:850;box-shadow:0 8px 25px #0008}",
+    ".rol-gapper-panel{position:fixed;left:12px;bottom:68px;z-index:2251;width:min(470px,calc(100vw - 24px));max-height:78vh;overflow:auto;overscroll-behavior:contain;background:#091323;border:1px solid #39506f;border-radius:16px;box-shadow:0 24px 70px #000b;padding:14px;display:none;color:#eef6ff}",
+    ".rol-gapper-panel.open{display:block}.rol-gapper-head{display:flex;align-items:center;justify-content:space-between;gap:10px}.rol-gapper-head h3{margin:0;font-size:17px}.rol-gapper-close{border:1px solid #405574;background:#13213a;color:#eef6ff;border-radius:8px;padding:6px 9px}",
+    ".rol-gapper-panel p{font-size:11px;color:#a8bad1;line-height:1.5}.rol-gapper-panel label{display:block;font-size:10px;color:#a8bad1;margin:10px 0 5px}.rol-gapper-panel select{width:100%;padding:10px;background:#080f1d;color:#f4f7fb;border:1px solid #344a69;border-radius:8px}",
+    ".rol-gap-results{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin:10px 0}.rol-gap-results>div{min-width:0;padding:10px;border:1px solid #293e5d;border-radius:9px;background:#101d32}.rol-gap-results small{display:block;color:#91a0b8;font-size:9px}.rol-gap-results strong{display:block;font-size:15px;margin-top:3px;overflow-wrap:anywhere}",
+    ".rol-gap-status{padding:10px;border:1px solid #3c5877;background:#0d1c30;border-radius:9px;font-size:11px;line-height:1.5;color:#eaf2ff}.rol-gap-status.warn{border-color:#896528;background:#261d10;color:#f5dfad}",
+    ".rol-gap-actions{display:flex;gap:7px;flex-wrap:wrap;margin:10px 0}.rol-gap-actions button{border:1px solid #405574;background:#13213a;color:#eef6ff;border-radius:8px;padding:9px 10px;font-size:10px;font-weight:800}.rol-gap-actions button.primary{background:#66d9ff;color:#06101a;border-color:#66d9ff}",
+    ".rol-gap-details{border:1px solid #293e5d;border-radius:9px;margin:8px 0;background:#0d182a;overflow:hidden}.rol-gap-details summary{cursor:pointer;padding:10px;font-size:11px;font-weight:800;color:#66d9ff}.rol-gap-details .rol-gap-body{padding:0 11px 11px;color:#c3d0df;font-size:10px;line-height:1.55}.rol-gap-body b{color:#f4f7fb}.rol-gap-body ul{padding-left:17px;margin:6px 0}.rol-gap-body li{margin:4px 0}",
+    ".rol-gap-note{font-size:9px!important;color:#91a0b8!important;line-height:1.5}.rol-gap-bar{height:7px;background:#182a40;border-radius:20px;overflow:hidden;margin:8px 0}.rol-gap-bar i{display:block;height:100%;background:#66d9ff}",
+    "@media(max-width:650px){.rol-gapper-panel{left:8px;bottom:66px;width:calc(100vw - 16px);max-height:75vh;padding:11px}.rol-gapper-trigger{left:8px;bottom:12px;padding:9px 11px}.rol-gap-results{grid-template-columns:repeat(2,minmax(0,1fr))}}"
+  ].join("");
+  document.head.appendChild(gapperStyle);
+
+  const gapperScenarios=[
+    {id:"starter",name:"$75K · REO starter rental",type:"buyhold",purchase:75000,arv:130000,rehab:20000,closing:7500,selling:10400,buyerCash:20000,targetProfit:15000,contingency:5000,rate:9.5,months:6,explain:"A lower-price REO may look attractive on equity, but the illustrative 75% loan is only $56,250—below the partner's indicative $75,000 minimum loan. The model therefore treats lender proceeds as $0 until a different product is confirmed."},
+    {id:"deed",name:"$150K · tax-deed acquisition",type:"deed",purchase:150000,arv:260000,rehab:25000,closing:17000,selling:20800,buyerCash:125000,targetProfit:40000,contingency:7500,rate:0,months:6,explain:"A tax-lien certificate is a claim, not an immediate house purchase. A tax-deed/foreclosure deed transaction still needs statutory notice, sale confirmation, deed recording, redemption review where applicable, possession and insurable-title checks. This illustration assumes $0 lender advance at the auction stage."},
+    {id:"flip250",name:"$250K · fix-and-flip",type:"flip",purchase:250000,arv:420000,rehab:50000,closing:15000,selling:33600,buyerCash:20000,targetProfit:60000,contingency:10000,rate:12,months:6,explain:"At 70% of the $420,000 ARV, the notional facility ceiling is $294,000. That does not mean the lender wires $294,000 at closing: rehab may be reimbursed by draw, and the lender can impose purchase-price, LTC, liquidity, credit, experience and property-condition caps."},
+    {id:"hold350",name:"$350K · buy-and-hold rental",type:"buyhold",purchase:350000,arv:450000,rehab:15000,closing:30000,selling:0,buyerCash:100000,targetProfit:35000,contingency:10000,rate:9.5,months:12,explain:"The 75% lower-of-purchase/value screen gives $262,500. The estimated principal-and-interest payment below uses an assumed 9.5% fixed rate over 30 years. It excludes taxes, insurance, HOA, repairs, vacancy and lender fees; rent must be verified before DSCR or cash-flow conclusions."},
+    {id:"flip500",name:"$500K · larger fix-and-flip",type:"flip",purchase:500000,arv:750000,rehab:65000,closing:35000,selling:60000,buyerCash:50000,targetProfit:90000,contingency:15000,rate:12,months:8,explain:"A 70% ARV ceiling is $525,000. With $50,000 of buyer cash, the simplified gap is $25,000. A lender will still review sponsor experience, credit, liquidity, detailed rehab budget, valuation support, project timeline and the exit buyer/market."}
+  ];
+  const gapperTrigger=document.createElement("button");
+  gapperTrigger.type="button";gapperTrigger.className="rol-gapper-trigger";gapperTrigger.textContent="🧩 Find a Gapper";
+  gapperTrigger.title="Open property purchase and lender gap walkthrough";
+  const gapper=document.createElement("aside");
+  gapper.className="rol-gapper-panel";gapper.id="rolGapperPanel";
+  gapper.innerHTML="<div class='rol-gapper-head'><h3>Find a Gapper · Deal-to-Lender Desk</h3><button type='button' class='rol-gapper-close' id='rolGapperClose'>Close ✕</button></div>"+
+    "<p>Pick a property example. The desk estimates the money required, a possible lender ceiling and the remaining gap. These are worked examples—not a valuation, loan quote or approval.</p>"+
+    "<label for='rolGapScenario'>Choose a property scenario</label><select id='rolGapScenario'>"+gapperScenarios.map((x,i)=>"<option value='"+x.id+"'"+(i===0?" selected":"")+">"+esc(x.name)+"</option>").join("")+"</select>"+
+    "<div id='rolGapScenarioResults'></div>"+
+    "<div class='rol-gap-actions'><button class='primary' id='rolGapUseCalc' type='button'>Use numbers in Financial Toolbox</button><button id='rolGapToPartner' type='button'>Open Partner Desk worksheet</button></div>"+
+    "<details class='rol-gap-details'><summary>① How buying an REO / bank-owned home works</summary><div class='rol-gap-body'><ol><li><b>Find and identify:</b> confirm the exact address, parcel/APN, auction seller, residential type and ownership.</li><li><b>Read sale rules:</b> registration, deposits/EMD, proof of funds, cash-only rules, buyer premium, closing deadline, access and occupancy.</li><li><b>Inspect the risk:</b> title/lien/tax/municipal review, insurance, flood, condition, repairs and possession. Auction purchases are commonly as-is; read that auction's terms.</li><li><b>Price the deal:</b> use supported comparable sales, contractor scope, carrying/closing/selling costs and a contingency—not just an online estimate.</li><li><b>Arrange funds:</b> show cash to close and a lender's written eligibility/terms before relying on financing. Many auction deadlines are shorter than normal mortgage timelines.</li><li><b>Close and execute:</b> follow deed/closing instructions, secure property, complete rehab and exit through a verified buyer or rental strategy.</li></ol></div></details>"+
+    "<details class='rol-gap-details'><summary>② How a tax lien differs from a tax deed</summary><div class='rol-gap-body'><b>Tax lien certificate:</b> you acquire a statutory tax claim/certificate and rights defined by that jurisdiction; you do not automatically own the house. Redemption, notice and foreclosure procedures apply.<br><b>Tax deed / tax foreclosure sale:</b> the process may transfer title after statutory requirements and deed recording. Redemption rights, notice defects, title insurability, possession and surviving interests vary by state and county.<br><b>Rule:</b> do not market a lien as a house purchase or assume a deed is immediately financeable. Confirm the official county process and have a title/real-estate attorney review the file.</div></details>"+
+    "<details class='rol-gap-details'><summary>③ What the lender underwriter needs to see</summary><div class='rol-gap-body'><ul><li>Borrower/guarantor and borrowing entity; ownership/authorized signer details.</li><li>Property address, parcel, property type, purchase contract or auction terms, deposits and close date.</li><li>ARV supported by relevant closed comparable sales, condition and photos/inspection status.</li><li>Contractor's written scope and line-item labor/material budget, permits, timeline, insurance and draw schedule.</li><li>Borrower experience: prior sales history, REO schedule, landlord/flip track record and liquidity/POF.</li><li>Use of funds, requested loan, cash contribution, reserves, proposed exit, rent/expenses for hold deals.</li><li>Title, tax, municipal, lien, occupancy, insurance, zoning and flood checks where applicable.</li></ul><b>Do not send SSNs or dates of birth by ordinary email.</b> Use the lender's approved secure application channel.</div></details>"+
+    "<details class='rol-gap-details'><summary>④ Contractor meeting · questions to ask</summary><div class='rol-gap-body'><ul><li>Walk the property and produce a written room-by-room / trade-by-trade scope.</li><li>Separate labor, materials, permits, disposal, contingency and owner-supplied items.</li><li>Confirm licenses, insurance, references, start date, duration and who supervises subs.</li><li>Set draw milestones based on completed, inspected work—not just calendar dates.</li><li>Agree change-order approvals, warranties, lien waivers and cleanup/security responsibilities.</li><li>Ask: would you buy this property, bring a buyer, or partner? What price and terms?</li></ul></div></details>"+
+    "<details class='rol-gap-details'><summary>⑤ Buyer / investor conversation · questions to ask</summary><div class='rol-gap-body'><ul><li>Are you the end buyer, landlord, cash buyer, operator or capital partner?</li><li>What property type, price band, neighborhood and return/risk profile fit?</li><li>What is your maximum price after inspection, repairs, title, taxes and closing costs?</li><li>Can you show proof of funds or lender pre-qualification and close by the auction deadline?</li><li>Will you buy as-is, take occupancy risk, or need an interior inspection?</li><li>For investors: what capital amount, preferred structure, decision process and exit?</li></ul></div></details>"+
+    "<p class='rol-gap-note'>The partner profile discussed previously is an indicative screening reference only: buy/hold may be capped around 75% of the lower of purchase price or value, with a stated minimum loan; fix/flip may be screened around 70–75% of ARV and require prior experience and borrower qualifications. Reconfirm today's guidelines directly with the funding partner. A lender may size to a lower amount or decline.</p>";
+  document.body.append(gapperTrigger,gapper);
+  gapperTrigger.addEventListener("click",()=>gapper.classList.toggle("open"));
+  $("rolGapperClose").addEventListener("click",()=>gapper.classList.remove("open"));
+
+  const currency=value=>new Intl.NumberFormat("en-US",{style:"currency",currency:"USD",maximumFractionDigits:0}).format(Number(value)||0);
+  function gapCalc(x){
+    const upfront=x.purchase+x.rehab+x.closing;
+    const saleMargin=x.arv-upfront-x.selling;
+    let lender=0,loanRule="",blocker="";
+    if(x.type==="deed"){loanRule="No auction-stage advance assumed";blocker="Tax-deed/title/insurability review: assumed lender proceeds $0 at auction stage.";}
+    else if(x.type==="buyhold"){
+      const candidate=Math.min(x.purchase,x.arv)*.75;
+      if(candidate<75000){loanRule="75% lower-of-price/value = "+currency(candidate);blocker="Below the indicative $75,000 minimum loan; this example does not qualify under that product.";}
+      else{lender=Math.min(candidate,upfront);loanRule="75% of lower purchase/value = "+currency(candidate);blocker="Subject to borrower, property, debt-service, reserve and loan-size underwriting.";}
+    }else{
+      lender=Math.min(x.arv*.70,upfront);
+      loanRule="70% of ARV screening cap = "+currency(x.arv*.70);
+      blocker="Subject to experience, credit, liquidity, appraisal, purchase/LTC caps and rehab draws.";
+    }
+    const gap=Math.max(0,upfront-lender-x.buyerCash);
+    const equity=x.arv-upfront;
+    let monthly=null;
+    if(x.type==="buyhold"&&lender>0){
+      const r=x.rate/1200,n=360;
+      monthly=r>0?lender*r/(1-Math.pow(1+r,-n)):lender/n;
+    }
+    return {upfront,saleMargin,equity,lender,gap,loanRule,blocker,monthly};
+  }
+  function renderGapper(){
+    const id=$("rolGapScenario").value,x=gapperScenarios.find(s=>s.id===id)||gapperScenarios[0],r=gapCalc(x);
+    const status=r.gap===0?"No modeled cash gap after the assumed loan and buyer contribution. Confirm loan draws and closing cash.":"Modeled additional capital gap: "+currency(r.gap)+". Find the gap through lower purchase price, more buyer cash, a qualified partner or a different capital structure.";
+    $("rolGapScenarioResults").innerHTML=
+      "<div class='rol-gap-results'>"+
+      "<div><small>Purchase price</small><strong>"+currency(x.purchase)+"</strong></div>"+
+      "<div><small>Estimated ARV</small><strong>"+currency(x.arv)+"</strong></div>"+
+      "<div><small>Cash needed before lender / sale</small><strong>"+currency(r.upfront)+"</strong></div>"+
+      "<div><small>Illustrative lender ceiling</small><strong>"+currency(r.lender)+"</strong></div>"+
+      "<div><small>Buyer cash assumed</small><strong>"+currency(x.buyerCash)+"</strong></div>"+
+      "<div><small>Remaining capital gap</small><strong>"+currency(r.gap)+"</strong></div>"+
+      "<div><small>Indicative sale spread before financing/tax</small><strong>"+(x.type==="buyhold"?"Not sold · equity cushion "+currency(r.equity):currency(r.saleMargin))+"</strong></div>"+
+      "<div><small>Sale / disposition costs assumed</small><strong>"+currency(x.selling)+"</strong></div>"+
+      "</div>"+
+      "<div class='rol-gap-status"+(r.gap>0?" warn":"")+"'><b>Underwriting view:</b> "+esc(r.loanRule)+". "+esc(r.blocker)+"</div>"+
+      (r.monthly?"<div class='rol-gap-status'>Illustrative monthly principal & interest at "+x.rate.toFixed(1)+"% over 30 years: <b>"+currency(r.monthly)+"/mo</b>. Excludes tax, insurance, HOA, utilities, vacancy, maintenance, lender fees and reserves.</div>":"")+
+      "<p>"+esc(x.explain)+"</p>"+
+      "<p class='rol-gap-note'>Gross sale spread = ARV − purchase − rehab − closing/holding − assumed selling cost. The cash gap is a simplified planning estimate; lenders may hold back rehab draws, exclude closing costs, require reserves and apply lower caps. No number is an approval or guaranteed profit.</p>";
+    return {scenario:x,result:r};
+  }
+  $("rolGapScenario").addEventListener("change",renderGapper);
+  $("rolGapUseCalc").addEventListener("click",()=>{
+    const data=renderGapper(),x=data.scenario,r=data.result;
+    const setValue=(id,value)=>{const el=$(id);if(el)el.value=String(value);};
+    setValue("boArv",x.arv);setValue("boRehab",x.rehab);
+    setValue("boClosing",x.closing+x.selling);setValue("boProfit",x.targetProfit);
+    setValue("boContingency",x.contingency);setValue("boCurrentBid",x.purchase);
+    setValue("boProjectCost",r.upfront);setValue("boBuyerCash",x.buyerCash);
+    setValue("boLoanAmount",r.lender);setValue("boCollateralValue",x.arv);
+    setValue("boRate",x.rate||0);setValue("boMonths",x.months);
+    ["boCalcBid","boCalcFunding"].forEach(id=>$(id)?.click());
+    gapper.classList.remove("open");
+    const section=$("calculators");if(section)section.scrollIntoView({behavior:"smooth",block:"start"});
+  });
+  $("rolGapToPartner").addEventListener("click",()=>{
+    gapper.classList.remove("open");
+    const section=$("partner-underwriting");
+    if(section)section.scrollIntoView({behavior:"smooth",block:"start"});
+    else window.scrollTo({top:document.documentElement.scrollHeight,behavior:"smooth"});
+  });
+  renderGapper();
+
   console.info("RO'Lyfe Market + Property Intelligence Upgrade ready");
 })();
