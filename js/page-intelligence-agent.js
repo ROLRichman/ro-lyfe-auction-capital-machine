@@ -19,8 +19,8 @@ function syncWithUnderwriter(){
  // Hide page-positioning/scroll controls while the underwriter is open;
  // these otherwise sit over the chat composer on small screens.
  document.querySelectorAll("button,a,[role='button']").forEach(el=>{
-   const label=(el.innerText||el.getAttribute("aria-label")||el.title||"").replace(/\\s+/g," ").trim();
-   const isObstruction=/mid-page|lock screen|↑\\s*top|back to top/i.test(label);
+   const label=(el.innerText||el.getAttribute("aria-label")||el.title||"").replace(/\s+/g," ").trim();
+   const isObstruction=/mid-page|lock screen|↑\s*top|back to top/i.test(label);
    if(active&&isObstruction){
      if(!el.dataset.rolAiHidden){el.dataset.rolAiHidden="1";el.dataset.rolAiDisplay=el.style.display||"";}
      el.style.setProperty("display","none","important");
