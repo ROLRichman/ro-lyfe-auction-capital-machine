@@ -318,7 +318,7 @@
     applyChartHeight();
 
     const indicators = [
-      ["EMA Trend · 5/10/20/50/200","Trend alignment","Compare price with the five exponential averages. Short EMAs show near-term momentum; EMA 50 and 200 add broader trend context. Stacked rising averages support an uptrend; tangled averages warn of chop.","M5/10/20/50/200"],
+      ["EMA Trend · 5/10/20/40/50/200","Trend alignment","Compare price with the five exponential averages. Short EMAs show near-term momentum; EMA 40 adds a medium-term trend reference, while EMA 50 and 200 add broader trend context. Stacked rising averages support an uptrend; tangled averages warn of chop.","M5/10/20/50/200"],
       ["VWAP","Session value","Compare price with the session volume-weighted average. Holding above VWAP can support an intraday bullish read; rejection below it can show sellers defending value. Reassess after each session.","VWAP"],
       ["RSI","Momentum / exhaustion","RSI measures the speed and magnitude of recent price changes. Strong trends can stay overbought or oversold; look for context, divergence and confirmation rather than automatic 70/30 reversals.","RSI"],
       ["MACD","Momentum change","MACD compares two moving averages and a signal line. Watch the zero line, signal crosses and histogram contraction/expansion for momentum shifts—not guaranteed direction.","MACD"],
@@ -339,7 +339,7 @@
     function visualFor(i) { return i===0||i===1||i===12 ? trendSvg : (i===3||i===7||i===11||i===13 ? barsSvg : oscSvg); }
     const panel = document.createElement("section");
     panel.className = "rol-indicator-panel";
-    panel.innerHTML = "<h4>RO’Lyfe 14-Indicator Playbook</h4><p>Three core checks stay visible. Open the dropdown for the remaining studies. The mini visuals teach what to look for; they are not calculated from this embedded chart.</p>";
+    panel.innerHTML = "<h4>RO’Lyfe 14-Indicator Playbook</h4><p>Three core checks stay visible. Open the dropdown for the remaining studies. The mini visuals teach what to look for; the separate Live Chart Desk calculates its supported studies from loaded OHLCV candles.</p>";
     const core = document.createElement("div");
     core.className = "rol-indicator-grid";
     const rest = document.createElement("details");
@@ -358,7 +358,7 @@
     panel.appendChild(rest);
     const caveat = document.createElement("div");
     caveat.className = "rol-visual-caveat";
-    caveat.textContent = "Important: the three main studies and the remaining 11 are visual explainers, not live calculations. TradingView’s embedded iframe is cross-origin and does not expose its study settings to this page.";
+    caveat.textContent = "The playbook cards are visual explainers. The Live Chart Desk below the chart calculates its supported EMA, VWAP, RSI, MACD, Stochastic and other selectable studies from returned OHLCV candles; provider coverage and timeframe history vary.";
     panel.appendChild(caveat);
     tools.insertAdjacentElement("afterend", panel);
 
