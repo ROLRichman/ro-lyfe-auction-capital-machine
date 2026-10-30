@@ -465,8 +465,8 @@ footer{margin-top:35px;border-top:1px solid var(--border);padding:30px 0;color:v
     <article class="bo-card">
       <h3>TradingView Market Chart</h3><div class="bo-note">Default: NASDAQ:AAPL. Change the symbol using TradingView’s symbol format, for example NASDAQ:NVDA or NYSE:PLTR.</div>
       <div class="bo-form"><div class="bo-field"><label for="boSymbol">Symbol</label><input id="boSymbol" value="NASDAQ:AAPL" maxlength="40"></div><div class="bo-field"><label for="boInterval">Chart interval</label><select id="boInterval"><option value="D">1D</option><option value="240">4H</option><option value="60">1H</option><option value="15">15M</option><option value="5">5M</option><option value="W">1W</option></select></div></div>
-      <div class="bo-actions"><button class="primary" id="boLoadChart" type="button">Load Chart</button><a class="bo-btn" href="https://www.tradingview.com/" target="_blank" rel="noopener noreferrer">Open TradingView ↗</a></div>
-      <iframe class="bo-chart" id="boChart" title="TradingView market chart" loading="lazy" referrerpolicy="no-referrer" src="https://www.tradingview.com/widgetembed/?symbol=NASDAQ%3AAAPL&interval=D&theme=dark&style=1&locale=en&hide_top_toolbar=false&allow_symbol_change=true&save_image=false&calendar=false"></iframe>
+      <div class="bo-actions"><button class="primary" id="boLoadChart" type="button">Load Chart</button><a class="bo-btn" href="https://rolrichman.github.io/RO-Lyfe-Trading-Intelligence-Classroom/live-chart-desk/" target="_blank" rel="noopener noreferrer">Open Live Chart Desk ↗</a></div>
+      <iframe class="bo-chart" id="boChart" title="RO’Lyfe live candlestick chart with calculated indicators" loading="lazy" referrerpolicy="no-referrer" src="https://rolrichman.github.io/RO-Lyfe-Trading-Intelligence-Classroom/live-chart-desk/?embed=auction&amp;symbol=AAPL&amp;interval=1d"></iframe>
     </article>
     <article class="bo-card">
       <h3>RO’Lyfe Confirmation Gauge</h3><div class="bo-note">Tick only what your own chart confirms. The score summarizes checklist completion, not probability of profit.</div>
@@ -852,7 +852,24 @@ document.addEventListener("DOMContentLoaded",()=>{
  const money=v=>new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',maximumFractionDigits:0}).format(Number.isFinite(v)?v:0);
  const pct=v=>(Number.isFinite(v)?v:0).toFixed(1)+'%';
  function set(id,value){if($(id))$(id).textContent=value;}
- function chart(){const sym=($('boSymbol')?.value||'NASDAQ:AAPL').trim().toUpperCase().replace(/[^A-Z0-9:._-]/g,'');const interval=$('boInterval')?.value||'D';if(!sym)return;set('symbolStatus',sym+' • Stock-first confirmation');const url='https://www.tradingview.com/widgetembed/?symbol='+encodeURIComponent(sym)+'&interval='+encodeURIComponent(interval)+'&theme=dark&style=1&locale=en&hide_top_toolbar=false&allow_symbol_change=true&save_image=false&calendar=false';$('boChart').src=url;}
+ function chart(){
+ const raw=($('boSymbol')?.value||'AAPL').trim().toUpperCase().replace(/[^A-Z0-9:._-]/g,'');
+ if(!raw)return;
+ const sym=raw.includes(':')?raw.split(':').pop():raw;
+ const selected=$('boInterval')?.value||'D';
+ const intervals={D:'1d',240:'4h',60:'1h',15:'15m',5:'5m'};
+ const interval=intervals[selected]||'1d';
+ const frame=$('boChart');if(!frame)return;
+ const base='https://rolrichman.github.io/RO-Lyfe-Trading-Intelligence-Classroom/live-chart-desk/';
+ const existing=frame.getAttribute('src')||'';
+ const target=base+'?embed=auction&symbol='+encodeURIComponent(sym)+'&interval='+encodeURIComponent(interval);
+ set('symbolStatus',sym+' • Tickerbot OHLCV · calculated studies');
+ frame.style.setProperty('height','1450px','important');
+ if(existing.indexOf(base+'?embed=auction')===0&&frame.contentWindow){
+  try{if(frame.contentWindow.ROLyfeChartDesk){frame.contentWindow.ROLyfeChartDesk.setSymbol(sym);frame.contentWindow.ROLyfeChartDesk.setInterval(interval);return;}}catch(e){}
+ }
+ frame.src=target;
+}
  $('boLoadChart')?.addEventListener('click',chart);
  function signal(){const boxes=[...document.querySelectorAll('[data-bo-signal]')],n=boxes.filter(x=>x.checked).length,score=Math.round(n/boxes.length*100);$('boSignalMeter').style.width=score+'%';set('boSignalStatus',n+' / '+boxes.length+' — '+(n>=7?'CHECKLIST STRONG — VERIFY RISK':n>=5?'PARTIAL CONFIRMATION — REVIEW GAPS':'WAIT FOR CONFIRMATION'));}
  document.querySelectorAll('[data-bo-signal]').forEach(x=>x.addEventListener('change',signal));
@@ -890,6 +907,12 @@ document.addEventListener("DOMContentLoaded",()=>{
  // DOMContentLoaded may have fired before this appended script executes.
  if(document.readyState!=='loading'){chart();signal();ladder();bid();funding();lien();offers();vault();}
 })();
+
+window.addEventListener("message",function(event){
+ if(event.origin!=="https://rolrichman.github.io"||!event.data||event.data.type!=="rol-live-chart-symbol")return;
+ const field=document.getElementById("boSymbol");if(field)field.value=event.data.symbol||field.value;
+ const label=document.getElementById("symbolStatus");if(label)label.textContent=(event.data.symbol||"Symbol")+" • synced from live candlestick chart";
+});
 </script>
 
 
