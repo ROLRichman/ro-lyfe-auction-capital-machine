@@ -261,14 +261,14 @@
     advanced.className = "rol-advanced";
     advanced.innerHTML = "<summary>⚙ Advanced Mode · 130-symbol scanner + option execution calculator</summary><div class='rol-advanced-inner'><div class='rol-scan-head'><strong>Market Scanner Universe</strong><span id='rolUniverseCount' class='bo-pill'>130 symbols · watchlist only</span></div><div class='rol-scan-tabs'><button class='active' data-scan='stocks' type='button'>Stocks · 75</button><button data-scan='crypto' type='button'>Crypto · 25</button><button data-scan='futures' type='button'>Futures · 30</button></div><div class='rol-scan-search'><input id='rolScanSearch' placeholder='Filter ticker or instrument…'></div><div class='rol-scan-status' id='rolScanStatus'>Select a ticker to load that instrument in the TradingView chart. No market-data provider is connected to this scanner yet.</div><div class='rol-symbol-list' id='rolSymbolList'></div><div class='rol-quote-disclaimer'><strong>Live quote connection needed.</strong> The chart may show the data available from TradingView, but this scanner does not yet receive live stock, option or futures quote payloads. No prices are fabricated or labelled live. Connect a market-data provider through a secure server-side function before enabling quote columns or alerts.</div><div class='rol-market-note'><a href='https://developer.webull.com/apis/docs/market-data-api/overview/' target='_blank' rel='noopener noreferrer'>Webull Market Data API documentation ↗</a> · <a href='https://www.cmegroup.com/market-data/real-time-futures-and-options-data-api.html' target='_blank' rel='noopener noreferrer'>CME futures / options data API ↗</a></div><hr style='border-color:#263451;margin:14px 0'><h4>Stock-first Option Execution Calculator</h4><p class='rol-market-note'>Choose the underlying stock first, then estimate the option debit and expiration outcome. Use the option’s actual bid/ask, spread, open interest and expiry from your broker before considering an order.</p><div class='rol-option-grid'><label>Underlying symbol<input id='rolOptionSymbol' readonly></label><label>Option type<select id='rolOptionType'><option value='call'>Call</option><option value='put'>Put</option></select></label><label>Underlying price ($)<input id='rolUnderlyingPrice' type='number' min='0' step='0.01' value='10'></label><label>Strike price ($)<input id='rolStrike' type='number' min='0' step='0.01' value='10'></label><label>Option premium ($ / share)<input id='rolPremium' type='number' min='0' step='0.01' value='1'></label><label>Contracts<input id='rolContracts' type='number' min='1' step='1' value='1'></label><label>Expiration date<input id='rolExpiry' type='date'></label><label>Planned execution time (ET)<input id='rolExecutionTime' type='time' value='09:45'></label><label>Underlying target at expiry ($)<input id='rolTargetPrice' type='number' min='0' step='0.01' value='12'></label></div><div class='rol-option-results'><div><small>Days to expiration</small><strong id='rolDte'>—</strong></div><div><small>Total premium debit / max loss</small><strong id='rolDebit'>—</strong></div><div><small>Break-even at expiry</small><strong id='rolBreakeven'>—</strong></div><div><small>Intrinsic value at target</small><strong id='rolIntrinsic'>—</strong></div><div><small>Estimated P/L at expiry</small><strong id='rolOptionPL'>—</strong></div><div><small>Return on premium</small><strong id='rolOptionReturn'>—</strong></div></div><div class='rol-market-note' id='rolOptionTimeNote'>This is a payoff-at-expiration calculator, not an option-pricing model. It does not estimate implied volatility, theta, delta, spread, early exercise or the value before expiration.</div></div>";
     tools.insertAdjacentElement("afterend", advanced);
-    const stocks = "AAPL MSFT NVDA AMZN GOOGL META TSLA AVGO AMD INTC QCOM MU ARM PLTR ORCL CRM NOW SNOW PANW CRWD NET DDOG MDB SMCI ANET DELL HPE IBM CSCO JPM BAC GS MS WFC C COIN HOOD SOFI XYZ PYPL V MA XOM CVX OXY COP SLB CAT DE GE RTX LMT BA FDX UPS WMT COST TGT HD LOW NKE DIS NFLX ROKU SPY QQQ IWM DIA XLF XLK XLE SMH TLT GLD".split(" ");
+    const stocks = "AAPL MSFT NVDA AMZN GOOGL META TSLA AVGO AMD INTC QCOM MU ARM PLTR ORCL CRM NOW SNOW PANW CRWD NET DDOG MDB SMCI ANET DELL HPE IBM CSCO JPM BAC GS MS WFC C COIN HOOD SOFI XYZ PYPL V MA LLY XOM CVX OXY COP SLB CAT DE GE RTX LMT BA FDX UPS WMT COST TGT HD LOW NKE DIS NFLX ROKU SPY QQQ IWM DIA XLF XLK XLE SMH TLT GLD".split(" ");
     const cryptos = ["BTC","ETH","SOL","XRP","BNB","DOGE","ADA","AVAX","LINK","DOT","LTC","BCH","TRX","TON","SUI","APT","NEAR","ATOM","ETC","FIL","UNI","AAVE","SHIB","PEPE","ICP"];
     const futures = ["CME_MINI:ES1!","CME_MINI:NQ1!","CBOT_MINI:YM1!","CME_MINI:RTY1!","CME_MINI:MES1!","CME_MINI:MNQ1!","CBOT_MINI:MYM1!","CME_MINI:M2K1!","COMEX:GC1!","COMEX:SI1!","COMEX:HG1!","NYMEX:CL1!","NYMEX:NG1!","CBOT:ZB1!","CBOT:ZN1!","CBOT:ZF1!","CBOT:ZT1!","CBOT:ZC1!","CBOT:ZS1!","CBOT:ZW1!","CBOT:ZM1!","CBOT:ZL1!","CME:6E1!","CME:6J1!","CME:6B1!","CME:6A1!","CME:6C1!","CME:6S1!","CME:6M1!","NYMEX:RB1!"];
     if (stocks.length !== 75 || cryptos.length !== 25 || futures.length !== 30) {
       $("rolUniverseCount").textContent = stocks.length + " stocks · " + cryptos.length + " crypto · " + futures.length + " futures";
     }
     const groupData = {
-      stocks: stocks.map((s) => ({name:s, tv:(["JPM","BAC","GS","MS","WFC","C","V","MA","XOM","CVX","OXY","COP","SLB","CAT","DE","GE","RTX","LMT","BA","FDX","UPS","WMT","COST","TGT","HD","LOW","NKE","DIS","NFLX"].includes(s) ? "NYSE:" : (["SPY","DIA","IWM","XLF","XLK","XLE","SMH","TLT","GLD"].includes(s) ? "AMEX:" : "NASDAQ:"))+s})),
+      stocks: stocks.map((s) => ({name:s, tv:(["JPM","BAC","GS","MS","WFC","C","V","MA","XOM","CVX","OXY","COP","SLB","CAT","DE","GE","RTX","LMT","BA","FDX","UPS","WMT","COST","TGT","HD","LOW","NKE","DIS","NFLX","LLY"].includes(s) ? "NYSE:" : (["SPY","DIA","IWM","XLF","XLK","XLE","SMH","TLT","GLD"].includes(s) ? "AMEX:" : "NASDAQ:"))+s})),
       crypto: cryptos.map((s) => ({name:s, tv:"BINANCE:"+s+"USDT"})),
       futures: futures.map((s) => ({name:s.split(":").pop(), tv:s}))
     };
@@ -337,6 +337,54 @@
   if (trigger) trigger.style.top = "68px";
   const lock = $("rolLock");
   if (lock) { lock.style.padding="4px 7px"; lock.style.fontSize="9px"; lock.style.minHeight="26px"; }
+
+
+  // Refresh current conditions and place those same readings on the map.
+  const weatherButton = $("rolWeatherBtn");
+  if (weatherButton) {
+    weatherButton.onclick = async function () {
+      const status = $("rolMapStatus");
+      if (status) status.textContent = "Loading current weather and map markers…";
+      const cities = [
+        ["Philadelphia",39.9526,-75.1652],
+        ["New York",40.7128,-74.0060],
+        ["Pittsburgh",40.4406,-79.9959]
+      ];
+      try {
+        const data = await Promise.all(cities.map(async function (city) {
+          const url = "https://api.open-meteo.com/v1/forecast?latitude="+city[1]+"&longitude="+city[2]+"&current=temperature_2m,apparent_temperature,wind_speed_10m,relative_humidity_2m&temperature_unit=fahrenheit&timezone=America%2FNew_York";
+          const response = await fetch(url);
+          if (!response.ok) throw new Error("Weather service HTTP "+response.status);
+          const json = await response.json();
+          if (!json.current) throw new Error("Weather response was incomplete for "+city[0]);
+          return {
+            name:city[0],lat:city[1],lon:city[2],
+            temperature:Math.round(json.current.temperature_2m)+"°F",
+            feels:Math.round(json.current.apparent_temperature)+"°F",
+            wind:Math.round(json.current.wind_speed_10m)+" mph",
+            humidity:json.current.relative_humidity_2m+"%"
+          };
+        }));
+        let strip=$("rolWeatherStrip");
+        if(!strip){
+          strip=document.createElement("div");
+          strip.id="rolWeatherStrip";
+          strip.className="rol-weather";
+          weatherButton.parentElement.insertAdjacentElement("afterend",strip);
+        }
+        strip.innerHTML=data.map(function(x){
+          return "<div><b>"+esc(x.name)+"</b><strong>"+x.temperature+"</strong>Feels "+x.feels+" · Wind "+x.wind+"<br>Humidity "+x.humidity+"</div>";
+        }).join("");
+        const mapped=window.ROLyfeAuctionMap&&window.ROLyfeAuctionMap.addWeatherMarkers
+          ? window.ROLyfeAuctionMap.addWeatherMarkers(data) : false;
+        if(status) status.textContent=mapped
+          ? "Weather loaded · 3 city readings pinned on the map · Open-Meteo"
+          : "Weather loaded in cards · map markers unavailable until Leaflet is ready";
+      } catch(error) {
+        if(status) status.textContent="Weather refresh failed: "+(error&&error.message?error.message:"Check your connection and retry.");
+      }
+    };
+  }
 
   console.info("RO'Lyfe Market + Property Intelligence Upgrade ready");
 })();
