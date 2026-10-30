@@ -50,7 +50,7 @@ input,select,textarea{width:100%;background:#080e1c;color:var(--text);border:1px
 .ai-underwriter-panel{position:fixed;right:18px;bottom:88px;z-index:30000;width:min(400px,calc(100vw - 28px));height:520px;background:rgba(10,16,30,.985);border:1px solid var(--border2);border-radius:18px;box-shadow:0 25px 70px rgba(0,0,0,.55);display:none;flex-direction:column;overflow:hidden}.ai-underwriter-panel.open{display:flex}
 .ai-header{padding:14px 16px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;background:linear-gradient(145deg,var(--panel),var(--panel2))}.ai-header-main{display:flex;align-items:center;gap:9px}.ai-avatar{width:34px;height:34px;border-radius:10px;display:flex;align-items:center;justify-content:center;background:rgba(102,217,255,.1);border:1px solid rgba(102,217,255,.25)}.ai-header-title strong{display:block;font-size:14px}.ai-header-title span{display:block;color:var(--green);font-size:9px;margin-top:2px}.ai-close{border:0;background:transparent;color:var(--muted);font-size:20px}
 .ai-messages{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:9px}.ai-message{max-width:90%;padding:9px 11px;border-radius:11px;font-size:12px;line-height:1.45}.ai-message.system{align-self:flex-start;background:var(--panel3);border:1px solid var(--border)}.ai-message.user{align-self:flex-end;background:rgba(102,217,255,.12);border:1px solid rgba(102,217,255,.25)}.ai-message small{display:block;color:var(--muted);margin-top:4px;font-size:8px}
-.ai-quick{display:flex;gap:6px;overflow-x:auto;padding:8px 10px;border-top:1px solid var(--border)}.ai-quick button{flex:0 0 auto;padding:6px 8px;border:1px solid var(--border);border-radius:999px;background:var(--panel3);color:var(--muted);font-size:9px}.ai-input-row{display:flex;gap:6px;padding:10px;border-top:1px solid var(--border)}.ai-input-row input{flex:1}.ai-send{width:42px;border:1px solid var(--accent);border-radius:9px;background:var(--accent);color:#06101a;font-weight:800}
+.ai-voice-controls{display:flex;gap:7px;flex-wrap:wrap;padding:8px 10px 2px;border-top:1px solid var(--border)}.ai-voice-controls .btn{flex:1;min-width:90px;padding:8px 9px;font-size:11px}.ai-voice-status{padding:3px 12px 7px;color:var(--muted);font-size:9px;line-height:1.35}.ai-quick{display:flex;gap:6px;overflow-x:auto;padding:8px 10px;border-top:1px solid var(--border)}.ai-quick button{flex:0 0 auto;padding:6px 8px;border:1px solid var(--border);border-radius:999px;background:var(--panel3);color:var(--muted);font-size:9px}.ai-input-row{display:flex;gap:6px;padding:10px;border-top:1px solid var(--border)}.ai-input-row input{flex:1}.ai-send{width:42px;border:1px solid var(--accent);border-radius:9px;background:var(--accent);color:#06101a;font-weight:800}
 .ai-toast{position:fixed;right:18px;bottom:88px;z-index:1999;width:min(350px,calc(100vw - 30px));padding:12px 14px;border:1px solid rgba(102,217,255,.35);border-radius:13px;background:rgba(12,19,35,.97);box-shadow:0 18px 50px rgba(0,0,0,.4);display:none}.ai-toast.show{display:block}.ai-toast strong{display:block;color:var(--accent);font-size:10px;margin-bottom:3px}.ai-toast div{font-size:11px}
 .back-to-top{position:fixed;right:86px;bottom:22px;z-index:1998;width:43px;height:43px;border-radius:50%;border:1px solid var(--border2);background:rgba(16,24,43,.94);color:var(--accent);opacity:0;visibility:hidden;transition:.2s}.back-to-top.show{opacity:1;visibility:visible}
 footer{margin-top:35px;border-top:1px solid var(--border);padding:30px 0;color:var(--muted);font-size:12px}.footer-title{color:var(--text);font-weight:800;margin-bottom:6px}
@@ -533,21 +533,6 @@ Planning and underwriting support only. No valuation, financing, approval, profi
     <div class="ai-header-main"><div class="ai-avatar">🤖</div><div class="ai-header-title"><strong>RO'Lyfe AI Underwriter™</strong><span>LIVE MACHINE SNAPSHOT</span></div></div>
     <button class="ai-close" type="button" onclick="toggleAI(false)">×</button>
   </div>
-  <div class="ai-key-registry" style="margin:8px 12px;padding:10px;border:1px solid var(--border2);border-radius:12px;background:rgba(18,31,52,.72);font-size:11px">
-    <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px"><strong>🔐 API &amp; Service Key Registry</strong><span style="color:var(--muted)">Metadata only · Not connected</span></div>
-    <div style="overflow-x:auto">
-      <table style="width:100%;border-collapse:collapse;min-width:420px;text-align:left">
-        <thead><tr style="color:var(--muted);border-bottom:1px solid var(--border2)"><th style="padding:6px">Name</th><th style="padding:6px">SHA-256 Digest</th><th style="padding:6px">Updated</th></tr></thead>
-        <tbody>
-          <tr><td style="padding:7px 6px">API_SPORTS_KEY</td><td style="padding:7px 6px;color:var(--muted)">Not supplied</td><td style="padding:7px 6px">29 Oct 2026 · 03:45:37 UTC</td></tr>
-          <tr><td style="padding:7px 6px">REGRID_API_KEY <span style="color:var(--muted)">(Supabase)</span></td><td style="padding:7px 6px;color:var(--muted)">Not supplied</td><td style="padding:7px 6px">29 Oct 2026 · 15:09:27 UTC</td></tr>
-          <tr><td style="padding:7px 6px">GOOGLE_MAPS_API_KEY</td><td style="padding:7px 6px;color:var(--muted)">Not supplied</td><td style="padding:7px 6px">29 Oct 2026 · 15:09:27 UTC</td></tr>
-          <tr><td style="padding:7px 6px">free_news_api_io</td><td style="padding:7px 6px;color:var(--muted)">Not supplied</td><td style="padding:7px 6px;color:var(--muted)">Not provided</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <p style="margin:8px 0 0;color:var(--muted)">Secret values are never displayed here. Key storage and live service connections are managed separately in Supabase.</p>
-  </div>
   <div class="ai-messages" id="aiMessages"></div>
   <div class="ai-quick">
     <button type="button" onclick="askAI('What is my max acquisition?')">Max acquisition</button>
@@ -556,6 +541,12 @@ Planning and underwriting support only. No valuation, financing, approval, profi
     <button type="button" onclick="askAI('What are my missing items?')">Missing items</button>
     <button type="button" onclick="askAI('Give me an underwriting snapshot.')">Snapshot</button>
   </div>
+  <div class="ai-voice-controls" aria-label="Voice controls">
+    <button type="button" class="btn" onclick="rolAiListen()">🎙 Talk</button>
+    <button type="button" class="btn" onclick="rolAiReadLatest()">🔊 Read answer</button>
+    <button type="button" class="btn" onclick="rolAiStopVoice()">■ Stop</button>
+  </div>
+  <div id="aiVoiceStatus" class="ai-voice-status" aria-live="polite">Voice controls use browser speech features. Microphone support and permission may vary.</div>
   <div class="ai-input-row"><input id="aiInput" placeholder="Ask the underwriter about this deal..." onkeydown="if(event.key==='Enter') askAI()"><button class="ai-send" type="button" onclick="askAI()">➤</button></div>
 </div>
 <div class="ai-underwriter-float"><button class="ai-underwriter-button" type="button" onclick="toggleAI()" aria-label="Open AI Underwriter">🤖<span class="ai-dot"></span></button></div>
@@ -843,6 +834,29 @@ function askAI(preset){
   const input=$("aiInput"),q=preset||input.value.trim();if(!q)return;
   addAIMessage("user",q);input.value="";
   setTimeout(()=>addAIMessage("system",aiAnswer(q)),180);
+}
+let rolAiRecognition=null;
+function rolAiStopVoice(){if(window.speechSynthesis)window.speechSynthesis.cancel();if(rolAiRecognition){try{rolAiRecognition.stop()}catch(e){}}const s=$("aiVoiceStatus");if(s)s.textContent="Speech stopped.";}
+function rolAiReadLatest(){
+  const messages=[...document.querySelectorAll("#aiMessages .ai-message.system")],latest=messages[messages.length-1],text=latest?.innerText?.trim();
+  if(!text){$("aiVoiceStatus").textContent="Ask a question first; there is no answer to read yet.";return;}
+  if(!("speechSynthesis" in window)||!("SpeechSynthesisUtterance" in window)){$("aiVoiceStatus").textContent="Text-to-speech is not supported in this browser.";return;}
+  window.speechSynthesis.cancel();const utterance=new SpeechSynthesisUtterance(text);utterance.lang="en-US";utterance.rate=1;
+  utterance.onstart=()=>{$("aiVoiceStatus").textContent="Reading the latest answer aloud…";};
+  utterance.onend=()=>{$("aiVoiceStatus").textContent="Finished reading.";};
+  utterance.onerror=()=>{$("aiVoiceStatus").textContent="Speech playback could not finish. Try again.";};
+  window.speechSynthesis.speak(utterance);
+}
+function rolAiListen(){
+  const SpeechRecognition=window.SpeechRecognition||window.webkitSpeechRecognition;
+  if(!SpeechRecognition){$("aiVoiceStatus").textContent="Speech input is not supported here. You can still use Read answer.";return;}
+  if(rolAiRecognition){try{rolAiRecognition.stop()}catch(e){}}
+  rolAiRecognition=new SpeechRecognition();rolAiRecognition.lang="en-US";rolAiRecognition.interimResults=false;rolAiRecognition.maxAlternatives=1;
+  rolAiRecognition.onstart=()=>{$("aiVoiceStatus").textContent="Listening… speak your question.";};
+  rolAiRecognition.onresult=e=>{const heard=e.results?.[0]?.[0]?.transcript||"";if(heard){$("aiInput").value=heard;$("aiVoiceStatus").textContent="Heard: "+heard;askAI();}};
+  rolAiRecognition.onerror=e=>{$("aiVoiceStatus").textContent="Microphone: "+(e.error||"could not start");};
+  rolAiRecognition.onend=()=>{rolAiRecognition=null;};
+  try{rolAiRecognition.start();}catch(e){$("aiVoiceStatus").textContent="Microphone is already active or unavailable.";}
 }
 document.addEventListener("input",e=>{
   if(e.target.matches("input,select,textarea")&&!e.target.closest("#aiPanel")){
