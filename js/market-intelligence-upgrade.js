@@ -235,12 +235,14 @@
         ["Last recorded sale",data.lastSalePrice==null?null:"$"+Number(data.lastSalePrice).toLocaleString("en-US")],
         ["Last sale date",data.lastSaleDate],["Annual property tax",data.annualTax==null?null:"$"+Number(data.annualTax).toLocaleString("en-US")],
         ["Tax year",data.taxYear],["Lot acres",data.acreage],["Parcel sq ft",data.parcelSquareFeet],
-        ["Building sq ft",data.buildingSquareFeet],["FEMA flood zone",data.floodZone],
+        ["Building sq ft",data.buildingSquareFeet],["Building footprint sq ft",data.buildingFootprintSquareFeet],
+        ["County record last refreshed",data.countyDataLastRefresh],["FEMA flood zone",data.floodZone],
         ["County / State / ZIP",[data.county,data.state,data.zip].filter(Boolean).join(" · ")]
       ];
       if(box){
         box.innerHTML="<div class='rol-lookup-note'><strong>Regrid parcel match · one record returned</strong></div>"+
           fields.filter(x=>x[1]!==null&&x[1]!==undefined&&x[1]!=="").map(x=>"<div class='rol-lookup-note'><strong>"+esc(x[0])+":</strong> "+esc(x[1])+"</div>").join("")+
+          (/^https?:\/\//i.test(data.countySourceUrl||"")?"<div class='rol-lookup-note'><a href='"+esc(data.countySourceUrl)+"' target='_blank' rel='noopener noreferrer'>Open county assessor record ↗</a></div>":"")+
           "<div class='rol-lookup-note'>Source: Regrid. Assessed value is not ARV or a current appraisal. Parcel match does not establish clear title, lien status, auction status, interior condition or legal ownership. Verify county records and source documents.</div>";
       }
       if(status)status.textContent="Regrid parcel returned · 1 result · verify county records and title separately";
