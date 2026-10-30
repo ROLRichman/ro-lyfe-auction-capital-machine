@@ -317,3 +317,38 @@ This project loads the reusable RO’Lyfe Property Research Dock from the canoni
 
 Shared workflow standard: https://github.com/ROLRichman/rolyfe-property-research-intelligence/blob/main/PROPERTY_RESEARCH_STANDARD.md
 Shared component: https://github.com/ROLRichman/rolyfe-property-research-intelligence/blob/main/shared/property-research-dock.js
+
+---
+
+## October 30, 2026 — Market & Property Intelligence Add-ons
+
+The following upgrades are additive and load through `js/market-intelligence-upgrade.js`. The original acquisition, underwriting, map and partner modules remain separate.
+
+### Map and property research
+- The map-height control now uses an important inline height and calls Leaflet's resize method so the control works on narrow/mobile layouts.
+- Current Open-Meteo readings for Philadelphia, New York and Pittsburgh display in cards and as map pins when refreshed.
+- A map-side address / Auction.com URL input can locate an address and generate prefilled searches for residential auction homes, parcel/owner research, county records and auction timing.
+- Search links are starting points only. The user must verify the actual listing, property type, parcel match, auction date/time, deposits, title, occupancy and terms at the original source. The page does not scrape Auction.com or guarantee that a listing exists.
+
+### Trading chart and education
+- The TradingView iframe has a chart-height control, refresh control and a plain-language chart-reading guide.
+- The indicator playbook includes 14 visual explainers: EMA 5/10/20/50/200 trend, VWAP, RSI, MACD, Stochastic, CCI, TTM Squeeze, Volume, ATR, ADX, Bollinger Bands, OBV, Supertrend and Relative Volume.
+- The three primary guides remain visible; the other 11 are in a collapsible section.
+- The TradingView iframe is cross-origin. These explainer visuals do not calculate live indicator values and do not inject studies into the embedded TradingView chart. Use TradingView's own study controls for actual chart overlays.
+
+### Advanced market workspace
+- The symbol universe contains 75 stocks, 25 crypto symbols and 30 futures symbols.
+- Selecting a scanner symbol loads that same symbol in the TradingView chart.
+- The scanner is a symbol universe, not a live quote feed. No prices are fabricated. A secure data provider integration is required before live stock, options or futures quotes, alerts or automated scans can be displayed.
+- The option calculator estimates premium debit, max premium loss, break-even and payoff at expiration from user-entered contract details. It is not an options-pricing model and does not estimate Greeks, implied volatility, theta or pre-expiration option value.
+
+### API security
+For parcel data, Regrid's API token is generated in the API section of the Regrid account profile. Keep it server-side; never place it in this public GitHub Pages code or a browser field. Regrid documents per-record API billing, so use small result limits and account usage controls while testing:
+- Regrid API setup: https://support.regrid.com/docs/getting-started-api
+- Regrid API endpoints: https://support.regrid.com/docs/api-endpoint-overview
+
+For stock, options, futures and crypto quote integration, choose a provider and confirm market-data entitlements for the intended use. Keep credentials in a secure server-side function or secret manager, not in the browser. Examples of provider documentation:
+- Webull Market Data API: https://developer.webull.com/apis/docs/market-data-api/overview/
+- CME Real-Time Futures and Options Data API: https://www.cmegroup.com/market-data/real-time-futures-and-options-data-api.html
+
+The public page is a research and decision-support interface. It is not a broker, exchange, auction operator, parcel authority, lender, title company, appraisal or guarantee of financing or investment outcome.
