@@ -864,7 +864,7 @@ document.addEventListener("DOMContentLoaded",()=>{
  const existing=frame.getAttribute('src')||'';
  const target=base+'?embed=auction&symbol='+encodeURIComponent(sym)+'&interval='+encodeURIComponent(interval);
  set('symbolStatus',sym+' • Tickerbot OHLCV · calculated studies');
- frame.style.setProperty('height','1450px','important');
+ frame.style.setProperty('height','1650px','important');
  if(existing.indexOf(base+'?embed=auction')===0&&frame.contentWindow){
   try{if(frame.contentWindow.ROLyfeChartDesk){frame.contentWindow.ROLyfeChartDesk.setSymbol(sym);frame.contentWindow.ROLyfeChartDesk.setInterval(interval);return;}}catch(e){}
  }
