@@ -136,7 +136,7 @@
  $("rolReviewClose").addEventListener("click",()=>{panel.classList.remove("open");trigger.setAttribute("aria-expanded","false");});
  $("rolReviewBuild").addEventListener("click",build);
  $("rolReviewDownload").addEventListener("click",()=>download(filename("txt"),report(),"text/plain;charset=utf-8"));
- $("rolReviewCSV").addEventListener("click",()=>download(filename("csv"),makeCsv(),"text/csv;charset=utf-8"));
+ $("rolReviewCSV").addEventListener("click",()=>{report();download(filename("csv"),makeCsv(),"text/csv;charset=utf-8");});
  $("rolReviewPDF").addEventListener("click",()=>{
   const w=window.open("","_blank");
   if(!w){$("rolReviewStatus").textContent="Pop-up blocked. Use Download TXT or allow pop-ups to print/save PDF.";return;}
@@ -161,6 +161,12 @@
   download(filename("txt"),text,"text/plain;charset=utf-8");
   $("rolReviewStatus").textContent="Report downloaded. Open your email app and attach the downloaded TXT file.";
  });
+ document.addEventListener("input",event=>{
+  if(!event.target.closest("#rolReviewPanel"))latestReport="";
+ },true);
+ document.addEventListener("change",event=>{
+  if(!event.target.closest("#rolReviewPanel"))latestReport="";
+ },true);
  $("rolReviewMail").addEventListener("click",()=>{
   const to=$("rolReviewEmail").value.trim();
   if(to&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(to)){
