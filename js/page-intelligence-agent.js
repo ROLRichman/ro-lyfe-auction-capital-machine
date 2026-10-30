@@ -10,6 +10,19 @@ const toast=document.createElement("div");toast.className="rol-ai-toast";toast.t
 const panel=document.createElement("section");panel.className="rol-ai-panel";
 panel.innerHTML="<b>✦ RO’Lyfe Page Intelligence</b><button id='rolAiClose' style='float:right'>Close ✕</button><p style='font-size:10px;color:#9eb4cf'>Ask about the page or a general topic. Speak or type. Speech features depend on browser support.</p><select id='rolAiTopic' style='width:100%'><option value=''>Choose a guided question…</option><option>Explain the property acquisition workflow from auction intake to closing.</option><option>Explain lender underwriting and how to calculate the funding gap.</option><option>Explain tax liens versus tax deeds and due diligence.</option><option>Explain EMA 40, EMA 200, VWAP, RSI, MACD and Stochastic.</option><option>Explain the option execution calculator and time to expiration.</option><option>Explain Regrid parcel research and county verification.</option><option>Explain Review / Email and how to download the report.</option></select><div id='rolAiAnswer' class='rol-ai-answer'>Hi! Choose a topic or ask a question.</div><textarea id='rolAiQuestion' placeholder='Ask a question…'></textarea><div><button id='rolAiAsk'>Ask AI ↗</button><button id='rolAiMic'>🎙 Speak</button><button id='rolAiRead'>🔊 Read answer</button><button id='rolAiStop'>■ Stop</button></div><div id='rolAiStatus' style='font-size:10px;color:#9eb4cf'>Questions and visible page text are sent securely to the AI service. Form values are not collected.</div><details><summary>Useful links & explainers</summary><a target='_blank' href='https://www.auction.com/'>Auction.com — listings; verify event details.</a><br><a target='_blank' href='https://app.regrid.com/'>Regrid — parcel data; verify with county records.</a><br><a target='_blank' href='https://www.pacourts.us/'>PA Courts — court research.</a><br><a target='_blank' href='https://www.tradingview.com/'>TradingView — charting.</a><br><a target='_blank' href='https://www.cboe.com/delayed_quotes/'>Cboe — delayed quote reference.</a></details>";
 document.body.append(launch,toast,panel);
+// Coordinate with the original AI Underwriter: never show two floating AI controls at once.
+function syncWithUnderwriter(){
+ const underwriter=document.getElementById("aiPanel");
+ const active=!!underwriter&&underwriter.classList.contains("open");
+ launch.style.display=active?"none":"";
+ toast.style.display=active?"none":"";
+}
+const underwriter=document.getElementById("aiPanel");
+if(underwriter){
+ new MutationObserver(syncWithUnderwriter).observe(underwriter,{attributes:true,attributeFilter:["class"]});
+ syncWithUnderwriter();
+}
+
 const $=id=>document.getElementById(id);
 function open(){panel.classList.add("open");toast.classList.add("hide");}
 launch.onclick=()=>panel.classList.contains("open")?panel.classList.remove("open"):open();
