@@ -463,7 +463,7 @@ footer{margin-top:35px;border-top:1px solid var(--border);padding:30px 0;color:v
   <p class="bo-sub">A combined command layer for property opportunities, capital decisions, and stock-first market review. Trading indicators here are a manual checklist—not an automated buy/sell signal. Define the underlying stock’s invalidation before considering an option.</p>
   <div class="bo-grid">
     <article class="bo-card">
-      <h3>TradingView Market Chart</h3><div class="bo-note">Default: NASDAQ:AAPL. Change the symbol using TradingView’s symbol format, for example NASDAQ:NVDA or NYSE:PLTR.</div>
+      <h3>RO’Lyfe Live Candlestick Chart</h3><div class="bo-note">Tickerbot OHLCV candles · calculated EMA, VWAP and momentum studies. Select a symbol and timeframe, then load the chart. Provider coverage and timestamps are shown inside the chart.</div>
       <div class="bo-form"><div class="bo-field"><label for="boSymbol">Symbol</label><input id="boSymbol" value="NASDAQ:AAPL" maxlength="40"></div><div class="bo-field"><label for="boInterval">Chart interval</label><select id="boInterval"><option value="D">1D</option><option value="240">4H</option><option value="60">1H</option><option value="15">15M</option><option value="5">5M</option><option value="W">1W</option></select></div></div>
       <div class="bo-actions"><button class="primary" id="boLoadChart" type="button">Load Chart</button><a class="bo-btn" href="https://rolrichman.github.io/RO-Lyfe-Trading-Intelligence-Classroom/live-chart-desk/" target="_blank" rel="noopener noreferrer">Open Live Chart Desk ↗</a></div>
       <iframe class="bo-chart" id="boChart" title="RO’Lyfe live candlestick chart with calculated indicators" loading="lazy" referrerpolicy="no-referrer" src="https://rolrichman.github.io/RO-Lyfe-Trading-Intelligence-Classroom/live-chart-desk/?embed=auction&amp;symbol=AAPL&amp;interval=1d"></iframe>
@@ -866,7 +866,14 @@ document.addEventListener("DOMContentLoaded",()=>{
  set('symbolStatus',sym+' • Tickerbot OHLCV · calculated studies');
  frame.style.setProperty('height','1650px','important');
  if(existing.indexOf(base+'?embed=auction')===0&&frame.contentWindow){
-  try{if(frame.contentWindow.ROLyfeChartDesk){frame.contentWindow.ROLyfeChartDesk.setSymbol(sym);frame.contentWindow.ROLyfeChartDesk.setInterval(interval);return;}}catch(e){}
+  try{
+   if(frame.contentWindow.ROLyfeChartDesk){
+    const state=frame.contentWindow.ROLyfeChartDesk.getState();
+    if(!state||state.symbol!==sym)frame.contentWindow.ROLyfeChartDesk.setSymbol(sym);
+    if(!state||state.interval!==interval)frame.contentWindow.ROLyfeChartDesk.setInterval(interval);
+    return;
+   }
+  }catch(e){}
  }
  frame.src=target;
 }
