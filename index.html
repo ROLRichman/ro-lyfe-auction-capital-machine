@@ -6,7 +6,7 @@
 <meta name="description" content="RO'Lyfe Auction Capital Machine™ — auction property intelligence, deal analysis, rehab, tax and lien research, underwriting, contractor coordination and capital routing.">
 <title>RO'Lyfe Auction Capital Machine™</title>
 <link rel="stylesheet" href="./css/machine.css">
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css" crossorigin=""><link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
 
 <style>
 :root{
@@ -547,7 +547,7 @@ Planning and underwriting support only. No valuation, financing, approval, profi
 <button id="backToTop" class="back-to-top" type="button" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">↑</button>
 
 <!-- ONE production engine stack. Do not duplicate these scripts. -->
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+<script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
 <script src="./js/app.js"></script>
 <script src="./js/auction-engine.js"></script>
 <script src="./js/deal-engine.js"></script>
@@ -972,6 +972,25 @@ window.addEventListener("message",function(event){
 })();
 </script>
 <script src="./js/auction-map-engine.js"></script>
+<script>
+(function(){
+  function initializeMap(){
+    if(window.ROLyfeAuctionMap&&typeof window.ROLyfeAuctionMap.refresh==="function"){
+      window.ROLyfeAuctionMap.refresh();
+    }
+  }
+  if(window.L){initializeMap();return;}
+  var fallback=document.createElement("script");
+  fallback.src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js";
+  fallback.crossOrigin="anonymous";
+  fallback.onload=initializeMap;
+  fallback.onerror=function(){
+    var status=document.getElementById("mapStatus");
+    if(status)status.textContent="Map library could not load from either CDN. Weather cards and property research links remain available.";
+  };
+  document.head.appendChild(fallback);
+})();
+</script>
 <script src="https://rolrichman.github.io/rolyfe-property-research-intelligence/shared/property-research-dock.js"></script>
 <script src="./js/partner-intelligence-dock.js"></script>
 <script src="./js/market-intelligence-upgrade.js"></script>
