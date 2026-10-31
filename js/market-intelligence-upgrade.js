@@ -4,7 +4,7 @@
   if (window.__rolMarketUpgrade) return;
   window.__rolMarketUpgrade = true;
   const $ = (id) => document.getElementById(id);
-  const mapStatusEl = () => mapStatusEl() || $("mapStatus");
+  const mapStatusEl = () => $("rolMapStatus") || $("mapStatus");
   const esc = (value) => String(value == null ? "" : value).replace(/[&<>"']/g, (c) => ({
     "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
   }[c]));
