@@ -618,7 +618,7 @@ function askStateYieldAI(){
     askAI("Help me select a state and county for tax-sale research. Ask me to enter a state abbreviation and county before giving jurisdiction-specific rules.");
     return;
   }
-  askAI("Show me the tax-yield profile and county/state tax-sale rules for State "+state+(county?" County "+county:"")+". Include tax lien versus deed model, OTC terminology, redemption, interest/penalties, timing, official verification steps, and identify what must be checked with the county.");
+  askAI((county?"County "+county+", ":"")+"State "+state+". Show the tax-yield profile and tax-sale rules, including tax lien versus deed model, OTC terminology, redemption, interest/penalties, timing, official verification steps, and what must be checked with the county.");
 }
 
 
