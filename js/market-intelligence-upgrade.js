@@ -417,7 +417,8 @@
         const pct=(v)=>v===null||v===undefined||!Number.isFinite(Number(v))?"—":(Number(v)*100).toFixed(2)+"%";
         const quoteRows=rows.map(row=>{
           const chartSymbol=assetClass==="crypto"?(String(row.ticker||"").replace(/^X:/,"").replace(/USD$/,"")+"-USD"):row.ticker;
-          const change=Number(row.change_1d_pct),rsi=Number(row.rsi_14),stochK=Number(row.stochastic_k),stochD=Number(row.stochastic_d),macd=Number(row.macd_histogram),adx=Number(row.adx_14);
+          const metric=value=>value===null||value===undefined||value===""?NaN:Number(value);
+          const change=metric(row.change_1d_pct),rsi=metric(row.rsi_14),stochK=metric(row.stochastic_k),stochD=metric(row.stochastic_d),macd=metric(row.macd_histogram),adx=metric(row.adx_14);
           const complete=[change,rsi,stochK,stochD,macd,adx].every(Number.isFinite);
           let posture="Neutral / Waiting",postureClass="neutral",postureCopy="Mixed indicators, weak confirmation, or no clear setup.";
           if(!complete)postureCopy="Mixed indicators, weak confirmation, or no clear setup. Waiting for complete provider data.";
