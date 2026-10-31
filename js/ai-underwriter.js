@@ -8,7 +8,11 @@
   function tax(){return root.ROLyfeTaxLienEngine}
   function snapshot(){try{return typeof root.getSnapshot==="function"?root.getSnapshot():tax()?.snapshot?.()||{}}catch(e){return {}}}
   function answer(question){
-    const q=String(question||"").toLowerCase(); const s=snapshot(); const state=(s.tax?.state||s.state||s.property?.state||"").toUpperCase(); const county=s.tax?.county||s.property?.county||"";
+    const rawQuestion=String(question||""); const q=rawQuestion.toLowerCase(); const s=snapshot();
+    const requestedState=rawQuestion.match(/\\b(?:state|jurisdiction)\\s*[:=]?\\s*([A-Z]{2})\\b/i);
+    const requestedCounty=rawQuestion.match(/\\bcounty\\s+([A-Za-z][A-Za-z .'-]*?)(?:\\s+state\\s+[A-Z]{2}\\b|$)/i);
+    const state=(requestedState?.[1]||s.tax?.state||s.state||s.property?.state||"").toUpperCase();
+    const county=(requestedCounty?.[1]||s.tax?.county||s.property?.county||"").trim();
     const r=rules()?.getState(state); const otc=rules()?.getOTCTerms(state);
     if(q.includes("otc")||q.includes("over the counter")) return `<strong>${state||"Jurisdiction not entered"}</strong>: ${otc||"No state-specific alternate term is stored. Ask the county what it calls post-sale or non-auction inventory."}<br><br>Confirm whether unsold certificates/lien interests are actually offered after the sale, how the list is published, and what registration/payment rules apply.`;
     if(q.includes("glossary")||q.includes("define")||q.includes("what does")){ const hits=rules()?.searchGlossary(question)||[]; return hits.length?hits.map(x=>`<strong>${x.term}</strong>: ${x.definition}`).join("<br><br>"):"Ask me to define a specific tax-sale term such as redemption, certificate of purchase, assignment, lien, tax deed, quiet title or yield."; }
