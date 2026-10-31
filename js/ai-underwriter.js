@@ -9,8 +9,8 @@
   function snapshot(){try{return typeof root.getSnapshot==="function"?root.getSnapshot():tax()?.snapshot?.()||{}}catch(e){return {}}}
   function answer(question){
     const rawQuestion=String(question||""); const q=rawQuestion.toLowerCase(); const s=snapshot();
-    const requestedState=rawQuestion.match(/\\b(?:state|jurisdiction)\\s*[:=]?\\s*([A-Z]{2})\\b/i);
-    const requestedCounty=rawQuestion.match(/\\bcounty\\s+([A-Za-z][A-Za-z .'-]*?)(?:\\s+state\\s+[A-Z]{2}\\b|$)/i);
+    const requestedState=rawQuestion.match(/\b(?:state|jurisdiction)\s*[:=]?\s*([A-Z]{2})\b/i);
+    const requestedCounty=rawQuestion.match(/\bcounty\s+([A-Za-z][A-Za-z .'-]*?)(?:\s+state\s+[A-Z]{2}\b|$)/i);
     const state=(requestedState?.[1]||s.tax?.state||s.state||s.property?.state||"").toUpperCase();
     const county=(requestedCounty?.[1]||s.tax?.county||s.property?.county||"").trim();
     const r=rules()?.getState(state); const otc=rules()?.getOTCTerms(state);
