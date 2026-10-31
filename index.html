@@ -958,8 +958,10 @@ document.addEventListener("DOMContentLoaded",()=>{
   try{
    if(frame.contentWindow.ROLyfeChartDesk){
     const state=frame.contentWindow.ROLyfeChartDesk.getState();
-    if(!state||state.symbol!==sym)frame.contentWindow.ROLyfeChartDesk.setSymbol(sym);
-    if(!state||state.interval!==interval)frame.contentWindow.ROLyfeChartDesk.setInterval(interval);
+    let changed=false;
+    if(!state||state.symbol!==sym){frame.contentWindow.ROLyfeChartDesk.setSymbol(sym);changed=true;}
+    if(!state||state.interval!==interval){frame.contentWindow.ROLyfeChartDesk.setInterval(interval);changed=true;}
+    if(!changed&&frame.contentWindow.ROLyfeChartDesk.refresh)frame.contentWindow.ROLyfeChartDesk.refresh();
     return;
    }
   }catch(e){}
