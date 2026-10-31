@@ -175,7 +175,7 @@ footer{margin-top:35px;border-top:1px solid var(--border);padding:30px 0;color:v
           <div class="panel-title-row"><h3>🇺🇸 State Tax-Yield Quick Reference</h3><span id="stateCountBadge" class="badge">50 states</span></div>
           <div class="state-filter-row"><input id="stateYieldSearch" placeholder="Search state..." oninput="filterStateYieldTable()"><select id="stateYieldSort" onchange="renderStateYieldTable()"><option value="name">State</option><option value="interest">Interest %</option><option value="redemption">Redemption</option></select></div>
           <div class="state-yield-table-wrap"><table class="state-yield-table"><thead><tr><th>State</th><th>Type</th><th>Interest %</th><th>Redemption</th></tr></thead><tbody id="stateYieldTable"></tbody></table></div>
-          <div class="state-yield-foot"><span>Research index — verify official county/state rules.</span><button class="btn" type="button" onclick="askAI('Show me the tax-yield profile for this state.')">Ask AI</button></div>
+          <div class="state-yield-foot"><span>Research index — verify official county/state rules.</span><button class="btn" type="button" onclick="askStateYieldAI()">Ask AI</button></div>
         </aside>
       </div>
       <div class="auction-map-shell">
@@ -608,6 +608,19 @@ function toggleSection(button){
   const shell=button.closest(".section-shell");
   if(shell) shell.classList.toggle("open");
 }
+
+function askStateYieldAI(){
+  const raw=(val("yieldState")||val("taxState")||val("propertyState")).trim();
+  const county=(val("yieldCounty")||val("taxCounty")||val("county")).trim();
+  const codes={alabama:"AL",alaska:"AK",arizona:"AZ",arkansas:"AR",california:"CA",colorado:"CO",connecticut:"CT",delaware:"DE",florida:"FL",georgia:"GA",hawaii:"HI",idaho:"ID",illinois:"IL",indiana:"IN",iowa:"IA",kansas:"KS",kentucky:"KY",louisiana:"LA",maine:"ME",maryland:"MD",massachusetts:"MA",michigan:"MI",minnesota:"MN",mississippi:"MS",missouri:"MO",montana:"MT",nebraska:"NE",nevada:"NV","new hampshire":"NH","new jersey":"NJ","new mexico":"NM","new york":"NY","north carolina":"NC","north dakota":"ND",ohio:"OH",oklahoma:"OK",oregon:"OR",pennsylvania:"PA","rhode island":"RI","south carolina":"SC","south dakota":"SD",tennessee:"TN",texas:"TX",utah:"UT",vermont:"VT",virginia:"VA",washington:"WA","west virginia":"WV",wisconsin:"WI",wyoming:"WY","district of columbia":"DC","washington dc":"DC"};
+  const state=/^[A-Za-z]{2}$/.test(raw)?raw.toUpperCase():(codes[raw.toLowerCase()]||"");
+  if(!state){
+    askAI("Help me select a state and county for tax-sale research. Ask me to enter a state abbreviation and county before giving jurisdiction-specific rules.");
+    return;
+  }
+  askAI("Show me the tax-yield profile and county/state tax-sale rules for State "+state+(county?" County "+county:"")+". Include tax lien versus deed model, OTC terminology, redemption, interest/penalties, timing, official verification steps, and identify what must be checked with the county.");
+}
+
 
 function updateClock(){
   const now=new Date();
