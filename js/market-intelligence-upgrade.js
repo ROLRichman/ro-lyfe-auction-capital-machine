@@ -4,12 +4,13 @@
   if (window.__rolMarketUpgrade) return;
   window.__rolMarketUpgrade = true;
   const $ = (id) => document.getElementById(id);
+  const mapStatusEl = () => mapStatusEl() || $("mapStatus");
   const esc = (value) => String(value == null ? "" : value).replace(/[&<>"']/g, (c) => ({
     "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
   }[c]));
   const style = document.createElement("style");
   style.textContent = [
-    ".rol-map-search{display:grid;grid-template-columns:minmax(0,1fr) repeat(4,auto);gap:8px;align-items:center;padding:10px 12px;background:#0b1426;border-top:1px solid #263451}",
+    ".rol-map-search{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;align-items:center;padding:10px 12px;background:#0b1426;border-top:1px solid #263451}.rol-map-query-wrap{grid-column:1/-1;display:grid;gap:5px}.rol-map-query-wrap label{font-size:11px;color:#eaf4ff;font-weight:800}.rol-map-query-wrap small{font-size:10px;color:#91a0b8;line-height:1.4}.rol-map-query-wrap input{width:100%}",
     ".rol-map-search input,.rol-map-search select{min-width:0;width:100%;padding:9px;background:#080f1d;color:#f4f7fb;border:1px solid #344a69;border-radius:8px}",
     ".rol-map-search button,.rol-lookup-links a,.rol-market button{border:1px solid #405574;background:#13213a;color:#eef6ff;border-radius:8px;padding:9px 11px;font-size:11px;font-weight:700;text-decoration:none;cursor:pointer}",
     ".rol-map-search button.primary,.rol-market button.primary{background:#66d9ff;color:#06101a;border-color:#66d9ff}",
@@ -68,7 +69,7 @@
     ".rol-sample-link{font-size:10px;color:#66d9ff;display:inline-block;margin-top:8px}",
     ".rol-trigger{top:68px!important}.rolhub{top:72px!important;max-height:76vh!important}",
     ".rol-fixed #rolLock{font-size:9px!important;padding:4px 7px!important;min-height:26px!important;line-height:1.1!important}",
-    "@media(max-width:700px){.rol-map-search{grid-template-columns:1fr 1fr}.rol-map-search input{grid-column:1/-1}.rol-lookup-links{grid-template-columns:repeat(2,minmax(0,1fr))}.rol-indicator-grid,.rol-indicator-grid.more{grid-template-columns:repeat(2,minmax(0,1fr))}.rol-symbol-list{grid-template-columns:repeat(3,minmax(0,1fr))}.rol-option-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.rol-option-results{grid-template-columns:repeat(2,minmax(0,1fr))}.rol-trigger{top:54px!important}.rolhub{top:60px!important;max-height:72vh!important}.rol-chart-height{grid-template-columns:1fr}.rol-chart-actions button{flex:1}}",
+    "@media(max-width:700px){.rol-map-search{grid-template-columns:repeat(2,minmax(0,1fr))}.rol-map-query-wrap{grid-column:1/-1}.rol-map-search button{width:100%;min-width:0}.rol-lookup-links{grid-template-columns:repeat(2,minmax(0,1fr))}.rol-indicator-grid,.rol-indicator-grid.more{grid-template-columns:repeat(2,minmax(0,1fr))}.rol-symbol-list{grid-template-columns:repeat(3,minmax(0,1fr))}.rol-option-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.rol-option-results{grid-template-columns:repeat(2,minmax(0,1fr))}.rol-trigger{top:54px!important}.rolhub{top:60px!important;max-height:72vh!important}.rol-chart-height{grid-template-columns:1fr}.rol-chart-actions button{flex:1}}",
     "@media(max-width:390px){.rol-option-grid{grid-template-columns:1fr}.rol-symbol-list{grid-template-columns:repeat(2,minmax(0,1fr))}}",
     "@media print{.rol-map-search,.rol-lookup-links,.rol-chart-tools,.rol-advanced{display:none!important}}"
   ].join("");
@@ -94,8 +95,8 @@
 
   // Map: fix the mobile !important height conflict, invalidate Leaflet, and add a nearby address box.
   const map = $("auctionMap");
-  const mapBar = document.querySelector(".rol-mapbar");
-  if (map && mapBar) {
+  const mapShell = map && map.closest(".auction-map-shell");
+  if (map && mapShell) {
     const slider = $("rolHeight");
     const heightValue = $("rolHeightValue");
     const currentHeight = Math.max(280, Math.min(760, Math.round(map.getBoundingClientRect().height / 20) * 20 || 440));
@@ -119,7 +120,7 @@
       search.className = "rol-map-search";
       search.id = "rolMapSearchRow";
       search.innerHTML =
-        "<input id='rolMapAddress' type='text' autocomplete='street-address' placeholder='Enter a property address or paste an Auction.com URL'>" +
+        "<div class='rol-map-query-wrap'><label for='rolMapAddress'>PROPERTY ADDRESS / AUCTION URL · ONE SHARED INPUT</label><input id='rolMapAddress' type='text' autocomplete='street-address' placeholder='Enter street, city, state ZIP or paste an Auction.com URL'><small>Enter the location once, then choose one action below. Locate, Weather, Regrid and Auction Links each use this same field.</small></div>" +
         "<button class='primary' id='rolLocateAddress' type='button'>📍 Locate</button>" +
         "<button id='rolWeatherAddress' type='button'>☁ Weather here</button>" +
         "<button id='rolRegridLookup' type='button'>🧭 Regrid parcel</button>" +
@@ -128,30 +129,31 @@
       links.className = "rol-lookup-links";
       links.id = "rolAuctionLookupLinks";
       links.innerHTML = "<div class='rol-lookup-note'>Enter an address to build source-specific searches for residential auction homes, parcel records and auction timing. These are links to research sources, not verified listings.</div>";
-      mapBar.insertAdjacentElement("afterend", search);
+      const insertAfter = mapShell.querySelector(".map-mode-bar") || mapShell.querySelector(".auction-map-head") || map;
+      insertAfter.insertAdjacentElement("afterend", search);
       search.insertAdjacentElement("afterend", links);
       const addressInput = $("rolMapAddress");
       const priorAddress = $("address");
       if (priorAddress && priorAddress.value) addressInput.value = priorAddress.value;
       $("rolLocateAddress").addEventListener("click", function () {
         const raw = addressInput.value.trim();
-        if (!raw) { const s=$("rolMapStatus"); if(s)s.textContent="Enter a property address or Auction.com URL first."; return; }
+        if (!raw) { const s=mapStatusEl(); if(s)s.textContent="Enter a property address or Auction.com URL first."; return; }
         const q = addressFromInput(raw);
         if (priorAddress) { priorAddress.value = q; priorAddress.dispatchEvent(new Event("input",{bubbles:true})); }
         if (window.ROLyfeAuctionMap && window.ROLyfeAuctionMap.locate) {
           window.ROLyfeAuctionMap.locate(q, "property");
-          if ($("rolMapStatus")) $("rolMapStatus").textContent="Locating property and loading address weather…";
+          if (mapStatusEl()) mapStatusEl().textContent="Locating property and loading address weather…";
         }
         weatherForAddress(q);
       });
       $("rolWeatherAddress").addEventListener("click", function () {
         const q = addressFromInput(addressInput.value.trim());
-        if (!q) { $("rolMapStatus").textContent="Enter an address or Auction.com URL first."; return; }
+        if (!q) { mapStatusEl().textContent="Enter an address or Auction.com URL first."; return; }
         weatherForAddress(q);
       });
       $("rolRegridLookup").addEventListener("click", function () {
         const q = addressFromInput(addressInput.value.trim());
-        if (!q) { $("rolMapStatus").textContent="Enter an address or Auction.com URL first."; return; }
+        if (!q) { mapStatusEl().textContent="Enter an address or Auction.com URL first."; return; }
         lookupRegrid(q);
       });
       addressInput.addEventListener("keydown", function (e) {
@@ -159,7 +161,7 @@
       });
       $("rolBuildAuctionLinks").addEventListener("click", function () {
         const q = addressInput.value.trim();
-        if (!q) { $("rolMapStatus").textContent="Enter an address or auction URL to build the research links."; return; }
+        if (!q) { mapStatusEl().textContent="Enter an address or auction URL to build the research links."; return; }
         buildPropertyLinks(q);
       });
     }
@@ -176,7 +178,7 @@
   }
 
   async function weatherForAddress(address) {
-    const status=$("rolMapStatus");
+    const status=mapStatusEl();
     if(status)status.textContent="Finding the address and checking current weather…";
     try{
       const geoUrl="https://nominatim.openstreetmap.org/search?format=jsonv2&limit=1&q="+encodeURIComponent(address);
@@ -200,7 +202,7 @@
         humidity:c.relative_humidity_2m+"%"
       };
       let card=$("rolAddressWeatherCard");
-      if(!card){card=document.createElement("div");card.id="rolAddressWeatherCard";card.className="rol-weather";const bar=document.querySelector(".rol-mapbar");if(bar)bar.insertAdjacentElement("afterend",card);}
+      if(!card){card=document.createElement("div");card.id="rolAddressWeatherCard";card.className="rol-weather";const anchor=$("rolMapSearchRow")||document.querySelector(".auction-map-shell .map-mode-bar");if(anchor)anchor.insertAdjacentElement("afterend",card);}
       card.id="rolAddressWeatherCard";
       card.innerHTML="<div><b>Weather at searched address</b><strong>"+esc(item.temperature)+"</strong>Feels "+esc(item.feels)+" · Wind "+esc(item.wind)+"<br>Humidity "+esc(item.humidity)+"<br><small>"+esc(item.name)+" · Open-Meteo</small></div>";
       const mapped=window.ROLyfeAuctionMap&&window.ROLyfeAuctionMap.addWeatherMarkers
@@ -212,7 +214,7 @@
   }
 
   async function lookupRegrid(address) {
-    const box=$("rolAuctionLookupLinks"),status=$("rolMapStatus");
+    const box=$("rolAuctionLookupLinks"),status=mapStatusEl();
     if(status)status.textContent="Requesting one matched parcel from Regrid…";
     const base="https://ykmdyfbklvuoseqdjnxy.supabase.co/functions/v1/regrid-parcel-lookup";
     const anon="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlrbWR5ZmJrbHZ1b3NlcWRqbnh5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTI3ODk5OTQsImV4cCI6MjEwODM2NTk5NH0._YEZj2GSnPcLGXmwgj98V_JzXdJIhTmOFoAH9BSia2I";
@@ -428,7 +430,7 @@
             if(adx>=18&&change>0&&macd>0&&bull>=3){posture="Bullish";postureClass="bullish";postureCopy="Trend and momentum support an upward setup.";}
             else if(adx>=18&&change<0&&macd<0&&bear>=3){posture="Bearish";postureClass="bearish";postureCopy="Trend and momentum support a downward setup.";}
           }
-          return "<tr><td><button type='button' data-live-chart='"+esc(chartSymbol)+"'>"+esc(row.ticker||"—")+"</button></td><td><span class='rol-posture "+postureClass+"'>"+posture+"</span><small class='rol-posture-copy'>"+postureCopy+"</small></td><td>"+fmt(row.price,4)+"</td><td>"+pct(row.change_1d_pct)+"</td><td>"+pct(row.gap_pct)+"</td><td>"+(row.relative_volume==null?"—":fmt(row.relative_volume,2)+"×")+"</td><td>"+fmt(row.rsi_14,1)+"</td><td>"+fmt(row.stochastic_k,1)+" / "+fmt(row.stochastic_d,1)+"</td><td>"+fmt(row.macd_histogram,4)+"</td><td>"+fmt(row.adx_14,1)+"</td></tr>";
+          return "<tr><td><button type='button' data-live-chart='"+esc(chartSymbol)+"'>"+esc(row.ticker||"—")+"</button></td><td><span class='rol-posture "+postureClass+"'>"+(posture==="Bullish"?"🏹 ↑ BULLISH":posture==="Bearish"?"🏹 ↓ BEARISH":"⏸ NEUTRAL / WAITING")+"</span><small class='rol-posture-copy'>"+postureCopy+"</small></td><td>"+fmt(row.price,4)+"</td><td>"+pct(row.change_1d_pct)+"</td><td>"+pct(row.gap_pct)+"</td><td>"+(row.relative_volume==null?"—":fmt(row.relative_volume,2)+"×")+"</td><td>"+fmt(row.rsi_14,1)+"</td><td>"+fmt(row.stochastic_k,1)+" / "+fmt(row.stochastic_d,1)+"</td><td>"+fmt(row.macd_histogram,4)+"</td><td>"+fmt(row.adx_14,1)+"</td></tr>";
         }).join("");
         liveResults.innerHTML=rows.length
           ?"<div class='rol-live-scan-stamp'>Provider as of "+esc(data.asOf||"timestamp not supplied")+" · "+rows.length+" returned of "+symbols.length+" requested. Null fields mean no provider coverage/value, not zero.</div><div class='rol-live-scan-wrap'><table class='rol-live-scan'><thead><tr><th>Symbol</th><th>Technical posture</th><th>Price</th><th>1D change</th><th>Gap</th><th>Rel Vol</th><th>RSI</th><th>Stoch K/D</th><th>MACD Hist</th><th>ADX</th></tr></thead><tbody>"+quoteRows+"</tbody></table></div>"
@@ -512,7 +514,7 @@
   const weatherButton = $("rolWeatherBtn");
   if (weatherButton) {
     weatherButton.onclick = async function () {
-      const status = $("rolMapStatus");
+      const status = mapStatusEl();
       if (status) status.textContent = "Loading current weather and map markers…";
       const cities = [
         ["Philadelphia",39.9526,-75.1652],
