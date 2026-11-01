@@ -1188,5 +1188,10 @@ const samples={conservative:[5000,6,6,150],standard:[5000,12,12,100],extended:[1
 document.querySelectorAll("[data-otc-sample]").forEach(btn=>btn.addEventListener("click",()=>{const values=samples[btn.dataset.otcSample];if(!values)return;ids.forEach((id,i)=>get(id).value=String(values[i]));calc();}));
 calc();
 })();
+</script><script id="rol-tax-yield-hash-open">
+(function(){
+function reveal(){if(location.hash==="#taxYield"){const shell=document.querySelector("#taxYield .section-shell");if(shell)shell.classList.add("open");}}
+reveal();window.addEventListener("hashchange",reveal);
+})();
 </script></body>
 </html>
