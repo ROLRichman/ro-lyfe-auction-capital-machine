@@ -364,7 +364,23 @@ html.rol-property-embed .section-shell{margin-top:10px}
   <div class="card"><h3>County Research Script</h3><p class="muted">Use these questions with the tax collector, treasurer, clerk or sale administrator.</p><ol id="countyScriptList"></ol><div class="button-row"><button class="btn" type="button" onclick="askAI('What questions should I ask the county?')">Send to AI</button></div></div>
 </div>
 <div class="form-card" style="margin-top:15px"><h3>Tax Certificate / OTC Inventory</h3><p class="muted">Use this as a research inventory. Verify every record against the official county/state source.</p><div class="budget-table-wrap"><table class="budget-table"><thead><tr><th>Certificate #</th><th>Year</th><th>Parcel / PIN</th><th>Address</th><th>State</th><th>County</th><th>Purchase Amount</th><th>Interest</th><th>Delinquent Year</th><th>Status</th></tr></thead><tbody id="taxYieldRows"><tr><td colspan="10" class="muted">No inventory rows yet.</td></tr></tbody></table></div><div class="button-row"><button class="btn" type="button" onclick="addTaxYieldRow()">Add Certificate / OTC Record</button></div></div>
-<div class="card" style="margin-top:15px"><h3>Yield Guardrail</h3><p class="muted">A quoted statutory rate is not the same as realized annualized yield. Account for purchase price, bid method, penalties, fees, redemption timing, discounts, servicing/admin costs and principal risk.</p></div>
+<div class="card" id="otc-yield-screener" style="margin-top:15px">
+<h3>📈 Tax Yield Sample Calculator</h3>
+<p class="muted">Preliminary simple-interest screen. Load a sample or enter your own figures; jurisdiction rules and certificate terms control actual returns.</p>
+<div class="form-grid">
+<div class="field"><label for="otcYieldAmount">Investment / lien amount ($)</label><input id="otcYieldAmount" type="number" min="0" step="100" value="5000"></div>
+<div class="field"><label for="otcYieldRate">Annual rate (%)</label><input id="otcYieldRate" type="number" min="0" step=".1" value="12"></div>
+<div class="field"><label for="otcYieldMonths">Months held</label><input id="otcYieldMonths" type="number" min="0" step="1" value="12"></div>
+<div class="field"><label for="otcYieldCosts">Costs / fees ($)</label><input id="otcYieldCosts" type="number" min="0" step="10" value="100"></div>
+</div>
+<div class="button-row">
+<button class="btn" type="button" data-otc-sample="conservative">Conservative sample</button>
+<button class="btn" type="button" data-otc-sample="standard">Standard sample</button>
+<button class="btn" type="button" data-otc-sample="extended">Extended hold sample</button>
+<button class="btn primary" type="button" id="otcYieldCalculate">Calculate Yield</button>
+</div>
+<div class="result" id="otcYieldResult" aria-live="polite">Enter assumptions and calculate.</div>
+</div>\n<div class="card" style="margin-top:15px"><h3>Yield Guardrail</h3><p class="muted">A quoted statutory rate is not the same as realized annualized yield. Account for purchase price, bid method, penalties, fees, redemption timing, discounts, servicing/admin costs and principal risk.</p></div>
 </div></div></div></section>
 
 <section id="underwriting"><div class="container">
@@ -1154,5 +1170,23 @@ window.addEventListener("message",function(event){
 })();
 </script>
 
-</body>
+<script id="rol-otc-yield-calculator">
+(function(){
+const ids=["otcYieldAmount","otcYieldRate","otcYieldMonths","otcYieldCosts"];
+const get=id=>document.getElementById(id);
+const money=n=>new Intl.NumberFormat("en-US",{style:"currency",currency:"USD",maximumFractionDigits:2}).format(n);
+function calc(){
+ const amount=Math.max(0,Number(get(ids[0])?.value)||0),rate=Math.max(0,Number(get(ids[1])?.value)||0),months=Math.max(0,Number(get(ids[2])?.value)||0),costs=Math.max(0,Number(get(ids[3])?.value)||0);
+ const interest=amount*rate/100*months/12,net=interest-costs,proceeds=amount+net,yieldPct=amount?net/amount*100:0;
+ const out=get("otcYieldResult");if(out)out.innerHTML="<strong>Estimated interest:</strong> "+money(interest)+"<br><strong>Net estimated return:</strong> "+money(net)+"<br><strong>Net yield:</strong> "+yieldPct.toFixed(2)+"%<br><strong>Estimated proceeds:</strong> "+money(proceeds)+"<p class='muted'>Illustrative only; not a promise of statutory return or payment.</p>";
+}
+const params=new URLSearchParams(location.search);
+["amount","rate","months","costs"].forEach((key,i)=>{const value=params.get("yield_"+key);if(value!==null&&Number.isFinite(Number(value)))get(ids[i]).value=String(Math.max(0,Number(value)));});
+get("otcYieldCalculate")?.addEventListener("click",calc);
+ids.forEach(id=>get(id)?.addEventListener("input",calc));
+const samples={conservative:[5000,6,6,150],standard:[5000,12,12,100],extended:[10000,10,18,350]};
+document.querySelectorAll("[data-otc-sample]").forEach(btn=>btn.addEventListener("click",()=>{const values=samples[btn.dataset.otcSample];if(!values)return;ids.forEach((id,i)=>get(id).value=String(values[i]));calc();}));
+calc();
+})();
+</script></body>
 </html>
