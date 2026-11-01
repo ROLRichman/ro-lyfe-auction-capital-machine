@@ -91,6 +91,15 @@ footer{margin-top:35px;border-top:1px solid var(--border);padding:30px 0;color:v
 .bo-ladder-output{margin-top:12px;padding:12px;border:1px solid rgba(102,217,255,.38);border-radius:12px;background:linear-gradient(145deg,rgba(14,34,54,.9),rgba(15,20,42,.94));box-shadow:inset 0 0 18px rgba(102,217,255,.045)}.bo-ladder-heading{font-size:10px;font-weight:900;letter-spacing:.12em;color:var(--accent);margin-bottom:8px}.bo-ladder-results{grid-template-columns:repeat(2,minmax(0,1fr));margin-top:0}.bo-ladder-results .bo-result strong{font-size:20px}.bo-field select#boAssetPick{border-color:rgba(102,217,255,.45);background:#0b1930}@media(max-width:700px){.bo-ladder-results{grid-template-columns:repeat(2,minmax(0,1fr))}.bo-ladder-results .bo-result{padding:9px}.bo-ladder-results .bo-result strong{font-size:18px}}
 </style>
 
+
+<script>if(new URLSearchParams(location.search).get("embed")==="property")document.documentElement.classList.add("rol-property-embed");</script>
+<style id="rol-property-embed-mode">
+html.rol-property-embed header,html.rol-property-embed .hero,html.rol-property-embed .live-bar,html.rol-property-embed #globalIntelligence,html.rol-property-embed #dashboard,html.rol-property-embed #intake,html.rol-property-embed #dueDiligence,html.rol-property-embed #underwriting,html.rol-property-embed #capital,html.rol-property-embed #research,html.rol-property-embed #markets{display:none!important}
+html.rol-property-embed body{background:#070b16}
+html.rol-property-embed .container{width:min(1180px,96%)}
+html.rol-property-embed #analysis,html.rol-property-embed #contractor,html.rol-property-embed #rehabSection,html.rol-property-embed #taxLien,html.rol-property-embed #taxYield,html.rol-property-embed #calculators,html.rol-property-embed #vault{scroll-margin-top:12px}
+html.rol-property-embed .section-shell{margin-top:10px}
+</style>
 </head>
 
 <body>
@@ -1129,6 +1138,21 @@ window.addEventListener("message",function(event){
 <script src="./js/partner-intelligence-dock.js"></script>
 <script src="./js/market-intelligence-upgrade.js"></script>
 <script src="./js/review-export.js"></script>
-<script src="./js/page-intelligence-agent.js"></script>
+<script>if(new URLSearchParams(location.search).get("embed")!=="property"){var rolPageAgent=document.createElement("script");rolPageAgent.src="./js/page-intelligence-agent.js";document.body.appendChild(rolPageAgent);}</script>
+
+<script id="rol-property-embed-resize">
+(function(){
+ if(new URLSearchParams(location.search).get("embed")!=="property"||window.parent===window)return;
+ const send=function(){
+  const h=Math.max(document.documentElement.scrollHeight,document.body?document.body.scrollHeight:0)+24;
+  window.parent.postMessage({type:"rol-property-engine-height",height:h},"https://rolrichman.github.io");
+ };
+ window.addEventListener("load",function(){send();setTimeout(send,250);setTimeout(send,900);});
+ window.addEventListener("resize",send);
+ if("ResizeObserver" in window){new ResizeObserver(send).observe(document.body);}
+ if("MutationObserver" in window){new MutationObserver(send).observe(document.body,{childList:true,subtree:true,attributes:true});}
+})();
+</script>
+
 </body>
 </html>
