@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="RO'Lyfe Auction Capital Machine™ — auction property intelligence, deal analysis, rehab, tax and lien research, underwriting, contractor coordination and capital routing.">
 <title>RO'Lyfe Auction Capital Machine™</title>
-<link rel="stylesheet" href="./css/machine.css">
+<!-- Legacy machine.css is preserved in css/backups; current production styles are maintained inline. -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css" crossorigin=""><link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
 
 <style>
@@ -1193,5 +1193,42 @@ calc();
 function reveal(){if(location.hash==="#taxYield"){const shell=document.querySelector("#taxYield .section-shell");if(shell)shell.classList.add("open");}}
 reveal();window.addEventListener("hashchange",reveal);
 })();
-</script></body>
+</script>
+<style id="rol-device-compatibility">
+/* Current production layout: phone, tablet and desktop width safeguards.
+   The older machine.css remains preserved in css/backups and is not loaded
+   because it predates the current inline layout and applies broad legacy rules. */
+html,body{max-width:100%}
+body{min-width:0;overflow-x:clip}
+img,svg,canvas,iframe,video{max-width:100%}
+.container,main,.section-shell,.section-content,.form-card,.hero-card,.card,
+.auction-map-shell,.global-intel-shell,.global-globe-panel,.state-yield-panel,
+.underwriting-box{min-width:0}
+.form-grid>*,.result-grid>*,.row-grid>*,.dashboard>*,.live-grid>*,
+.capital-grid>*,.link-grid>*,.grid>*,.hero-grid>*,.global-intel-grid>*,
+.underwriting-grid>*{min-width:0}
+input,select,textarea{min-width:0;max-width:100%}
+.budget-table-wrap,.state-yield-table-wrap,.bo-table-wrap{
+  max-width:100%;overflow-x:auto;overscroll-behavior-x:contain;
+  -webkit-overflow-scrolling:touch;
+}
+#auctionMap{width:100%;max-width:100%;min-width:0}
+.map-mode-bar>.btn{min-width:0;max-width:100%;min-height:44px;white-space:normal;line-height:1.25}
+.mobile-nav-toggle{width:auto;min-width:44px;max-width:54px;flex:0 0 auto}
+.ai-underwriter-panel{max-width:calc(100vw - 16px);max-height:calc(100dvh - 16px)}
+@media(max-width:390px){
+  .container{width:calc(100% - 16px)}
+  .section-content{padding-left:10px;padding-right:10px}
+  .hero h1{font-size:clamp(28px,8vw,38px)}
+  .live-value,.stat-value{font-size:clamp(16px,5vw,24px);overflow-wrap:anywhere}
+  .result-item strong,.underwriting-box strong{font-size:clamp(15px,4.8vw,20px);overflow-wrap:anywhere}
+}
+@media(max-height:520px) and (orientation:landscape){
+  .ai-underwriter-panel{top:8px;bottom:8px;height:auto;max-height:calc(100dvh - 16px)}
+  .globe-stage{min-height:280px}
+  .hero{padding-top:22px}
+}
+</style>
+
+</body>
 </html>
