@@ -227,7 +227,7 @@ html.rol-property-embed .section-shell{margin-top:10px}
   <div class="field full"><label for="auctionUrl">Auction Property URL</label><input id="auctionUrl" type="url" placeholder="https://www.auction.com/..."></div>
   <div class="field full"><label for="address">Property Address</label><input id="address" placeholder="Street, City, State ZIP"></div>
   <div class="field"><label for="propertyState">Property State</label><input id="propertyState" placeholder="PA"></div>
-  <div class="field"><label for="county">County</label><input id="county" placeholder="County"></div>
+  <div class="field"><label for="county">County</label><input id="county" placeholder="County"></div><div class="field"><label for="propertyZip">ZIP code</label><input id="propertyZip" inputmode="numeric" autocomplete="postal-code" maxlength="10" placeholder="19104"></div>
   <div class="field"><label for="taxCity">City / Municipality</label><input id="taxCity" placeholder="City"></div>
   <div class="field"><label for="parcel">Parcel / APN</label><input id="parcel" placeholder="APN / Parcel"></div>
   <div class="field"><label for="auctionType">Auction Type</label><select id="auctionType"><option value="">Select</option><option>Bank Owned / REO</option><option>Foreclosure</option><option>Sheriff Sale</option><option>Tax Sale</option><option>Tax Lien</option><option>Tax Deed</option><option>Other</option></select></div>
@@ -848,7 +848,7 @@ function addTaxYieldRow(){
 function getSnapshot(){
   const d=calculateDealUI();
   return {
-    property:{address:val("address"),state:val("propertyState"),county:val("county"),parcel:val("parcel"),type:val("auctionType"),occupancy:val("occupancy")},
+    property:{address:val("address"),state:val("propertyState"),county:val("county"),zip:val("propertyZip"),parcel:val("parcel"),type:val("auctionType"),occupancy:val("occupancy")},
     auction:{url:val("auctionUrl"),date:val("auctionDate"),time:val("auctionTime"),openingBid:num("openingBid"),currentBid:num("currentBid"),increment:num("bidIncrement"),reserve:val("reserve"),financing:val("financing"),emd:num("emd")},
     deal:d, borrower:{guarantor:val("primaryGuarantor"),entity:val("borrowingEntity"),liquidity:num("liquidity"),netWorth:num("netWorth"),creditScore:num("creditScore")},
     tax:{state:val("taxState"),county:val("taxCounty"),type:val("taxSaleType"),totalDue:num("taxTotalDue")||num("delinquentTaxes")+num("taxPenalties")+num("taxFees")}
@@ -862,7 +862,7 @@ function saveProperty(){
   showAIToast("Deal snapshot saved locally on this device.");
 }
 function loadExample(){
-  const values={address:"2539 62nd St, Philadelphia, PA 19142",propertyState:"PA",county:"Philadelphia",parcel:"402104100",auctionType:"Bank Owned / REO",occupancy:"Occupied",openingBid:25000,currentBid:83500,bidIncrement:500,reserve:"Unknown",financing:"Cash; hard money / LOC may be accepted — verify auction terms",emd:4175,auctionDate:"2026-09-24",arv:306500,rehab:60000,closing:5000,holding:2000,selling:15000,financingCosts:10000,profit:40000,contingency:10000,buyerCapital:14000};
+  const values={address:"2539 62nd St, Philadelphia, PA 19142",propertyState:"PA",county:"Philadelphia",propertyZip:"19142",parcel:"402104100",auctionType:"Bank Owned / REO",occupancy:"Occupied",openingBid:25000,currentBid:83500,bidIncrement:500,reserve:"Unknown",financing:"Cash; hard money / LOC may be accepted — verify auction terms",emd:4175,auctionDate:"2026-09-24",arv:306500,rehab:60000,closing:5000,holding:2000,selling:15000,financingCosts:10000,profit:40000,contingency:10000,buyerCapital:14000};
   Object.entries(values).forEach(([id,v])=>{if($(id))$(id).value=v});
   calculateDealUI();updateClock();showAIToast("Example auction loaded. Replace the facts with verified property data before relying on the analysis.");
 }
