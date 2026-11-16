@@ -173,7 +173,7 @@
       status(modeLabel + " view · location pin found · verify exact parcel/address before relying on it");
       setActiveButton(modeLabel === "street" ? "mapModeStreet" : "mapModeProperty");
     } catch (err) {
-      status("Location lookup failed. Check connectivity or try again. " + (err && err.message ? err.message : ""));
+      status("Location lookup did not complete. Check the address and try again.");
     } finally {
       state.busy = false;
     }
