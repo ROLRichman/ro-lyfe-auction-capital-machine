@@ -209,7 +209,7 @@
         ?window.ROLyfeAuctionMap.addWeatherMarkers([item]):false;
       if(status)status.textContent=mapped?"Address weather loaded · marker added to map":"Address weather loaded in card · map layer is not initialized yet";
     }catch(error){
-      if(status)status.textContent="Address weather unavailable: "+(error&&error.message?error.message:"Check address and connection.");
+      if(status)status.textContent="Address weather is unavailable right now. The property and research links remain available.";
     }
   }
 
@@ -249,9 +249,8 @@
       }
       if(status)status.textContent="Regrid parcel returned · 1 result · verify county records and title separately";
     }catch(error){
-      const message=error&&error.message?error.message:"Request failed.";
-      if(box)box.innerHTML="<div class='rol-lookup-note'><strong>Regrid lookup:</strong> "+esc(message)+"</div>";
-      if(status)status.textContent="Regrid not ready: "+message;
+      if(box)box.innerHTML="<div class='rol-lookup-note'><strong>Parcel lookup:</strong> Temporarily unavailable. Verify parcel details with official county records.</div>";
+      if(status)status.textContent="Parcel lookup did not complete. County records remain the source of truth.";
     }
   }
 
@@ -437,8 +436,8 @@
           :"<div class='rol-scan-status'>No current matches returned for this selected list. That is not proof that every symbol is inactive; check provider coverage and null fields.</div>";
         $("rolScanStatus").textContent="Tickerbot returned "+rows.length+" records for "+assetClass+". Tap a symbol in the result table to load it on the same candlestick chart.";
       }catch(error){
-        liveResults.innerHTML="<div class='rol-scan-status'>Live scan unavailable: "+esc(error&&error.message?error.message:"Provider request failed.")+"</div>";
-        $("rolScanStatus").textContent="Provider request did not complete. Check Edge Function status, API entitlement and data coverage.";
+        liveResults.innerHTML="<div class='rol-scan-status'>Live market scan is temporarily unavailable. No signal is being fabricated.</div>";
+        $("rolScanStatus").textContent="Scan did not complete. The rest of the Auction Machine remains available.";
       }finally{
         button.disabled=false;button.textContent="↻ Run live scan · current list";
       }
@@ -552,7 +551,7 @@
           ? "Weather loaded · 3 city readings pinned on the map · Open-Meteo"
           : "Weather loaded in cards · map markers unavailable until Leaflet is ready";
       } catch(error) {
-        if(status) status.textContent="Weather refresh failed: "+(error&&error.message?error.message:"Check your connection and retry.");
+        if(status) status.textContent="Weather refresh is temporarily unavailable. Try again later.";
       }
     };
   }
