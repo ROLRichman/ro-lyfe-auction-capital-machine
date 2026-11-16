@@ -41,6 +41,16 @@ function open(){panel.classList.add("open");toast.classList.add("hide");}
 launch.onclick=()=>panel.classList.contains("open")?panel.classList.remove("open"):open();
 $("rolAiClose").onclick=()=>panel.classList.remove("open");
 $("rolAiTopic").onchange=e=>{if(e.target.value){$("rolAiQuestion").value=e.target.value;ask();}};
+function localPageAnswer(question){
+ const q=String(question||"").toLowerCase();
+ if(/tax.?deed|tax.?lien|redemption|certificate/.test(q))return "Tax-deed and tax-lien sales are different processes. A tax-lien certificate generally creates a lien claim, not immediate ownership. A tax-deed or foreclosure purchase still requires jurisdiction-specific review of notices, redemption rights, title, surviving liens, possession and auction payment deadlines. Verify the county rules and sale documents before bidding.";
+ if(/max.?bid|maximum.?bid|acquisition price|bid room/.test(q))return "The maximum acquisition calculation starts with estimated ARV and subtracts rehab, closing, holding, selling and financing costs, required profit, and contingency. Compare that result with the current bid; a positive difference is bid room, not permission to bid. Confirm every input with current comps, contractor pricing and sale terms.";
+ if(/capital|funding.?gap|loan|financ/.test(q))return "The funding gap is the total project cash requirement minus verified buyer cash and any financing amount that is actually available. Separate auction-day deposit and winning-bid funds from post-purchase rehab and holding capital. A lender ceiling is only an estimate until the lender confirms eligibility and terms.";
+ if(/rehab|contractor|repair|condition/.test(q))return "Use the rehab worksheet to itemize labor, materials, permits, utilities and contingency. Include only checked line items in the total, then confirm the scope and timeline with the contractor. For auction properties, price unknown conditions conservatively because interior access may be restricted.";
+ if(/title|lien|due.?diligence|occup|inspection|possession/.test(q))return "Before a bid, verify parcel identity, ownership, title, taxes, surviving liens, HOA balances, redemption rights, occupancy, access, possession/eviction process, auction deposit, proof-of-funds rules and closing deadlines. Use official county records and qualified title/legal professionals; third-party search links are leads, not verification.";
+ if(/workflow|where do i start|next step|auction/.test(q))return "Start with the exact property and auction jurisdiction. Confirm the auction type and sale terms, verify parcel/title/tax/occupancy risks, establish ARV from comparable sales, obtain a contractor scope, calculate total project cost and maximum bid, then identify the capital gap and required proof-of-funds timeline. Keep the deal on HOLD until critical facts are verified.";
+ return "I can still guide you through the Auction Capital Machine using the tools and information on this page. Ask about tax deeds versus liens, maximum bid, rehab, title risks, due diligence or the funding gap. For this question, start by identifying the property, auction jurisdiction and deadline so the answer can be grounded in the actual deal.";
+}
 async function ask(){
 const q=$("rolAiQuestion").value.trim();if(!q){$("rolAiStatus").textContent="Enter a question first.";return;}
 $("rolAiAnswer").textContent="Thinking…";$("rolAiAsk").disabled=true;
@@ -50,7 +60,7 @@ const r=await fetch(url,{method:"POST",headers:{apikey:anon,Authorization:"Beare
 const d=await r.json();if(!r.ok)throw new Error(d.error||("AI service HTTP "+r.status));
 $("rolAiAnswer").textContent=d.answer||"No answer returned.";
 $("rolAiStatus").textContent="Answered by "+(d.model||"RO'Lyfe AI")+". Verify live prices and official property records before acting.";
-}catch(e){$("rolAiAnswer").textContent=e.message;$("rolAiStatus").textContent="The secure AI service is not configured or could not be reached. Voice playback can still read the on-screen message.";}
+}catch(e){$("rolAiAnswer").textContent=localPageAnswer(q);$("rolAiStatus").textContent="Local page guide · live assistant response is temporarily unavailable. Your research and calculations remain available.";}
 finally{$("rolAiAsk").disabled=false;}
 }
 $("rolAiAsk").onclick=ask;
