@@ -409,3 +409,73 @@ These examples are calculation checks only; lender, tax, title and transaction d
 
 ### Current validation status
 Repository JavaScript syntax and embedded-page script syntax were checked after the changes. The Edge Functions deployed successfully. This repository has not yet been completed through a real Android browser acceptance test: the map CDN fallback, live Tickerbot scan response, address weather response, Regrid secret/parcel response, quote-to-calculator sync and each calculator still require a visual in-browser run. Do not mark production-ready until these flows are checked on the live page.
+
+
+---
+
+# RO’Lyfe Real Estate & Auction Capital Intelligence™
+
+**Core application:** RO’Lyfe Auction Capital Machine™  
+**Positioning:** Property discovery • Tax-sale research • Due diligence • Deal underwriting • Capital routing
+
+**Project description:** A real-estate deal discovery, verification, underwriting and capital-routing command center for investors, contractors, buyers and funding professionals. It connects auction and tax-sale research, parcel intelligence, property analysis, rehab estimates, maximum-bid calculations, contractor coordination, funding preparation and partner-resource links in one workflow.
+
+**Operating promise:** **Find the Property. Verify the Risk. Build the Deal. Match the Capital.**
+
+ROOT OF LYFE LLC operates as a funding and referral business—not a lender. Capital links are pathways for discussion or referral; they are not a representation that a provider offers a particular product for a particular sale type, nor an offer, approval, quote or commitment. The provider makes its own eligibility, underwriting, pricing and approval decisions.
+
+## Connected RO’Lyfe workspace
+
+| Workspace | Role | Link |
+|---|---|---|
+| Property Research Intelligence | Canonical discovery, parcel, source verification and due-diligence workflow | https://rolrichman.github.io/rolyfe-property-research-intelligence/ |
+| Auction Capital Machine | Auction intake, deal analysis, rehab, risk, capital needs and maximum-bid support | https://rolrichman.github.io/ro-lyfe-auction-capital-machine/ |
+| Real Estate Command Center | Real-estate scenarios, acquisition analysis, capital routing, deal packets and due diligence | https://rolrichman.github.io/rolyfe-real-estate-command-center/ |
+| Funding & Execution Hub | Funding workflows and partner handoff | https://rolrichman.github.io/rolyfe-funding/ |
+| Business Funding Resource Center | Business-funding and grant-readiness research | https://rolrichman.github.io/ro-lyfe-business-funding-resource-center/ |
+| Contract & Document Hub | Contract/document workflow | https://rolrichman.github.io/rolyfe-contract-documents-hub/ |
+| Acquisition Engine | Acquisition workflow tools | https://rolrichman.github.io/rolyfe-acquisition-engine/ |
+| Buyer Network OS | Buyer-side coordination | https://rolrichman.github.io/RO-Lyfe-Buyer-Network-OS/ |
+| Closers OS | Closing and execution operations | https://rolrichman.github.io/RO-Lyfe-Closers-OS/ |
+| Command Center | Cross-platform operating hub | https://rolrichman.github.io/rolyfe-command-center/ |
+| County / tax intelligence V1 | Supporting calculators, county-research and link-vault workspace | https://github.com/ROLRichman/RO-Lyfe-Auction-Capital-Machine-V1 |
+
+The shared Property Research Dock is the common launchpad. The connected sites are still separate applications; navigation links do not mean they share a secure CRM, a common database, user accounts, or synchronized client records. The Property Research Engine currently documents browser-local storage limitations. Do not place client financial records, identity documents, SSNs, EIN letters, bank statements, credentials or other sensitive data in public repositories or browser-local research records.
+
+## End-to-end deal workflow
+
+1. **Discover:** capture the auction/listing URL, address, parcel/APN, county, sale date and source.
+2. **Identify:** confirm that address, parcel, legal description and sale record refer to the same asset.
+3. **Classify:** record the exact process—tax lien/certificate, tax deed, upset/judicial sale, sheriff sale, mortgage foreclosure, bank-owned/REO, government sale or ordinary listing.
+4. **Verify:** preserve official sale terms and dated primary-record checks for taxes, liens, ownership, title, redemption, occupancy, access, zoning/use and property condition.
+5. **Underwrite:** distinguish sourced facts from estimates; model purchase/bid, premium, deposits, taxes, legal/title costs, rehab, utilities, holding, financing, selling costs, contingency and target return.
+6. **Set the bid ceiling:** use a conservative maximum-offer model, not the current bid or opening bid.
+7. **Map capital timing:** separate cash needed to register/bid, deposit/earnest money, final auction settlement, post-award acquisition costs and any later rehab/bridge financing.
+8. **Coordinate execution:** collect contractor scope and estimate, buyer/operator experience, access/inspection status and a realistic exit.
+9. **Prepare the partner package:** summarize the asset, sale process, jurisdiction, verified documents, economics, borrower overview, funding request and unresolved risks.
+10. **Refer and track:** present the scenario to an appropriate capital partner for review; record provider feedback and next steps without representing a referral as approval.
+
+## Capital pathways and partner directory
+
+These are known links from the RO’Lyfe workspace. They are not an endorsement, a promise of a tax-sale lending product, or evidence that a provider will finance a particular auction. Confirm program availability, state/property eligibility, sale-type fit, deadlines, licensing/registration requirements, borrower criteria, fees and referral terms directly before presenting a pathway.
+
+- [Kiavi Broker Program](https://www.kiavi.com/collateral/broker-program) — potential real-estate investment financing discussion; verify whether the specific auction/tax-sale structure is eligible.
+- [Private Money Exchange — RO’Lyfe referral link](https://privatemoneyexchange.com/aff-page/richman/) — private-capital resource; verify lender and transaction fit.
+- [COGO Capital](https://www.cogocapital.com/) and [COGO application portal](https://www.borrowersviewcentral.com/portal/applynew?id=LCS) — business-financing pathway; do not assume it funds real-estate tax-sale acquisitions.
+- [National Corporate Credit](https://nationalcorporatecredit.com/) — funding-advisor / partner discussion; ask directly about auction capital, hard money, private lenders, eligible states and payment timing. [Richard Guzman’s scheduling page](https://calendly.com/richardguzman).
+- [MyPartner Business Financing](https://go.mypartner.io/business-financing/?ref=001Qk00000MkqgTIAR) — business-financing referral path, not a property-loan commitment.
+- [Americas Funding Experts](https://my.americasfundingexperts.com/?id=1820217000190862001) — business-funding referral path.
+- [7 Figures Credit](https://www.7figurescredit.com/?a_aid=ROLFunding) — credit education/support referral path; not a substitute for lender underwriting.
+
+## Accuracy and safety rules
+
+- Tax lien, tax certificate, tax deed, sheriff sale and mortgage foreclosure are different asset and legal processes. Never treat them as interchangeable.
+- County sale notices, governing terms, statutes and official records control over search results, estimates and third-party marketing pages.
+- A map pin is not a survey; a parcel match is not a title search; an assessed value or AVM is not an appraisal or verified ARV.
+- Redemption, notice, lien priority, tax/water/municipal balances, bankruptcy, title quieting/insurability, possession, eviction and post-sale deed timing are jurisdiction- and fact-specific. Obtain the appropriate title/legal review.
+- Identify **verified**, **estimated**, **conflicting** and **unknown** facts separately. Keep source URL and last-checked date with every material claim.
+- Show funding-to-win and post-award funding as separate needs. Do not assume a conventional bridge lender funds the bidder’s deposit or pays inside an auction’s settlement window.
+- Never state or imply that any partner has reviewed or approved the deal unless that partner has confirmed it.
+- Do not expose client personal data, financial statements, login credentials or API keys in public code.
+- Use browser-side demos and illustrative calculator assumptions only as planning aids; validate formulas and inputs before relying on results.
+
