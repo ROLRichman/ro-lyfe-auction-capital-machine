@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="RO'Lyfe Auction Capital Machine™ — auction property intelligence, deal analysis, rehab, tax and lien research, underwriting, contractor coordination and capital routing.">
+<link rel="canonical" href="https://rolrichman.github.io/ro-lyfe-auction-capital-machine/">
 <title>RO'Lyfe Auction Capital Machine™</title>
 <!-- Legacy machine.css is preserved in css/backups; current production styles are maintained inline. -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css" crossorigin=""><link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
@@ -110,7 +111,7 @@ html.rol-property-embed .section-shell{margin-top:10px}
     <nav class="nav-links" id="mainNavLinks">
       <a href="#dashboard">Dashboard</a><a href="#intake">Auction</a><a href="#analysis">Deal</a>
       <a href="#contractor">Contractor</a><a href="#rehabSection">Rehab</a><a href="#taxLien">Tax/Lien</a><a href="#taxYield">Tax Yield / OTC</a>
-      <a href="#underwriting">Underwriting</a><a href="#capital">Capital</a><a href="#globalIntelligence">Global</a><a href="#research">Research</a><a href="#markets">Markets</a><a href="#calculators">Toolbox</a><a href="#vault">Link Vault</a>
+      <a href="#underwriting">Underwriting</a><a href="#capital">Capital</a><a href="#globalIntelligence">Global</a><a href="#research">Research</a><a href="#markets">Markets</a><a href="#calculators">Auction Tools</a><a href="#vault">Link Vault</a>
     </nav>
   </div>
 </header>
@@ -667,7 +668,8 @@ function calculateDealUI(){
   const arv=num("arv"),rehab=num("rehab"),closing=num("closing"),holding=num("holding"),selling=num("selling"),
         financing=num("financingCosts"),profit=num("profit"),contingency=num("contingency"),buyer=num("buyerCapital"),bid=num("currentBid");
   const max=Math.max(arv-rehab-closing-holding-selling-financing-profit-contingency,0);
-  const project=max+rehab+closing+holding+financing+contingency;
+  /* Project cost and capital gap use the live/current acquisition bid, not the maximum bid ceiling. */
+  const project=bid+rehab+closing+holding+financing+contingency;
   const need=Math.max(project-buyer,0),room=max-bid,spread=arv-project-selling;
   $("maxAcquisition").textContent=money(max); $("projectCost").textContent=money(project); $("capitalNeed").textContent=money(need);
   $("bidRoom").textContent=money(room); $("grossSpread").textContent=money(spread);
@@ -685,7 +687,7 @@ function calculateRehabUI(){
   const r=window.ROLyfeRehabBudgetEngine;
   if(r?.calculate){ try{r.calculate()}catch(e){console.warn(e)} }
   let subtotal=0;
-  document.querySelectorAll("#rehabRows input").forEach(i=>subtotal+=Number(i.value)||0);
+  document.querySelectorAll("#rehabRows tr").forEach(tr=>{const input=tr.querySelector("input[type=number]");const include=tr.querySelector(".rehab-include");if(input&&(!include||include.checked))subtotal+=Number(input.value)||0;});
   const pct=Math.max(num("rehabContingencyPercent"),0),cont=subtotal*pct/100,total=subtotal+cont;
   $("rehabSubtotal").textContent=money(subtotal);$("rehabContingency").textContent=money(cont);$("rehabTotal").textContent=money(total);
   if($("rehab")) $("rehab").value=total;
@@ -1155,7 +1157,7 @@ window.addEventListener("message",function(event){
 <script src="./js/partner-intelligence-dock.js"></script>
 <script src="./js/market-intelligence-upgrade.js"></script>
 <script src="./js/review-export.js"></script>
-<script>if(new URLSearchParams(location.search).get("embed")!=="property"){var rolPageAgent=document.createElement("script");rolPageAgent.src="./js/page-intelligence-agent.js";document.body.appendChild(rolPageAgent);}</script>
+<script>if(new URLSearchParams(location.search).get("embed")!=="property"){var rolPageAgent=document.createElement("script");rolPageAgent.src="./js/page-intelligence-agent.js?v=20261116-1";document.body.appendChild(rolPageAgent);}</script>
 
 <script id="rol-property-embed-resize">
 (function(){
@@ -1253,6 +1255,6 @@ button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-vis
 .weather-city.yellow{border-color:#facc15!important}
 .weather-city.orange{border-color:#fb923c!important}
 </style>
-<script src="https://rolrichman.github.io/rolyfe-personal-trading-desk/shared/rolyfe-global-tools.js?v=20261115-5" defer></script>
+<script src="https://rolrichman.github.io/rolyfe-personal-trading-desk/shared/rolyfe-global-tools.js?v=20261116-1" defer></script>
 </body>
 </html>
