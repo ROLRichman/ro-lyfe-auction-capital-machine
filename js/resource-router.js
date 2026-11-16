@@ -38,6 +38,33 @@
         url: "https://www.auction.com/",
         description:
           "Auction listings, auction details and property research."
+      },
+      {
+        id: "bid4Assets",
+        name: "Bid4Assets",
+        type: "auction",
+        category: "Tax Sale / Government Auction Research",
+        url: "https://www.bid4assets.com/",
+        description:
+          "Tax sales, government auctions and property listings; verify each seller's sale terms and deadlines."
+      },
+      {
+        id: "govEase",
+        name: "GovEase",
+        type: "auction",
+        category: "Tax Sale Research",
+        url: "https://www.govease.com/tax-sale-property-auctions",
+        description:
+          "Participating county tax-sale auctions and sale documents; county procedures and property terms vary."
+      },
+      {
+        id: "govDealsRealEstate",
+        name: "GovDeals Real Estate",
+        type: "auction",
+        category: "Government Property Auctions",
+        url: "https://www.govdeals.com/en/real-estate-tax-deed-lien-sales",
+        description:
+          "Government real-estate and tax deed/lien listings; verify the disposing authority and exact sale conditions."
       }
     ],
 
@@ -77,6 +104,33 @@
         url: "https://www.realtor.com/",
         description:
           "Property listings and market research."
+      },
+      {
+        id: "regrid",
+        name: "Regrid",
+        type: "property",
+        category: "Parcel Intelligence",
+        url: "https://regrid.com/",
+        description:
+          "Parcel boundaries and identifiers; parcel data is not a title report, survey or appraisal."
+      },
+      {
+        id: "propwire",
+        name: "Propwire",
+        type: "property",
+        category: "Investor Lead Research",
+        url: "https://propwire.com/",
+        description:
+          "Investor lead research; independently verify ownership, contact data and property facts."
+      },
+      {
+        id: "femaFloodMaps",
+        name: "FEMA Flood Maps",
+        type: "property",
+        category: "Property Risk Research",
+        url: "https://msc.fema.gov/portal/search",
+        description:
+          "Flood-zone research for the exact property location."
       }
     ],
 
@@ -154,6 +208,24 @@
           "https://getyourbizloan.io/lp1?pu=recqKxJNkvD70xMqi",
         description:
           "Business funding pathway."
+      },
+      {
+        id: "nccPartnerInquiry",
+        name: "National Corporate Credit",
+        type: "capital",
+        category: "Capital Partner Inquiry",
+        url: "https://nationalcorporatecredit.com/",
+        description:
+          "Partner inquiry for business, real-estate and alternative funding; confirm exact state, county, sale type, deposit timing and funding structure before routing."
+      },
+      {
+        id: "nccStrategyCall",
+        name: "NCC Partner Strategy Call",
+        type: "capital",
+        category: "Capital Partner Inquiry",
+        url: "https://calendly.com/richardguzman",
+        description:
+          "Schedule a discussion with NCC; a meeting or referral is not a loan offer or approval."
       }
     ],
 
@@ -238,6 +310,15 @@
           "https://water-lien.phila.gov/",
         description:
           "Philadelphia water-lien research."
+      },
+      {
+        id: "realAuctionTaxResearch",
+        name: "RealAuction",
+        type: "tax",
+        category: "Tax Sale / Foreclosure Research",
+        url: "https://www.realauction.com/",
+        description:
+          "Participating jurisdiction tax-sale and foreclosure portals; sale method and county rules vary."
       }
     ],
 
@@ -275,6 +356,87 @@
           "https://rolrichman.github.io/rolyfe-machine/",
         description:
           "RO'Lyfe business intelligence platform."
+      },
+      {
+        id: "propertyResearchIntelligence",
+        name: "RO'Lyfe Property Research Intelligence",
+        type: "internal",
+        category: "RO'Lyfe Real Estate",
+        url: "https://rolrichman.github.io/rolyfe-property-research-intelligence/",
+        description:
+          "Shared property intake, parcel and county research, and due-diligence workspace."
+      },
+      {
+        id: "realEstateCommandCenter",
+        name: "RO'Lyfe Real Estate Command Center",
+        type: "internal",
+        category: "RO'Lyfe Real Estate",
+        url: "https://rolrichman.github.io/rolyfe-real-estate-command-center/",
+        description:
+          "Real-estate scenario modeling, deal analysis and capital routing."
+      },
+      {
+        id: "fundingExecutionHub",
+        name: "RO'Lyfe Funding & Execution Hub",
+        type: "internal",
+        category: "RO'Lyfe Funding",
+        url: "https://rolrichman.github.io/rolyfe-funding/",
+        description:
+          "Funding readiness, referral workflow and deal execution."
+      },
+      {
+        id: "businessFundingResourceCenter",
+        name: "RO'Lyfe Business Funding Resource Center",
+        type: "internal",
+        category: "RO'Lyfe Funding",
+        url: "https://rolrichman.github.io/ro-lyfe-business-funding-resource-center/",
+        description:
+          "Business funding and grant-readiness research."
+      },
+      {
+        id: "contractDocumentHub",
+        name: "RO'Lyfe Contract & Document Hub",
+        type: "internal",
+        category: "RO'Lyfe Operations",
+        url: "https://rolrichman.github.io/rolyfe-contract-documents-hub/",
+        description:
+          "Contract, closing and deal document workflow."
+      },
+      {
+        id: "acquisitionEngine",
+        name: "RO'Lyfe Acquisition Engine",
+        type: "internal",
+        category: "RO'Lyfe Operations",
+        url: "https://rolrichman.github.io/rolyfe-acquisition-engine/",
+        description:
+          "Acquisition workflow and execution tools."
+      },
+      {
+        id: "buyerNetwork",
+        name: "RO'Lyfe Buyer Network OS",
+        type: "internal",
+        category: "RO'Lyfe Operations",
+        url: "https://rolrichman.github.io/RO-Lyfe-Buyer-Network-OS/",
+        description:
+          "Buyer relationship and opportunity coordination."
+      },
+      {
+        id: "closersOS",
+        name: "RO'Lyfe Closers OS",
+        type: "internal",
+        category: "RO'Lyfe Operations",
+        url: "https://rolrichman.github.io/RO-Lyfe-Closers-OS/",
+        description:
+          "Closing and transaction execution operations."
+      },
+      {
+        id: "commandCenter",
+        name: "RO'Lyfe Command Center",
+        type: "internal",
+        category: "RO'Lyfe",
+        url: "https://rolrichman.github.io/rolyfe-command-center/",
+        description:
+          "Cross-platform RO'Lyfe navigation and operations."
       }
     ]
   };
@@ -474,6 +636,14 @@
 
       routes.push(
         getResource("privateMoneyExchange")
+      );
+
+      routes.push(
+        getResource("nccPartnerInquiry")
+      );
+
+      routes.push(
+        getResource("nccStrategyCall")
       );
     }
 
