@@ -236,7 +236,7 @@ html.rol-property-embed .section-shell{margin-top:10px}
   <div class="field"><label for="auctionDate">Auction Date</label><input id="auctionDate" type="date"></div>
   <div class="field"><label for="auctionTime">Auction Time</label><input id="auctionTime" type="time"></div>
   <div class="field"><label for="openingBid">Opening Bid</label><input id="openingBid" type="number" min="0" step="500"></div>
-  <div class="field"><label for="currentBid">Current Bid</label><input id="currentBid" type="number" min="0" step="500"></div>
+  <div class="field"><label for="currentBid">Current Bid / Planned Purchase Price</label><input id="currentBid" type="number" min="0" step="500"></div>
   <div class="field"><label for="bidIncrement">Bid Increment</label><input id="bidIncrement" type="number" min="0" step="100"></div>
   <div class="field"><label for="reserve">Reserve Status</label><select id="reserve"><option value="">Select</option><option>Reserve Met</option><option>Reserve Not Met</option><option>Unknown</option></select></div>
   <div class="field"><label for="financing">Auction Financing Terms</label><input id="financing" placeholder="Cash only / hard money / LOC / verify"></div>
@@ -668,19 +668,20 @@ function calculateDealUI(){
   const arv=num("arv"),rehab=num("rehab"),closing=num("closing"),holding=num("holding"),selling=num("selling"),
         financing=num("financingCosts"),profit=num("profit"),contingency=num("contingency"),buyer=num("buyerCapital"),bid=num("currentBid");
   const max=Math.max(arv-rehab-closing-holding-selling-financing-profit-contingency,0);
-  /* Project cost and capital gap use the live/current acquisition bid, not the maximum bid ceiling. */
-  const project=bid+rehab+closing+holding+financing+contingency;
-  const need=Math.max(project-buyer,0),room=max-bid,spread=arv-project-selling;
+  /* Use current bid, falling back to opening bid when the auction has not received a live bid yet. */
+  const purchase=bid>0?bid:num("openingBid");
+  const project=purchase+rehab+closing+holding+financing+contingency;
+  const need=Math.max(project-buyer,0),room=max-purchase,spread=arv-project-selling;
   $("maxAcquisition").textContent=money(max); $("projectCost").textContent=money(project); $("capitalNeed").textContent=money(need);
   $("bidRoom").textContent=money(room); $("grossSpread").textContent=money(spread);
-  $("analysisNextBid").textContent=money(bid+(num("bidIncrement")||0));
+  $("analysisNextBid").textContent=money(purchase+(num("bidIncrement")||0));
   $("dashboardBid").textContent=money(bid); $("dashboardMax").textContent=money(max); $("dashboardCapital").textContent=money(need);
   $("capitalRouteNeed").textContent=money(need); $("capitalRouteBuyer").textContent=money(buyer); $("capitalRouteGap").textContent=money(need);
   $("uwArv").textContent=money(arv); $("uwMax").textContent=money(max); $("uwRehab").textContent=money(rehab);
   $("uwBid").textContent=money(bid); $("uwCapital").textContent=money(need); $("uwBidRoom").textContent=money(room);
   const status=$("dealStatus");
   if(status) status.innerHTML=room<0?'<div class="status red">CURRENT BID IS ABOVE YOUR CALCULATED ACQUISITION CEILING</div>':room===0?'<div class="status yellow">CURRENT BID IS AT THE CALCULATED CEILING</div>':'<div class="status green">CURRENT BID IS BELOW THE CALCULATED CEILING</div>';
-  return {arv,rehab,closing,holding,selling,financing,profit,contingency,buyer,bid,max,project,need,room,spread};
+  return {arv,rehab,closing,holding,selling,financing,profit,contingency,buyer,bid,purchase,max,project,need,room,spread};
 }
 
 function calculateRehabUI(){
