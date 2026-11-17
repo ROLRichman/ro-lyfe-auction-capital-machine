@@ -409,3 +409,32 @@ These examples are calculation checks only; lender, tax, title and transaction d
 
 ### Current validation status
 Repository JavaScript syntax and embedded-page script syntax were checked after the changes. The Edge Functions deployed successfully. This repository has not yet been completed through a real Android browser acceptance test: the map CDN fallback, live Tickerbot scan response, address weather response, Regrid secret/parcel response, quote-to-calculator sync and each calculator still require a visual in-browser run. Do not mark production-ready until these flows are checked on the live page.
+
+---
+
+## November 17, 2026 — Investor Pathway & Tax-Sale State Strategy Map
+
+### Investor profile and learning center
+- New standalone page: `investor-pathway.html`.
+- Captures investor role, experience, current property status, target state/county, goal, cash range, capital path, timeline, exit preference and risk comfort.
+- Includes a course-advisor one-on-one review status. The investor can download a text profile to share with the advisor or RO'Lyfe.
+- Profile answers stay in the browser; this page does not submit the profile to a course vendor, RO'Lyfe, lender or third party.
+- Adds routing guidance for Pennsylvania, Florida, Arizona, Colorado, Illinois, Maryland, New Jersey, California, Georgia, South Carolina and Texas.
+- Links to the state strategy guide for official sources and deeper reading.
+
+### State strategy guide
+- New standalone page: `tax-sale-state-guide.html`.
+- Separates three asset types: tax-deed/direct property sales, tax-lien certificates, and post-auction OTC/repository inventory.
+- Includes a filterable map of 11 researched state examples with links to statutes, state agencies or representative official county pages.
+- Includes three inline SVG illustrations beside the explanations and a looping four-stage process animation with a pause control.
+- Explains redemption-rate bidding versus redemption amounts set by statute; face amount, assessed value, market/ARV, opening bid and redemption amount are distinct fields.
+- The state map is a researched starting point, not a complete 50-state survey. A county's current sale notice, governing law, and bidder instructions control every transaction.
+
+### Course-platform observations and verification
+The user reports that a course demonstration included a live purchase, county-level details, GovEase and other integrations, tracking, guided workflow, and a promised assigned one-on-one advisor. These are recorded as user-observed demonstrations and provider representations—not independent verification of the platform's contract, legal services, title result, or county integrations.
+Before enrollment or reliance, confirm in writing: exact supported counties and auction platforms; whether bids are placed by the investor or submitted through the service; legal counsel identity and client relationship; title search, deed preparation, recording, title insurance and possession scope; out-of-pocket fees; accepted payment methods and deadlines; and an example of a completed recorded deed or a redeemed lien.
+
+### User experience
+The State Strategy Map and deeper education live on a separate page linked from the main nav and hero. No new upgrade banner, auto-open education message or unsolicited chat popup was added to the main machine. The existing AI Underwriter remains user-invoked.
+
+These pages are educational and organizational tools. They do not guarantee a lien redemption, tax deed, clear title, possession, financing, return or property acquisition. Verify current local law, the parcel record, sale terms, required cash and professional advice before bidding.
