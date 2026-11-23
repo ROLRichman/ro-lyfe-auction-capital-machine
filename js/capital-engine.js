@@ -55,7 +55,7 @@
     return {verified,spent,reserved,cash,deployable:Math.max(cash-reserved,0),overdrawn:Math.max(-cash,0),pending:sum("pending"),credit:sum("credit")};
   }
   function calculation(){
-    const rawArv=num("acx-arv"),factor=Number($("acx-confidence")?.value||0.7),basis=rawArv*factor;
+    const rawArv=num("acx-arv"),confidence=$("acx-confidence")?.value||"0.7",factor=confidence==="verified"?1:Number(confidence),basis=rawArv*factor;
     const costs={
       rehab:num("acx-rehab"),
       auctionClosing:num("acx-auction-closing"),
@@ -83,7 +83,7 @@
     let status="HOLD — COMPLETE THE REVIEW";
     let detail="Enter the deal numbers, required cash and due-diligence confirmations.";
     let tone="warn";
-    if(hasBid&&maxBid>=0&&currentBid>maxBid){status="STOP — BID EXCEEDS THE CEILING";detail="The entered current bid is above this model's maximum allowable bid.";tone="bad";}
+    if(hasBid&&(maxBid<=0||currentBid>maxBid)){status="STOP — BID EXCEEDS THE CEILING";detail="The entered current bid is above this model's maximum allowable bid.";tone="bad";}
     else if(fundingGap>0){status="FUNDING GAP — NOT READY";detail="Available deployable capital does not cover the cash requirement entered for this deal.";tone="bad";}
     else if(!hasArv||!hasBid||!hasCashRequirement){status="HOLD — MISSING KEY INPUTS";detail="Add a value estimate, current bid and cash needed to participate / close.";tone="warn";}
     else if(!valueVerified||!diligence||!withinCeiling){status="HOLD — DUE DILIGENCE / VALUE REVIEW";detail="The ARV must be marked as verified and all four auction checks completed before this can reach final human review.";tone="warn";}
@@ -173,9 +173,9 @@
     setStatus("CSV export created. Store it securely as a backup of this device's local records.","good");
   }
 
-  function syncLegacyFields(){
+  function syncLegacyFields(force){
     const links=[["arv","acx-arv"],["currentBid","acx-current-bid"],["rehab","acx-rehab"],["closing","acx-auction-closing"],["holding","acx-holding"],["selling","acx-selling"],["financingCosts","acx-financing"],["profit","acx-profit"],["contingency","acx-contingency"]];
-    links.forEach(([legacy,target])=>{const source=$(legacy),dest=$(target);if(source&&dest&&source.value!==""&&dest.value==="")dest.value=source.value;});
+    links.forEach(([legacy,target])=>{const source=$(legacy),dest=$(target);if(source&&dest&&source.value!==""&&(force||dest.value===""))dest.value=source.value;});
     const address=$("address");if(address&&$("acx-property"))$("acx-property").value=address.value;
   }
 
@@ -321,7 +321,7 @@
     $("acx-export")?.addEventListener("click",exportCsv);
     $("acx-save-snapshot")?.addEventListener("click",saveSnapshot);
     $("acx-save-outcome")?.addEventListener("click",saveOutcome);
-    $("acx-refresh-deal")?.addEventListener("click",()=>{syncLegacyFields();updateCalculation();setStatus("Current auction-intake and deal-analysis values copied into this planner.","good");});
+    $("acx-refresh-deal")?.addEventListener("click",()=>{syncLegacyFields(true);updateCalculation();setStatus("Current auction-intake and deal-analysis values copied into this planner.","good");});
     $("acx-ledger-body")?.addEventListener("click",event=>{
       const button=event.target.closest("[data-delete-ledger]");if(!button)return;
       state.ledger=state.ledger.filter(x=>x.id!==button.dataset.deleteLedger);save();renderLedger();updateMetrics();updateCalculation();setStatus("Capital entry removed.","good");
@@ -333,7 +333,7 @@
     document.querySelectorAll("#acx-shell .acx-calc").forEach(el=>el.addEventListener("input",updateCalculation));
     document.querySelectorAll("#acx-shell .acx-calc").forEach(el=>el.addEventListener("change",updateCalculation));
     ["address","arv","currentBid","rehab","closing","holding","selling","financingCosts","profit","contingency"].forEach(id=>{
-      $(id)?.addEventListener("input",()=>{syncLegacyFields();updateCalculation();});
+      $(id)?.addEventListener("input",()=>{syncLegacyFields(true);updateCalculation();});
       $(id)?.addEventListener("change",()=>{syncLegacyFields();updateCalculation();});
     });
     root.ROLyfeAuctionCapitalIntelligence={version:"1.0.0",totals,calculation,saveSnapshot,exportCsv};
