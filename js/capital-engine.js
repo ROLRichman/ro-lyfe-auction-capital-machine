@@ -140,7 +140,7 @@
   function addLedgerEntry(){
     const kind=text("acx-ledger-kind"),amount=num("acx-ledger-amount");
     if(!kinds[kind]||!(amount>0)){setStatus("Choose an activity type and enter an amount greater than zero.","warn");return;}
-    if(kind==="verified-in"&&!["Owner capital","Business revenue received","Financing proceeds received","Internal transfer between tracked accounts"].includes(text("acx-ledger-category"))){setStatus("Use a received-cash category for verified capital. Pending commitments and credit capacity must stay separate.","warn");return;}
+    if(kind==="verified-in"&&!["Owner capital","Business revenue received","Financing proceeds received"].includes(text("acx-ledger-category"))){setStatus("Use a received-cash category for verified capital. Pending commitments and credit capacity must stay separate.","warn");return;}
     state.ledger.push({id:"l-"+Date.now()+"-"+Math.random().toString(36).slice(2,7),kind,category:text("acx-ledger-category"),amount,date:text("acx-ledger-date")||localDate(),note:text("acx-ledger-note")});
     save();renderLedger();updateMetrics();updateCalculation();
     $("acx-ledger-amount").value="";$("acx-ledger-note").value="";
