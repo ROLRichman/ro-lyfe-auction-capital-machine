@@ -93,7 +93,7 @@
   function updateMetrics(){
     const t=totals();
     const values={"acx-total-verified":money(t.verified),"acx-total-spent":money(t.spent),"acx-total-reserved":money(t.reserved),"acx-total-deployable":money(t.deployable),"acx-total-pending":money(t.pending),"acx-total-credit":money(t.credit)};
-    Object.entries(values).forEach(([id,value])=>{if($(id))$(id).textContent=value;});
+    Object.entries(values).forEach(([id,value])=>{if($(id))$(id).textContent=value;});\n    if($("acx-funds-free"))$("acx-funds-free").value=money(r.capital.deployable);
     if($("acx-overdrawn"))$("acx-overdrawn").textContent=t.overdrawn>0?"Ledger warning: recorded spending exceeds verified capital by "+money(t.overdrawn)+".":"";
   }
   function updateCalculation(){
@@ -104,7 +104,7 @@
       "acx-total-cost":money(r.projectCost),
       "acx-bid-room":money(r.maxBid-r.currentBid),
       "acx-funds-free":money(r.capital.deployable),
-      "acx-funding-gap":money(r.fundingGap),
+      "acx-funding-gap":money(r.fundingGap),"acx-funding-gap-need":money(r.fundingGap),
       "acx-cost-stack":money(r.totalCosts),
       "acx-capital-covered":r.cashRequired>0?Math.min(100,(r.capital.deployable/r.cashRequired)*100).toFixed(0)+"%":"—"
     };
@@ -136,7 +136,7 @@
   }
   function addLedgerEntry(){
     const kind=text("acx-ledger-kind"),amount=num("acx-ledger-amount");
-    if(!kinds[kind]||!(amount>0)){setStatus("Choose an activity type and enter an amount greater than zero.","warn");return;}
+    if(!kinds[kind]||!(amount>0)){setStatus("Choose an activity type and enter an amount greater than zero.","warn");return;}\n    if(kind==="verified-in"&&!["Owner capital","Business revenue received","Financing proceeds received","Confirmed internal transfer"].includes(text("acx-ledger-category"))){setStatus("Use a received-cash category for verified capital. Pending commitments and credit capacity must stay separate.","warn");return;}
     state.ledger.push({id:"l-"+Date.now()+"-"+Math.random().toString(36).slice(2,7),kind,category:text("acx-ledger-category"),amount,date:text("acx-ledger-date")||localDate(),note:text("acx-ledger-note")});
     save();renderLedger();updateMetrics();updateCalculation();
     $("acx-ledger-amount").value="";$("acx-ledger-note").value="";
@@ -145,7 +145,7 @@
   function saveSnapshot(){
     const r=updateCalculation();
     if(!r.hasArv){setStatus("Enter an estimated ARV before saving a deal snapshot.","warn");return;}
-    const address=text("address")||text("acx-property")||"Unnamed property";
+    const address=text("acx-property")||text("address")||"Unnamed property";
     const snapshot={id:"d-"+Date.now()+"-"+Math.random().toString(36).slice(2,7),address,savedAt:new Date().toISOString(),rawArv:r.rawArv,valueBasis:r.basis,maxBid:r.maxBid,currentBid:r.currentBid,totalCosts:r.totalCosts,projectCost:r.projectCost,cashRequired:r.cashRequired,deployable:r.capital.deployable,fundingGap:r.fundingGap,confidence:$("acx-confidence")?.value||"unverified",actualCost:null,exitProceeds:null,outcomeNotes:""};
     state.deals.push(snapshot);if(state.deals.length>100)state.deals=state.deals.slice(-100);
     save();renderDeals();setStatus("Underwriting snapshot saved. It is a planning record, not a validated appraisal or bid authorization.","good");
@@ -284,7 +284,7 @@
               <div class="acx-field"><label>Deployable cash ledger</label><input id="acx-funds-free" type="text" readonly value="$0"></div>
             </div>
             <div class="acx-results">
-              <div class="acx-result"><small>Funding gap</small><strong id="acx-funding-gap">$0</strong></div>
+              <div class="acx-result"><small>Funding gap</small><strong id="acx-funding-gap-need">$0</strong></div>
               <div class="acx-result"><small>Cash requirement covered</small><strong id="acx-capital-covered">—</strong></div>
             </div>
             <div style="margin-top:12px"><div class="acx-kicker">DUE-DILIGENCE CONFIRMATIONS</div>
