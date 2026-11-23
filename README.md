@@ -448,10 +448,10 @@ The existing **Capital Routing** section now includes an Acquisition Capital & B
 
 ### Capital ledger
 
-- Records owner capital, business revenue actually received, financing proceeds actually funded, confirmed transfers, reserves, released reserves and acquisition expenses.
+- Records owner capital, business revenue actually received, financing proceeds actually funded, reserves, released reserves, acquisition expenses and internal transfers as record-only activity (not new capital).
 - Separates pending / conditional sources and available credit from received cash.
 - Calculates verified receipts, recorded spend, reserved cash and deployable cash.
-- Rejects credit capacity, pending commitments and expected receipts as verified cash categories.
+- Rejects credit capacity, pending commitments, expected receipts and internal transfers as new verified cash.
 
 ### Deal ceiling and cash readiness
 
