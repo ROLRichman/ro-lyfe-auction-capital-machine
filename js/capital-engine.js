@@ -93,7 +93,8 @@
   function updateMetrics(){
     const t=totals();
     const values={"acx-total-verified":money(t.verified),"acx-total-spent":money(t.spent),"acx-total-reserved":money(t.reserved),"acx-total-deployable":money(t.deployable),"acx-total-pending":money(t.pending),"acx-total-credit":money(t.credit)};
-    Object.entries(values).forEach(([id,value])=>{if($(id))$(id).textContent=value;});\n    if($("acx-funds-free"))$("acx-funds-free").value=money(r.capital.deployable);
+    Object.entries(values).forEach(([id,value])=>{if($(id))$(id).textContent=value;});
+    if($("acx-funds-free"))$("acx-funds-free").value=money(r.capital.deployable);
     if($("acx-overdrawn"))$("acx-overdrawn").textContent=t.overdrawn>0?"Ledger warning: recorded spending exceeds verified capital by "+money(t.overdrawn)+".":"";
   }
   function updateCalculation(){
@@ -136,7 +137,8 @@
   }
   function addLedgerEntry(){
     const kind=text("acx-ledger-kind"),amount=num("acx-ledger-amount");
-    if(!kinds[kind]||!(amount>0)){setStatus("Choose an activity type and enter an amount greater than zero.","warn");return;}\n    if(kind==="verified-in"&&!["Owner capital","Business revenue received","Financing proceeds received","Confirmed internal transfer"].includes(text("acx-ledger-category"))){setStatus("Use a received-cash category for verified capital. Pending commitments and credit capacity must stay separate.","warn");return;}
+    if(!kinds[kind]||!(amount>0)){setStatus("Choose an activity type and enter an amount greater than zero.","warn");return;}
+    if(kind==="verified-in"&&!["Owner capital","Business revenue received","Financing proceeds received","Confirmed internal transfer"].includes(text("acx-ledger-category"))){setStatus("Use a received-cash category for verified capital. Pending commitments and credit capacity must stay separate.","warn");return;}
     state.ledger.push({id:"l-"+Date.now()+"-"+Math.random().toString(36).slice(2,7),kind,category:text("acx-ledger-category"),amount,date:text("acx-ledger-date")||localDate(),note:text("acx-ledger-note")});
     save();renderLedger();updateMetrics();updateCalculation();
     $("acx-ledger-amount").value="";$("acx-ledger-note").value="";
