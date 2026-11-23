@@ -438,3 +438,36 @@ Before enrollment or reliance, confirm in writing: exact supported counties and 
 The State Strategy Map and deeper education live on a separate page linked from the main nav and hero. No new upgrade banner, auto-open education message or unsolicited chat popup was added to the main machine. The existing AI Underwriter remains user-invoked.
 
 These pages are educational and organizational tools. They do not guarantee a lien redemption, tax deed, clear title, possession, financing, return or property acquisition. Verify current local law, the parcel record, sale terms, required cash and professional advice before bidding.
+
+
+---
+
+## November 23, 2026 — Acquisition Capital & Bid-Risk Engine
+
+The existing **Capital Routing** section now includes an Acquisition Capital & Bid-Risk workspace loaded by the existing `js/capital-engine.js` script.
+
+### Capital ledger
+
+- Records owner capital, business revenue actually received, financing proceeds actually funded, reserves, released reserves, acquisition expenses and internal transfers as record-only activity (not new capital).
+- Separates pending / conditional sources and available credit from received cash.
+- Calculates verified receipts, recorded spend, reserved cash and deployable cash.
+- Rejects credit capacity, pending commitments, expected receipts and internal transfers as new verified cash.
+
+### Deal ceiling and cash readiness
+
+- Reuses the current Auction Property Intake / Deal Analysis values when present, with a manual refresh control.
+- Applies a selectable value haircut to the user-entered ARV (0%, 10%, 20% or 30%).
+- Calculates the maximum bid as conservative value basis less repairs, auction / closing costs, title / tax / lien costs, holding, selling and financing costs, contingency and required profit.
+- Compares the entered cash needed to participate / close against deployable cash and reports the funding gap.
+- Uses explicit checks for auction terms, title / taxes / liens, condition / occupancy and deposit / proof-of-funds requirements before showing **Ready for Final Human Review**.
+
+### Deal learning log
+
+- Saves local underwriting snapshots and records actual project cost and exit proceeds.
+- Exports the ledger, saved assumptions and outcome records as CSV.
+
+### Storage and limitations
+
+The planner stores its ledger and snapshots in browser local storage under `rolyfe-auction-capital-intelligence-v1`, separate from the main saved-opportunity record. This first version is local to the browser / device and does not sync to a bank, lender, Supabase or another device. “Verified” means the user has personally confirmed the cash; the app does not independently verify bank balances, capital commitments, title, ARV or auction requirements. It does not transfer funds or place bids. Keep account numbers, passwords and card details out of the ledger.
+
+All calculations are planning estimates. Confirm property value, repair scope, title, liens, taxes, redemption, auction terms, deposits, proof-of-funds rules, funding terms and closing requirements with the applicable official sources and qualified professionals before bidding.
