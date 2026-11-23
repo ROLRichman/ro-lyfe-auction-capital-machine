@@ -28,6 +28,7 @@
     "verified-in":"Verified capital received",
     "reserve":"Reserve / commitment",
     "release":"Release reserve",
+    "transfer":"Internal transfer (tracking only)",
     "spent":"Capital spent",
     "pending":"Pending / conditional source",
     "credit":"Available credit (not cash)"
@@ -139,11 +140,11 @@
   function addLedgerEntry(){
     const kind=text("acx-ledger-kind"),amount=num("acx-ledger-amount");
     if(!kinds[kind]||!(amount>0)){setStatus("Choose an activity type and enter an amount greater than zero.","warn");return;}
-    if(kind==="verified-in"&&!["Owner capital","Business revenue received","Financing proceeds received","Confirmed internal transfer"].includes(text("acx-ledger-category"))){setStatus("Use a received-cash category for verified capital. Pending commitments and credit capacity must stay separate.","warn");return;}
+    if(kind==="verified-in"&&!["Owner capital","Business revenue received","Financing proceeds received","Internal transfer between tracked accounts"].includes(text("acx-ledger-category"))){setStatus("Use a received-cash category for verified capital. Pending commitments and credit capacity must stay separate.","warn");return;}
     state.ledger.push({id:"l-"+Date.now()+"-"+Math.random().toString(36).slice(2,7),kind,category:text("acx-ledger-category"),amount,date:text("acx-ledger-date")||localDate(),note:text("acx-ledger-note")});
     save();renderLedger();updateMetrics();updateCalculation();
     $("acx-ledger-amount").value="";$("acx-ledger-note").value="";
-    setStatus("Capital activity saved on this device. Pending funds and credit capacity remain outside deployable cash.","good");
+    setStatus("Capital activity saved on this device. Pending funds, internal transfers and credit capacity remain outside deployable cash.","good");
   }
   function saveSnapshot(){
     const r=updateCalculation();
@@ -241,9 +242,9 @@
         <div id="acx-overdrawn" class="acx-secondary"></div>
         <div class="acx-grid">
           <section class="acx-card">
-            <h4>1. Capital Activity Ledger</h4><p class="acx-help">Add only the amount and category—never account numbers, passwords or card details. “Verified” means you have personally confirmed the funds; this app does not verify bank balances.</p>
+            <h4>1. Capital Activity Ledger</h4><p class="acx-help">Add only the amount and category—never account numbers, passwords or card details. Internal transfers are record-only and do not increase total capital. “Verified” means you have personally confirmed the funds; this app does not verify bank balances.</p>
             <div class="acx-form">
-              <div class="acx-field"><label for="acx-ledger-kind">Activity type</label><select id="acx-ledger-kind"><option value="verified-in">Verified capital received</option><option value="reserve">Reserve / commitment</option><option value="release">Release reserve</option><option value="spent">Capital spent</option><option value="pending">Pending / conditional source</option><option value="credit">Available credit (not cash)</option></select></div>
+              <div class="acx-field"><label for="acx-ledger-kind">Activity type</label><select id="acx-ledger-kind"><option value="verified-in">Verified capital received</option><option value="reserve">Reserve / commitment</option><option value="release">Release reserve</option><option value="transfer">Internal transfer (tracking only)</option><option value="spent">Capital spent</option><option value="pending">Pending / conditional source</option><option value="credit">Available credit (not cash)</option></select></div>
               <div class="acx-field"><label for="acx-ledger-category">Category / source</label><select id="acx-ledger-category">${categories.map(x=>'<option>'+safe(x)+'</option>').join("")}</select></div>
               <div class="acx-field"><label for="acx-ledger-amount">Amount (USD)</label><input id="acx-ledger-amount" type="number" min="0" step="0.01" inputmode="decimal" placeholder="0.00"></div>
               <div class="acx-field"><label for="acx-ledger-date">Activity date</label><input id="acx-ledger-date" type="date" value="${localDate()}"></div>
