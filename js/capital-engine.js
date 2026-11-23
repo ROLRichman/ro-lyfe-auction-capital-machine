@@ -110,6 +110,7 @@
       "acx-capital-covered":r.cashRequired>0?Math.min(100,(r.capital.deployable/r.cashRequired)*100).toFixed(0)+"%":"—"
     };
     Object.entries(values).forEach(([id,value])=>{if($(id))$(id).textContent=value;});
+    if($("acx-funds-free"))$("acx-funds-free").value=money(r.capital.deployable);
     const badge=$("acx-readiness");if(badge){badge.textContent=r.status;badge.className="acx-readiness "+r.tone;}
     const explanation=$("acx-readiness-detail");if(explanation)explanation.textContent=r.detail;
     const warnings=[];
